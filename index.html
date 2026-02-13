@@ -1,0 +1,934 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guia de Estructura PERA</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #f4f4f4;
+        --text: #262626;
+        --muted: rgba(38, 38, 38, 0.65);
+        --border: rgba(11, 86, 198, 0.25);
+        --primary: #0b56c6;
+        --panel: #d5eafd;
+        --danger: #dc2626;
+        --white: #ffffff;
+        --success: #16a34a;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          "DM Sans",
+          -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+        padding: 20px;
+      }
+
+      .controls {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+        display: flex;
+        gap: 10px;
+        flex-direction: column;
+      }
+
+      .control-btn {
+        background: var(--primary);
+        color: var(--white);
+        border: none;
+        padding: 12px 16px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 10px rgba(11, 86, 198, 0.25);
+        min-width: 120px;
+      }
+
+      .control-btn:hover {
+        background: #0845a2;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(11, 86, 198, 0.35);
+      }
+
+      .download-btn {
+        background: #22c55e;
+      }
+
+      .download-btn:hover {
+        background: #16a34a;
+        box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: var(--panel);
+        border-radius: 12px;
+        padding: 40px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      .header h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--primary);
+        margin-bottom: 10px;
+      }
+
+      .header p {
+        color: var(--muted);
+        font-size: 1.1rem;
+        font-weight: 500;
+      }
+
+      .message-builder {
+        display: grid;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .input-group label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--primary);
+      }
+
+      .input-group textarea,
+      .input-group input,
+      .input-group select {
+        width: 100%;
+        min-height: 46px;
+        padding: 12px;
+        border: 2px solid var(--border);
+        border-radius: 8px;
+        background: var(--white);
+        color: var(--text);
+        font-family: inherit;
+        font-size: 0.97rem;
+      }
+
+      .input-group textarea {
+        min-height: 100px;
+        resize: vertical;
+      }
+
+      .options-grid {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      @media (max-width: 1024px) {
+        .options-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 768px) {
+        .options-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .section-title {
+        font-size: 1.1rem;
+        color: var(--primary);
+        font-weight: 700;
+      }
+
+      .actions-row {
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 1.75rem;
+      }
+
+      .ai-btn {
+        border: none;
+        background: var(--primary);
+        color: var(--white);
+        font-weight: 700;
+        border-radius: 8px;
+        padding: 12px 18px;
+        cursor: pointer;
+      }
+
+      .ai-btn[disabled] {
+        opacity: 0.65;
+        cursor: not-allowed;
+      }
+
+      .helper-text {
+        color: var(--muted);
+        font-size: 0.93rem;
+      }
+
+      .generated-message {
+        background: var(--primary);
+        border-radius: 12px;
+        padding: 24px;
+        margin-top: 12px;
+        color: var(--white);
+      }
+
+      .generated-content {
+        background: var(--white);
+        border-radius: 8px;
+        padding: 16px;
+        color: var(--text);
+        min-height: 50px;
+      }
+
+      .ai-output {
+        background: var(--white);
+        border: 2px solid var(--border);
+        border-radius: 12px;
+        padding: 24px;
+        margin: 1.5rem 0 2rem;
+      }
+
+      .ai-output h3 {
+        color: var(--primary);
+        margin-bottom: 0.75rem;
+      }
+
+      .score-grid {
+        display: grid;
+        gap: 0.7rem;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        margin-bottom: 1rem;
+      }
+
+      .score-item {
+        background: var(--panel);
+        border-radius: 10px;
+        padding: 0.7rem;
+      }
+
+      .score-item strong {
+        color: var(--primary);
+        display: block;
+      }
+
+      .feedback-grid {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        margin: 1rem 0;
+      }
+
+      @media (max-width: 768px) {
+        .feedback-grid,
+        .score-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .feedback-card {
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 1rem;
+      }
+
+      .feedback-card h4 {
+        color: var(--primary);
+        margin-bottom: 0.4rem;
+      }
+
+      .feedback-rewrite {
+        background: var(--panel);
+        border-radius: 8px;
+        padding: 0.7rem;
+        margin: 0.6rem 0;
+      }
+
+      .mini-btn {
+        border: 1px solid var(--primary);
+        color: var(--primary);
+        background: transparent;
+        border-radius: 8px;
+        padding: 7px 10px;
+        cursor: pointer;
+        font-weight: 600;
+      }
+
+      .alternatives {
+        margin-top: 1rem;
+      }
+
+      .alternatives li {
+        margin-left: 1rem;
+        margin-bottom: 0.6rem;
+      }
+
+      .pera-cards {
+        display: grid;
+        gap: 1.75rem;
+        margin-bottom: 1rem;
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      @media (max-width: 768px) {
+        .pera-cards {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .pera-card {
+        background: var(--white);
+        border: 2px solid var(--border);
+        border-radius: 16px;
+        padding: 24px;
+      }
+
+      .card-letter {
+        font-size: 3rem;
+        font-weight: 700;
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+      }
+
+      .card-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+
+      .card-description {
+        font-size: 1rem;
+        color: var(--muted);
+        margin-bottom: 1rem;
+      }
+
+      .card-example {
+        background: var(--panel);
+        border-left: 4px solid var(--primary);
+        padding: 1rem;
+        border-radius: 8px;
+        font-style: italic;
+      }
+
+      .save-status {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: var(--success);
+        color: var(--white);
+        padding: 10px 20px;
+        border-radius: 8px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .save-status.show {
+        opacity: 1;
+      }
+
+      .error {
+        color: var(--danger);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="save-status" id="saveStatus">Guardado automatico</div>
+
+    <div class="controls">
+      <button class="control-btn" id="clearBtn">Limpiar</button>
+      <button class="control-btn download-btn" id="downloadBtn">Descargar</button>
+      <button class="control-btn" id="pdfBtn">PDF</button>
+    </div>
+
+    <div class="container">
+      <div class="header">
+        <h1>PERA</h1>
+        <p>Domina el arte de comunicar con eficacia e inspiracion</p>
+      </div>
+
+      <div class="message-builder">
+        <div class="input-group">
+          <label>Punto</label>
+          <textarea
+            id="point-input"
+            placeholder="Escribe tu punto..."
+          ></textarea>
+        </div>
+        <div class="input-group">
+          <label>Ejemplo</label>
+          <textarea
+            id="example-input"
+            placeholder="Cuenta tu ejemplo..."
+          ></textarea>
+        </div>
+        <div class="input-group">
+          <label>Razones</label>
+          <textarea
+            id="reasons-input"
+            placeholder="Explica las razones..."
+          ></textarea>
+        </div>
+        <div class="input-group">
+          <label>Accion</label>
+          <textarea
+            id="action-input"
+            placeholder="Indica la accion..."
+          ></textarea>
+        </div>
+      </div>
+
+      <h2 class="section-title">Preferencias de IA</h2>
+      <div class="options-grid">
+        <div class="input-group">
+          <label>Tono</label>
+          <select id="tone-select">
+            <option value="formal">Formal</option>
+            <option value="informal">Informal</option>
+            <option value="inspirador">Inspirador</option>
+            <option value="directo">Directo</option>
+            <option value="tecnico">Tecnico</option>
+            <option value="empatico">Empatico</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Nivel de formalidad</label>
+          <select id="formality-select">
+            <option value="alto">Alto</option>
+            <option value="medio" selected>Medio</option>
+            <option value="bajo">Bajo</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Objetivo</label>
+          <select id="objective-select">
+            <option value="informar">Informar</option>
+            <option value="persuadir">Persuadir</option>
+            <option value="motivar">Motivar</option>
+            <option value="vender">Vender</option>
+            <option value="educar">Educar</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Audiencia</label>
+          <input
+            id="audience-input"
+            type="text"
+            placeholder="Ej: equipo comercial de Latam"
+          />
+        </div>
+        <div class="input-group">
+          <label>Canal</label>
+          <select id="channel-select">
+            <option value="presentacion">Presentacion</option>
+            <option value="reunion">Reunion</option>
+            <option value="email">Email</option>
+            <option value="mensaje_corto">Mensaje corto</option>
+            <option value="redes_sociales">Redes sociales</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Longitud</label>
+          <select id="length-select">
+            <option value="corta">Corta</option>
+            <option value="media" selected>Media</option>
+            <option value="larga">Larga</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="actions-row">
+        <button class="ai-btn" id="analyzeBtn">Analizar con IA</button>
+        <span class="helper-text" id="analysisStatus"
+          >La IA evaluara claridad, coherencia, persuasion y accionabilidad.</span
+        >
+      </div>
+
+      <div class="generated-message">
+        <h3>Tu guion completo:</h3>
+        <div class="generated-content" id="generated-content">
+          Escribe arriba para ver tu guion PERA aqui.
+        </div>
+      </div>
+
+      <div class="ai-output">
+        <h3>Analisis IA</h3>
+        <p class="helper-text" id="aiPlaceholder">
+          Completa tu mensaje y presiona "Analizar con IA" para ver
+          sugerencias.
+        </p>
+        <div id="aiResult"></div>
+      </div>
+
+      <div class="pera-cards">
+        <div class="pera-card">
+          <div class="card-letter">P</div>
+          <div class="card-title">Punto</div>
+          <div class="card-description">
+            Estructura: Disparador + Respuesta (X por Y, o Y por lo tanto X).
+            Conecta claramente causa y efecto.
+          </div>
+          <div class="card-example">
+            "Las empresas estan perdiendo a su mejor talento porque se niegan a
+            ofrecer esquemas de trabajo flexible."
+          </div>
+        </div>
+
+        <div class="pera-card">
+          <div class="card-letter">E</div>
+          <div class="card-title">Ejemplo</div>
+          <div class="card-description">
+            Cuenta una historia especifica con lugar, tiempo, personajes,
+            dialogo y, de ser posible, un giro inesperado.
+          </div>
+          <div class="card-example">
+            "El martes pasado, en las oficinas de Microsoft en Seattle, Sarah,
+            una desarrolladora senior, presento su renuncia durante una
+            junta..."
+          </div>
+        </div>
+
+        <div class="pera-card">
+          <div class="card-letter">R</div>
+          <div class="card-title">Razones</div>
+          <div class="card-description">
+            Sustenta con citas de expertos, datos o argumentos racionales que
+            validen tu punto.
+          </div>
+          <div class="card-example">
+            "Segun el informe de McKinsey 2024, 87% de los empleados dejaria su
+            trabajo por opciones flexibles."
+          </div>
+        </div>
+
+        <div class="pera-card">
+          <div class="card-letter">A</div>
+          <div class="card-title">Accion</div>
+          <div class="card-description">
+            Da instrucciones especificas y accionables para tu audiencia.
+          </div>
+          <div class="card-example">
+            "Encuesta a tu equipo antes del viernes sobre sus preferencias de
+            trabajo y agenda conversaciones uno a uno."
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const DRAFT_KEY = "pera_draft_v1";
+      const LOCAL_HOSTS = new Set(["localhost", "127.0.0.1", "::1"]);
+      const API_BASE_CANDIDATES = buildApiBaseCandidates();
+      let ACTIVE_API_BASE = API_BASE_CANDIDATES[0] || "";
+      let BACKEND_VERIFIED = false;
+
+      const latestRewrites = {
+        point: "",
+        example: "",
+        reasons: "",
+        action: "",
+      };
+
+      function buildApiBaseCandidates() {
+        const { protocol, hostname, port } = window.location;
+        if (protocol === "file:") return ["http://127.0.0.1:8787"];
+
+        const candidates = [""];
+
+        // If frontend runs in Live Server (e.g. :5500), route API to Node backend.
+        if (LOCAL_HOSTS.has(hostname) && port && port !== "8787") {
+          candidates.push("http://127.0.0.1:8787");
+        }
+
+        return [...new Set(candidates)];
+      }
+
+      function buildApiUrl(pathname, base = ACTIVE_API_BASE) {
+        return `${base}${pathname}`;
+      }
+
+      function describeApiBase(base) {
+        return base ? base : "mismo dominio";
+      }
+
+      async function fetchWithTimeout(url, options = {}, timeoutMs = 25000) {
+        const controller = new AbortController();
+        const timer = window.setTimeout(() => controller.abort(), timeoutMs);
+        try {
+          return await fetch(url, { ...options, signal: controller.signal });
+        } finally {
+          window.clearTimeout(timer);
+        }
+      }
+
+      function getFriendlyAnalyzeError(error) {
+        const raw = error instanceof Error ? error.message : String(error || "");
+        if (error?.name === "AbortError") {
+          return "La solicitud tardo demasiado. Intenta de nuevo.";
+        }
+        if (/Failed to fetch|NetworkError|Load failed|fetch/i.test(raw)) {
+          return "No hay conexion con el backend IA. Si es local, ejecuta npm start. Si es Netlify, revisa redirects y variables.";
+        }
+        return raw || "Error al analizar con IA.";
+      }
+
+      function escapeForHTML(value) {
+        if (typeof value !== "string") return "";
+        return value
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/\r?\n/g, "<br>");
+      }
+
+      function getScriptFromInputs() {
+        const point = document.getElementById("point-input").value.trim();
+        const example = document.getElementById("example-input").value.trim();
+        const reasons = document.getElementById("reasons-input").value.trim();
+        const action = document.getElementById("action-input").value.trim();
+        return [point, example, reasons, action].filter(Boolean).join("\n\n");
+      }
+
+      function getPayload() {
+        return {
+          sections: {
+            point: document.getElementById("point-input").value.trim(),
+            example: document.getElementById("example-input").value.trim(),
+            reasons: document.getElementById("reasons-input").value.trim(),
+            action: document.getElementById("action-input").value.trim(),
+          },
+          settings: {
+            tone: document.getElementById("tone-select").value,
+            formality: document.getElementById("formality-select").value,
+            objective: document.getElementById("objective-select").value,
+            audience: document.getElementById("audience-input").value.trim(),
+            channel: document.getElementById("channel-select").value,
+            length: document.getElementById("length-select").value,
+          },
+        };
+      }
+
+      function updateGenerated() {
+        const script = getScriptFromInputs();
+        const node = document.getElementById("generated-content");
+        node.innerHTML = script
+          ? escapeForHTML(script)
+          : "Escribe arriba para ver tu guion PERA aqui.";
+      }
+
+      function setAnalysisStatus(text, isError = false) {
+        const node = document.getElementById("analysisStatus");
+        node.textContent = text;
+        node.classList.toggle("error", isError);
+      }
+
+      function showSaveStatus() {
+        const node = document.getElementById("saveStatus");
+        node.classList.add("show");
+        window.setTimeout(() => node.classList.remove("show"), 800);
+      }
+
+      function saveDraft() {
+        try {
+          localStorage.setItem(DRAFT_KEY, JSON.stringify(getPayload()));
+          showSaveStatus();
+        } catch {
+          // Ignore storage errors (private mode / browser restrictions).
+        }
+      }
+
+      function loadDraft() {
+        try {
+          const raw = localStorage.getItem(DRAFT_KEY);
+          if (!raw) return;
+          const draft = JSON.parse(raw);
+          if (draft?.sections) {
+            document.getElementById("point-input").value = draft.sections.point || "";
+            document.getElementById("example-input").value = draft.sections.example || "";
+            document.getElementById("reasons-input").value = draft.sections.reasons || "";
+            document.getElementById("action-input").value = draft.sections.action || "";
+          }
+          if (draft?.settings) {
+            document.getElementById("tone-select").value = draft.settings.tone || "formal";
+            document.getElementById("formality-select").value = draft.settings.formality || "medio";
+            document.getElementById("objective-select").value = draft.settings.objective || "informar";
+            document.getElementById("audience-input").value = draft.settings.audience || "";
+            document.getElementById("channel-select").value = draft.settings.channel || "presentacion";
+            document.getElementById("length-select").value = draft.settings.length || "media";
+          }
+        } catch {
+          try {
+            localStorage.removeItem(DRAFT_KEY);
+          } catch {
+            // Ignore storage errors.
+          }
+        }
+      }
+
+      async function checkBackendHealth() {
+        for (const base of API_BASE_CANDIDATES) {
+          try {
+            const response = await fetchWithTimeout(buildApiUrl("/api/health", base), { method: "GET" }, 4000);
+            const data = await response.json();
+            if (!response.ok) throw new Error("health check failed");
+
+            ACTIVE_API_BASE = base;
+
+            if (!data?.openaiConfigured) {
+              BACKEND_VERIFIED = false;
+              setAnalysisStatus(
+                `Backend conectado (${describeApiBase(base)}), pero falta OPENAI_API_KEY`,
+                true,
+              );
+              return false;
+            }
+
+            BACKEND_VERIFIED = true;
+            setAnalysisStatus(`Backend IA conectado (${describeApiBase(base)}). Listo para analizar.`);
+            return true;
+          } catch {
+            // Try next candidate.
+          }
+        }
+
+        BACKEND_VERIFIED = false;
+        setAnalysisStatus(
+          "No hay conexion con el backend IA. Si es local, ejecuta npm start en el proyecto.",
+          true,
+        );
+        return false;
+      }
+
+      async function ensureBackendReady() {
+        if (BACKEND_VERIFIED) return true;
+        return checkBackendHealth();
+      }
+
+      function renderAnalysis(analysis) {
+        const placeholder = document.getElementById("aiPlaceholder");
+        const target = document.getElementById("aiResult");
+        placeholder.style.display = "none";
+
+        latestRewrites.point = analysis?.section_feedback?.point?.rewrite || "";
+        latestRewrites.example = analysis?.section_feedback?.example?.rewrite || "";
+        latestRewrites.reasons = analysis?.section_feedback?.reasons?.rewrite || "";
+        latestRewrites.action = analysis?.section_feedback?.action?.rewrite || "";
+
+        const score = analysis?.scores || {};
+        const section = analysis?.section_feedback || {};
+        const alternatives = Array.isArray(analysis?.alternatives)
+          ? analysis.alternatives
+          : [];
+
+        target.innerHTML = `
+          <p><strong>Resumen:</strong> ${escapeForHTML(analysis?.summary || "Sin resumen")}</p>
+          <div class="score-grid">
+            <div class="score-item"><strong>Claridad</strong>${Number(score.clarity || 0)}/100</div>
+            <div class="score-item"><strong>Coherencia</strong>${Number(score.coherence || 0)}/100</div>
+            <div class="score-item"><strong>Persuasion</strong>${Number(score.persuasion || 0)}/100</div>
+            <div class="score-item"><strong>Accionabilidad</strong>${Number(score.actionability || 0)}/100</div>
+          </div>
+
+          <div class="feedback-grid">
+            ${renderSectionCard("point", "Punto", section.point)}
+            ${renderSectionCard("example", "Ejemplo", section.example)}
+            ${renderSectionCard("reasons", "Razones", section.reasons)}
+            ${renderSectionCard("action", "Accion", section.action)}
+          </div>
+
+          <h4>Guion mejorado completo</h4>
+          <p>${escapeForHTML(analysis?.full_rewrite || "Sin propuesta completa")}</p>
+
+          <div class="alternatives">
+            <h4>Alternativas</h4>
+            <ol>
+              ${alternatives
+                .slice(0, 3)
+                .map(
+                  (item) =>
+                    `<li><strong>${escapeForHTML(item.label || "Opcion")}</strong>: ${escapeForHTML(item.text || "")}</li>`,
+                )
+                .join("")}
+            </ol>
+          </div>
+
+          <p><strong>Siguiente paso recomendado:</strong> ${escapeForHTML(analysis?.next_step || "No especificado")}</p>
+        `;
+      }
+
+      function renderSectionCard(field, label, data) {
+        const diagnosis = data?.diagnosis || "Sin diagnostico";
+        const suggestion = data?.suggestion || "Sin sugerencia";
+        const rewrite = data?.rewrite || "Sin reescritura";
+        return `
+          <article class="feedback-card">
+            <h4>${label}</h4>
+            <p><strong>Diagnostico:</strong> ${escapeForHTML(diagnosis)}</p>
+            <p><strong>Sugerencia:</strong> ${escapeForHTML(suggestion)}</p>
+            <div class="feedback-rewrite">${escapeForHTML(rewrite)}</div>
+            <button class="mini-btn apply-btn" data-field="${field}" type="button">Aplicar sugerencia</button>
+          </article>
+        `;
+      }
+
+      async function analyzeWithAI() {
+        const payload = getPayload();
+        const hasContent = Object.values(payload.sections).some(Boolean);
+
+        if (!hasContent) {
+          setAnalysisStatus("Completa al menos una seccion antes de analizar.", true);
+          return;
+        }
+
+        const button = document.getElementById("analyzeBtn");
+        button.disabled = true;
+        button.textContent = "Analizando...";
+        setAnalysisStatus("Verificando conexion del backend...");
+
+        try {
+          const backendReady = await ensureBackendReady();
+          if (!backendReady) return;
+
+          setAnalysisStatus("Analizando tu guion con IA...");
+
+          const response = await fetchWithTimeout(
+            buildApiUrl("/api/pera/analyze"),
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            },
+            25000,
+          );
+
+          const raw = await response.text();
+          let data = {};
+          try {
+            data = raw ? JSON.parse(raw) : {};
+          } catch {
+            data = {};
+          }
+
+          if (!response.ok) {
+            throw new Error(data?.error || "No se pudo obtener analisis.");
+          }
+
+          renderAnalysis(data.analysis);
+          setAnalysisStatus("Analisis listo. Puedes aplicar sugerencias por seccion.");
+        } catch (error) {
+          setAnalysisStatus(getFriendlyAnalyzeError(error), true);
+        } finally {
+          button.disabled = false;
+          button.textContent = "Analizar con IA";
+        }
+      }
+
+      document.querySelectorAll("textarea, select, input").forEach((node) => {
+        node.addEventListener("input", () => {
+          updateGenerated();
+          saveDraft();
+        });
+      });
+
+      document.getElementById("analyzeBtn").addEventListener("click", analyzeWithAI);
+
+      document.getElementById("aiResult").addEventListener("click", (event) => {
+        const button = event.target.closest(".apply-btn");
+        if (!button) return;
+
+        const field = button.dataset.field;
+        const map = {
+          point: "point-input",
+          example: "example-input",
+          reasons: "reasons-input",
+          action: "action-input",
+        };
+
+        const rewrite = latestRewrites[field];
+        if (!rewrite || !map[field]) return;
+
+        document.getElementById(map[field]).value = rewrite;
+        updateGenerated();
+        saveDraft();
+      });
+
+      document.getElementById("clearBtn").addEventListener("click", () => {
+        document.querySelectorAll("textarea").forEach((t) => (t.value = ""));
+        document.getElementById("audience-input").value = "";
+        updateGenerated();
+        saveDraft();
+        setAnalysisStatus("Formulario limpio.");
+      });
+
+      document.getElementById("downloadBtn").addEventListener("click", () => {
+        const script = getScriptFromInputs();
+        const blob = new Blob([script], { type: "text/plain;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "mensaje-pera.txt";
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+
+      document.getElementById("pdfBtn").addEventListener("click", () => {
+        const script = getScriptFromInputs();
+        const win = window.open("", "_blank");
+        if (!win) return;
+
+        const html = `
+          <html>
+          <head>
+            <title>Mensaje PERA</title>
+            <style>
+              body { font-family: sans-serif; padding: 40px; line-height: 1.5; }
+              h1 { color: #0b56c6; }
+              .section { margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+              .label { font-weight: bold; color: #0b56c6; display: block; }
+            </style>
+          </head>
+          <body>
+            <h1>Mensaje PERA</h1>
+            <div class="section"><span class="label">Punto:</span> ${escapeForHTML(document.getElementById("point-input").value)}</div>
+            <div class="section"><span class="label">Ejemplo:</span> ${escapeForHTML(document.getElementById("example-input").value)}</div>
+            <div class="section"><span class="label">Razones:</span> ${escapeForHTML(document.getElementById("reasons-input").value)}</div>
+            <div class="section"><span class="label">Accion:</span> ${escapeForHTML(document.getElementById("action-input").value)}</div>
+            <h2>Guion completo</h2>
+            <p>${escapeForHTML(script) || "(Sin contenido)"}</p>
+            <script>window.print();<\/script>
+          </body>
+          </html>`;
+
+        win.document.write(html);
+        win.document.close();
+      });
+
+      loadDraft();
+      updateGenerated();
+      checkBackendHealth();
+    </script>
+  </body>
+</html>

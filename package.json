@@ -1,0 +1,12 @@
+{
+  "name": "pera-ai-webapp",
+  "private": true,
+  "version": "1.0.0",
+  "description": "App PERA con analisis IA",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "netlify:dev": "netlify dev",
+    "netlify:build": "netlify build"
+  }
+}
