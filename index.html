@@ -159,51 +159,121 @@
         font-size: 0.95rem;
       }
 
-      .construction-grid {
+      .journey-pills {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin-bottom: 0.7rem;
+      }
+
+      .journey-pill {
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        padding: 0.35rem 0.75rem;
+        font-weight: 600;
+        font-size: 0.84rem;
+        background: rgba(255, 255, 255, 0.75);
+        color: var(--blue-indigo);
+      }
+
+      .journey-pill.active {
+        background: rgba(10, 86, 198, 0.14);
+        border-color: rgba(10, 86, 198, 0.35);
+      }
+
+      .journey-pill.done {
+        background: rgba(4, 164, 90, 0.16);
+        border-color: rgba(4, 164, 90, 0.38);
+      }
+
+      .guide-status {
+        margin-bottom: 0.9rem;
+      }
+
+      .guided-stack {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.9rem;
+      }
+
+      .guided-card {
         border: 2px solid var(--border);
         border-radius: 12px;
-        overflow: hidden;
+        padding: 0.9rem;
+        background: rgba(255, 255, 255, 0.9);
       }
 
-      .construction-cell {
-        padding: 16px;
-        background: rgba(255, 255, 255, 0.84);
+      .guided-card.complete {
+        border-color: rgba(4, 164, 90, 0.5);
+        background: rgba(4, 164, 90, 0.09);
       }
 
-      .construction-cell:nth-child(2) {
-        background: rgba(185, 214, 254, 0.33);
+      .guided-card.locked {
+        opacity: 0.68;
       }
 
-      .construction-cell:nth-child(3) {
-        background: rgba(240, 242, 218, 0.88);
+      .guided-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.7rem;
+        margin-bottom: 0.35rem;
       }
 
-      .construction-cell:nth-child(4) {
-        background: rgba(246, 109, 58, 0.1);
+      .guided-head h3 {
+        color: var(--blue-indigo);
+        font-size: 1.02rem;
       }
 
-      .construction-cell:nth-child(odd) {
-        border-right: 2px solid var(--border);
+      .guided-state {
+        border-radius: 999px;
+        padding: 0.2rem 0.58rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--blue-indigo);
+        background: rgba(1, 25, 99, 0.12);
       }
 
-      .construction-cell:nth-child(-n + 2) {
-        border-bottom: 2px solid var(--border);
+      .guided-question {
+        color: var(--muted);
+        margin-bottom: 0.55rem;
+        font-size: 0.9rem;
+      }
+
+      .inline-theory {
+        margin-bottom: 0.55rem;
+        border-radius: 10px;
+        border: 1px dashed rgba(1, 25, 99, 0.3);
+        background: rgba(185, 214, 254, 0.14);
+        padding: 0.45rem 0.6rem;
+      }
+
+      .inline-theory summary {
+        cursor: pointer;
+        font-weight: 600;
+        color: var(--blue-indigo);
+      }
+
+      .inline-theory p {
+        margin-top: 0.45rem;
+        font-size: 0.9rem;
+        color: var(--muted);
+      }
+
+      .unlock-note {
+        margin-top: 0.5rem;
+        font-size: 0.84rem;
+        color: var(--muted);
+      }
+
+      .guided-card textarea:disabled {
+        background: rgba(38, 38, 38, 0.06);
+        cursor: not-allowed;
       }
 
       @media (max-width: 768px) {
-        .construction-grid {
+        .guided-stack {
           grid-template-columns: 1fr;
-        }
-
-        .construction-cell:nth-child(odd) {
-          border-right: none;
-        }
-
-        .construction-cell:nth-child(-n + 2),
-        .construction-cell:nth-child(3) {
-          border-bottom: 2px solid var(--border);
         }
       }
 
@@ -217,6 +287,27 @@
         gap: 1rem;
         grid-template-columns: repeat(3, minmax(0, 1fr));
         margin-bottom: 1.5rem;
+      }
+
+      .essentials-grid {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        margin-bottom: 0.6rem;
+      }
+
+      .advanced-tuning {
+        border: 1px dashed rgba(1, 25, 99, 0.32);
+        border-radius: 12px;
+        padding: 0.7rem 0.8rem;
+        background: rgba(255, 255, 255, 0.7);
+      }
+
+      .advanced-tuning summary {
+        cursor: pointer;
+        font-weight: 700;
+        color: var(--blue-indigo);
+        margin-bottom: 0.6rem;
       }
 
       .input-group label {
@@ -246,12 +337,14 @@
       }
 
       @media (max-width: 1024px) {
+        .essentials-grid,
         .fine-tuning-grid {
           grid-template-columns: repeat(2, minmax(0, 1fr));
         }
       }
 
       @media (max-width: 768px) {
+        .essentials-grid,
         .fine-tuning-grid {
           grid-template-columns: 1fr;
         }
@@ -315,6 +408,111 @@
       .helper-text {
         color: var(--muted);
         font-size: 0.93rem;
+      }
+
+      .game-panel {
+        background: linear-gradient(135deg, rgba(1, 25, 99, 0.08), rgba(4, 164, 90, 0.08));
+      }
+
+      .game-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .game-meta {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin: 0.4rem 0 0.8rem;
+      }
+
+      .xp-track {
+        width: 100%;
+        height: 14px;
+        border-radius: 999px;
+        background: rgba(1, 25, 99, 0.15);
+        overflow: hidden;
+      }
+
+      .xp-fill {
+        height: 100%;
+        width: 0%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--orange-coral), var(--green-mint));
+        transition: width 0.35s ease;
+      }
+
+      .game-note {
+        color: var(--blue-indigo);
+        font-size: 0.92rem;
+        font-weight: 600;
+        margin: 0.65rem 0;
+      }
+
+      .mission-list {
+        display: grid;
+        gap: 0.55rem;
+        margin: 0.8rem 0 1rem;
+      }
+
+      .mission-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.8rem;
+        padding: 0.62rem 0.75rem;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.72);
+      }
+
+      .mission-item.done {
+        border-color: rgba(4, 164, 90, 0.5);
+        background: rgba(4, 164, 90, 0.14);
+      }
+
+      .mission-item strong {
+        color: var(--blue-indigo);
+        font-size: 0.82rem;
+      }
+
+      .badge-row {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+
+      .badge-chip {
+        border-radius: 999px;
+        padding: 0.33rem 0.72rem;
+        font-size: 0.82rem;
+        font-weight: 700;
+        color: var(--white);
+        background: linear-gradient(135deg, var(--orange-terracotta), var(--orange-coral));
+      }
+
+      .badge-chip.empty {
+        color: var(--blue-indigo);
+        background: rgba(1, 25, 99, 0.08);
+      }
+
+      .flash-level {
+        animation: pulse-level 650ms ease;
+      }
+
+      @keyframes pulse-level {
+        0% {
+          transform: scale(1);
+        }
+        35% {
+          transform: scale(1.08);
+        }
+        100% {
+          transform: scale(1);
+        }
       }
 
       .generated-message {
@@ -421,6 +619,13 @@
         margin-bottom: 0.6rem;
       }
 
+      .theory-block summary {
+        cursor: pointer;
+        font-weight: 700;
+        color: var(--blue-indigo);
+        margin-bottom: 1rem;
+      }
+
       .pera-cards {
         display: grid;
         gap: 1.75rem;
@@ -506,77 +711,131 @@
       </div>
 
       <section class="section-block message-builder">
-        <h2 class="section-heading">Seccion de Construccion</h2>
+        <h2 class="section-heading">Construccion Guiada</h2>
         <p class="section-subtitle">
-          Estructura tu mensaje en tabla 2x2: Punto, Ejemplo, Razones y Accion.
+          Completa un paso y desbloquea el siguiente. Asi reduces friccion y tomas foco.
         </p>
-        <div class="construction-grid">
-          <div class="construction-cell">
+        <div class="journey-pills">
+          <span class="journey-pill" id="step-pill-point">1. Punto</span>
+          <span class="journey-pill" id="step-pill-example">2. Ejemplo</span>
+          <span class="journey-pill" id="step-pill-reasons">3. Razones</span>
+          <span class="journey-pill" id="step-pill-action">4. Accion</span>
+        </div>
+        <p class="helper-text guide-status" id="constructionGuideStatus">
+          Empieza en Punto. Al completarlo, se desbloquea Ejemplo.
+        </p>
+
+        <div class="guided-stack">
+          <article class="guided-card" id="step-point-card">
+            <div class="guided-head">
+              <h3>Paso 1: Punto</h3>
+              <span class="guided-state" id="state-point">En progreso</span>
+            </div>
+            <p class="guided-question">
+              Pregunta guia: cual es la idea central que quieres que recuerden en una frase?
+            </p>
+            <details class="inline-theory">
+              <summary>Teoria rapida (opcional)</summary>
+              <p>
+                Un buen Punto conecta causa y efecto: X ocurre por Y. Debe ser claro y debatible.
+              </p>
+            </details>
             <div class="input-group">
               <label>Punto</label>
               <textarea
                 id="point-input"
-                placeholder="Escribe tu punto..."
+                placeholder="Ej: Estamos perdiendo talento porque el modelo actual no da flexibilidad."
               ></textarea>
             </div>
-          </div>
-          <div class="construction-cell">
+            <p class="unlock-note">Minimo recomendado: 24 caracteres.</p>
+          </article>
+
+          <article class="guided-card" id="step-example-card">
+            <div class="guided-head">
+              <h3>Paso 2: Ejemplo</h3>
+              <span class="guided-state" id="state-example">Bloqueado</span>
+            </div>
+            <p class="guided-question">
+              Pregunta guia: que historia real ilustra mejor tu Punto? Incluye tiempo, lugar y persona.
+            </p>
+            <details class="inline-theory">
+              <summary>Teoria rapida (opcional)</summary>
+              <p>
+                El Ejemplo vuelve concreto el mensaje. Si agregas un detalle inesperado, sube la recordacion.
+              </p>
+            </details>
             <div class="input-group">
               <label>Ejemplo</label>
               <textarea
                 id="example-input"
-                placeholder="Cuenta tu ejemplo..."
+                placeholder="Ej: El martes, en la reunion de equipo, una senior aviso que se iba por falta de flexibilidad."
+                disabled
               ></textarea>
             </div>
-          </div>
-          <div class="construction-cell">
+            <p class="unlock-note">Se activa al completar Punto.</p>
+          </article>
+
+          <article class="guided-card" id="step-reasons-card">
+            <div class="guided-head">
+              <h3>Paso 3: Razones</h3>
+              <span class="guided-state" id="state-reasons">Bloqueado</span>
+            </div>
+            <p class="guided-question">
+              Pregunta guia: con que datos, autoridad o logica vas a demostrar que tu Punto es valido?
+            </p>
+            <details class="inline-theory">
+              <summary>Teoria rapida (opcional)</summary>
+              <p>
+                Agrega 2 o 3 razones fuertes. Mezcla evidencia (dato) y criterio (interpretacion).
+              </p>
+            </details>
             <div class="input-group">
               <label>Razones</label>
               <textarea
                 id="reasons-input"
-                placeholder="Explica las razones..."
+                placeholder="Ej: Estudios 2024 muestran mayor retencion con esquemas flexibles."
+                disabled
               ></textarea>
             </div>
-          </div>
-          <div class="construction-cell">
+            <p class="unlock-note">Se activa al completar Ejemplo.</p>
+          </article>
+
+          <article class="guided-card" id="step-action-card">
+            <div class="guided-head">
+              <h3>Paso 4: Accion</h3>
+              <span class="guided-state" id="state-action">Bloqueado</span>
+            </div>
+            <p class="guided-question">
+              Pregunta guia: que quieres que hagan exactamente, quien lo hace y para cuando?
+            </p>
+            <details class="inline-theory">
+              <summary>Teoria rapida (opcional)</summary>
+              <p>
+                La Accion debe ser ejecutable hoy: verbo claro, responsable y fecha limite.
+              </p>
+            </details>
             <div class="input-group">
               <label>Accion</label>
               <textarea
                 id="action-input"
-                placeholder="Indica la accion..."
+                placeholder="Ej: Antes del viernes, lideres completan encuesta y agendan 1:1 con su equipo."
+                disabled
               ></textarea>
             </div>
-          </div>
+            <p class="unlock-note">Se activa al completar Razones.</p>
+          </article>
         </div>
       </section>
 
       <section class="section-block">
-        <h2 class="section-heading">Seccion de Fine Tuning</h2>
+        <h2 class="section-heading">Fine Tuning Inteligente</h2>
         <p class="section-subtitle">
-          Ajusta el estilo y contexto para darle mejores pistas a la IA.
+          Primero llena lo esencial. Lo avanzado es opcional y esta colapsado.
         </p>
-        <div class="fine-tuning-grid">
+
+        <div class="essentials-grid">
           <div class="input-group">
-            <label>Tono</label>
-            <select id="tone-select">
-              <option value="formal">Formal</option>
-              <option value="informal">Informal</option>
-              <option value="inspirador">Inspirador</option>
-              <option value="directo">Directo</option>
-              <option value="tecnico">Tecnico</option>
-              <option value="empatico">Empatico</option>
-            </select>
-          </div>
-          <div class="input-group">
-            <label>Nivel de formalidad</label>
-            <select id="formality-select">
-              <option value="alto">Alto</option>
-              <option value="medio" selected>Medio</option>
-              <option value="bajo">Bajo</option>
-            </select>
-          </div>
-          <div class="input-group">
-            <label>Objetivo</label>
+            <label>Objetivo (esencial)</label>
             <select id="objective-select">
               <option value="informar">Informar</option>
               <option value="persuadir">Persuadir</option>
@@ -586,7 +845,7 @@
             </select>
           </div>
           <div class="input-group">
-            <label>Audiencia</label>
+            <label>Audiencia (esencial)</label>
             <input
               id="audience-input"
               type="text"
@@ -594,7 +853,7 @@
             />
           </div>
           <div class="input-group">
-            <label>Canal</label>
+            <label>Canal (esencial)</label>
             <select id="channel-select">
               <option value="presentacion">Presentacion</option>
               <option value="reunion">Reunion</option>
@@ -604,51 +863,82 @@
             </select>
           </div>
           <div class="input-group">
-            <label>Longitud</label>
-            <select id="length-select">
-              <option value="corta">Corta</option>
-              <option value="media" selected>Media</option>
-              <option value="larga">Larga</option>
-            </select>
-          </div>
-          <div class="input-group">
-            <label>Industria</label>
-            <select id="industry-select">
-              <option value="general" selected>General</option>
-              <option value="tecnologia">Tecnologia</option>
-              <option value="salud">Salud</option>
-              <option value="educacion">Educacion</option>
-              <option value="finanzas">Finanzas</option>
-              <option value="retail">Retail</option>
-            </select>
-          </div>
-          <div class="input-group">
-            <label>Nivel de urgencia</label>
-            <select id="urgency-select">
-              <option value="baja">Baja</option>
-              <option value="media" selected>Media</option>
-              <option value="alta">Alta</option>
-            </select>
-          </div>
-          <div class="input-group">
-            <label>Estilo argumentativo</label>
-            <select id="argument-style-select">
-              <option value="balanceado" selected>Balanceado</option>
-              <option value="datos">Basado en datos</option>
-              <option value="historia">Basado en historia</option>
-              <option value="autoridad">Basado en autoridad</option>
-            </select>
-          </div>
-          <div class="input-group">
-            <label>Tipo de llamada a la accion</label>
-            <select id="cta-type-select">
-              <option value="directa" selected>Directa</option>
-              <option value="suave">Suave</option>
-              <option value="paso_a_paso">Paso a paso</option>
-              <option value="fecha_limite">Con fecha limite</option>
+            <label>Tono (esencial)</label>
+            <select id="tone-select">
+              <option value="formal">Formal</option>
+              <option value="informal">Informal</option>
+              <option value="inspirador">Inspirador</option>
+              <option value="directo">Directo</option>
+              <option value="tecnico">Tecnico</option>
+              <option value="empatico">Empatico</option>
             </select>
           </div>
         </div>
+        <p class="helper-text">
+          Con estos 4 campos suele bastar para un gran resultado.
+        </p>
+
+        <details class="advanced-tuning">
+          <summary>Abrir opciones avanzadas (opcionales)</summary>
+          <p class="helper-text">
+            Solo completa lo que realmente necesites afinar.
+          </p>
+          <div class="fine-tuning-grid">
+            <div class="input-group">
+              <label>Nivel de formalidad</label>
+              <select id="formality-select">
+                <option value="alto">Alto</option>
+                <option value="medio" selected>Medio</option>
+                <option value="bajo">Bajo</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label>Longitud</label>
+              <select id="length-select">
+                <option value="corta">Corta</option>
+                <option value="media" selected>Media</option>
+                <option value="larga">Larga</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label>Industria</label>
+              <select id="industry-select">
+                <option value="general" selected>General</option>
+                <option value="tecnologia">Tecnologia</option>
+                <option value="salud">Salud</option>
+                <option value="educacion">Educacion</option>
+                <option value="finanzas">Finanzas</option>
+                <option value="retail">Retail</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label>Nivel de urgencia</label>
+              <select id="urgency-select">
+                <option value="baja">Baja</option>
+                <option value="media" selected>Media</option>
+                <option value="alta">Alta</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label>Estilo argumentativo</label>
+              <select id="argument-style-select">
+                <option value="balanceado" selected>Balanceado</option>
+                <option value="datos">Basado en datos</option>
+                <option value="historia">Basado en historia</option>
+                <option value="autoridad">Basado en autoridad</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label>Tipo de llamada a la accion</label>
+              <select id="cta-type-select">
+                <option value="directa" selected>Directa</option>
+                <option value="suave">Suave</option>
+                <option value="paso_a_paso">Paso a paso</option>
+                <option value="fecha_limite">Con fecha limite</option>
+              </select>
+            </div>
+          </div>
+        </details>
       </section>
 
       <div class="actions-row">
@@ -665,6 +955,31 @@
           >La IA evaluara claridad, coherencia, persuasion y accionabilidad.</span
         >
       </div>
+
+      <section class="section-block game-panel">
+        <div class="game-top">
+          <div>
+            <h2 class="section-heading">Modo Story Game</h2>
+            <p class="section-subtitle">
+              Mejora tu mensaje como si fuera una mision: calidad, precision y cierre.
+            </p>
+          </div>
+          <button class="mini-btn" id="resetGameBtn" type="button">Reiniciar progreso</button>
+        </div>
+
+        <div class="game-meta">
+          <span class="counter-pill" id="playerRankPill">Rango: Aprendiz</span>
+          <span class="counter-pill secondary" id="playerXpPill">XP: 0</span>
+          <span class="counter-pill" id="missionCountPill">Misiones: 0/0</span>
+        </div>
+
+        <div class="xp-track" aria-hidden="true">
+          <div class="xp-fill" id="xpFill"></div>
+        </div>
+        <p class="game-note" id="gameEventNote">Completa misiones para desbloquear logros.</p>
+        <div class="mission-list" id="missionList"></div>
+        <div class="badge-row" id="badgeRow"></div>
+      </section>
 
       <section class="generated-message">
         <h2 class="section-heading" style="color: white; margin-bottom: 0.5rem">
@@ -684,64 +999,68 @@
         <div id="aiResult"></div>
       </section>
 
-      <div class="pera-cards">
-        <div class="pera-card">
-          <div class="card-letter">P</div>
-          <div class="card-title">Punto</div>
-          <div class="card-description">
-            Estructura: Disparador + Respuesta (X por Y, o Y por lo tanto X).
-            Conecta claramente causa y efecto.
+      <details class="section-block theory-block">
+        <summary>Ver teoria PERA completa (opcional)</summary>
+        <div class="pera-cards">
+          <div class="pera-card">
+            <div class="card-letter">P</div>
+            <div class="card-title">Punto</div>
+            <div class="card-description">
+              Estructura: Disparador + Respuesta (X por Y, o Y por lo tanto X).
+              Conecta claramente causa y efecto.
+            </div>
+            <div class="card-example">
+              "Las empresas estan perdiendo a su mejor talento porque se niegan a
+              ofrecer esquemas de trabajo flexible."
+            </div>
           </div>
-          <div class="card-example">
-            "Las empresas estan perdiendo a su mejor talento porque se niegan a
-            ofrecer esquemas de trabajo flexible."
-          </div>
-        </div>
 
-        <div class="pera-card">
-          <div class="card-letter">E</div>
-          <div class="card-title">Ejemplo</div>
-          <div class="card-description">
-            Cuenta una historia especifica con lugar, tiempo, personajes,
-            dialogo y, de ser posible, un giro inesperado.
+          <div class="pera-card">
+            <div class="card-letter">E</div>
+            <div class="card-title">Ejemplo</div>
+            <div class="card-description">
+              Cuenta una historia especifica con lugar, tiempo, personajes,
+              dialogo y, de ser posible, un giro inesperado.
+            </div>
+            <div class="card-example">
+              "El martes pasado, en las oficinas de Microsoft en Seattle, Sarah,
+              una desarrolladora senior, presento su renuncia durante una
+              junta..."
+            </div>
           </div>
-          <div class="card-example">
-            "El martes pasado, en las oficinas de Microsoft en Seattle, Sarah,
-            una desarrolladora senior, presento su renuncia durante una
-            junta..."
-          </div>
-        </div>
 
-        <div class="pera-card">
-          <div class="card-letter">R</div>
-          <div class="card-title">Razones</div>
-          <div class="card-description">
-            Sustenta con citas de expertos, datos o argumentos racionales que
-            validen tu punto.
+          <div class="pera-card">
+            <div class="card-letter">R</div>
+            <div class="card-title">Razones</div>
+            <div class="card-description">
+              Sustenta con citas de expertos, datos o argumentos racionales que
+              validen tu punto.
+            </div>
+            <div class="card-example">
+              "Segun el informe de McKinsey 2024, 87% de los empleados dejaria su
+              trabajo por opciones flexibles."
+            </div>
           </div>
-          <div class="card-example">
-            "Segun el informe de McKinsey 2024, 87% de los empleados dejaria su
-            trabajo por opciones flexibles."
-          </div>
-        </div>
 
-        <div class="pera-card">
-          <div class="card-letter">A</div>
-          <div class="card-title">Accion</div>
-          <div class="card-description">
-            Da instrucciones especificas y accionables para tu audiencia.
-          </div>
-          <div class="card-example">
-            "Encuesta a tu equipo antes del viernes sobre sus preferencias de
-            trabajo y agenda conversaciones uno a uno."
+          <div class="pera-card">
+            <div class="card-letter">A</div>
+            <div class="card-title">Accion</div>
+            <div class="card-description">
+              Da instrucciones especificas y accionables para tu audiencia.
+            </div>
+            <div class="card-example">
+              "Encuesta a tu equipo antes del viernes sobre sus preferencias de
+              trabajo y agenda conversaciones uno a uno."
+            </div>
           </div>
         </div>
-      </div>
+      </details>
     </div>
 
     <script>
       const DRAFT_KEY = "pera_draft_v1";
       const ITERATION_KEY = "pera_iteration_state_v1";
+      const GAME_KEY = "pera_story_game_v1";
       const DEFAULT_DAILY_LIMIT = 12;
       const LOCAL_HOSTS = new Set(["localhost", "127.0.0.1", "::1"]);
       const API_BASE_CANDIDATES = buildApiBaseCandidates();
@@ -784,6 +1103,65 @@
         cta_type: "cta-type-select",
       };
 
+      const GUIDED_STEPS = [
+        {
+          id: "point",
+          label: "Punto",
+          inputId: "point-input",
+          cardId: "step-point-card",
+          stateId: "state-point",
+          pillId: "step-pill-point",
+          minChars: 24,
+        },
+        {
+          id: "example",
+          label: "Ejemplo",
+          inputId: "example-input",
+          cardId: "step-example-card",
+          stateId: "state-example",
+          pillId: "step-pill-example",
+          minChars: 40,
+        },
+        {
+          id: "reasons",
+          label: "Razones",
+          inputId: "reasons-input",
+          cardId: "step-reasons-card",
+          stateId: "state-reasons",
+          pillId: "step-pill-reasons",
+          minChars: 35,
+        },
+        {
+          id: "action",
+          label: "Accion",
+          inputId: "action-input",
+          cardId: "step-action-card",
+          stateId: "state-action",
+          pillId: "step-pill-action",
+          minChars: 24,
+        },
+      ];
+
+      const RANKS = [
+        { minXP: 0, label: "Aprendiz" },
+        { minXP: 60, label: "Narrador" },
+        { minXP: 140, label: "Arquitecto" },
+        { minXP: 240, label: "Estratega" },
+        { minXP: 360, label: "Maestro PERA" },
+      ];
+
+      const MISSIONS = [
+        { id: "full_pera", label: "Completa las 4 casillas PERA", xp: 20 },
+        { id: "audience_set", label: "Define una audiencia especifica", xp: 12 },
+        { id: "first_analysis", label: "Realiza tu primer analisis IA", xp: 18 },
+        { id: "clarity_80", label: "Consigue 80+ en claridad", xp: 25 },
+        { id: "actionability_80", label: "Consigue 80+ en accionabilidad", xp: 25 },
+        { id: "apply_two_rewrites", label: "Aplica 2 sugerencias de IA", xp: 20 },
+        { id: "export_message", label: "Exporta el mensaje (TXT o PDF)", xp: 15 },
+      ];
+
+      let gameState = createDefaultGameState();
+
       function getTodayKey() {
         return new Date().toISOString().slice(0, 10);
       }
@@ -791,6 +1169,288 @@
       function clampToNonNegativeNumber(value) {
         if (!Number.isFinite(value)) return 0;
         return Math.max(0, Math.floor(value));
+      }
+
+      function getStepTextLength(step) {
+        const node = document.getElementById(step.inputId);
+        if (!node) return 0;
+        return node.value.trim().length;
+      }
+
+      function isStepComplete(step) {
+        return getStepTextLength(step) >= step.minChars;
+      }
+
+      function isGuidedFlowComplete() {
+        return GUIDED_STEPS.every((step) => isStepComplete(step));
+      }
+
+      function updateGuidedFlow() {
+        const guideNode = document.getElementById("constructionGuideStatus");
+
+        GUIDED_STEPS.forEach((step, index) => {
+          const inputNode = document.getElementById(step.inputId);
+          const cardNode = document.getElementById(step.cardId);
+          const stateNode = document.getElementById(step.stateId);
+          const pillNode = document.getElementById(step.pillId);
+
+          const unlocked = index === 0 ? true : isStepComplete(GUIDED_STEPS[index - 1]);
+          const done = isStepComplete(step);
+
+          if (inputNode) {
+            inputNode.disabled = !unlocked;
+            inputNode.setAttribute("aria-disabled", String(!unlocked));
+          }
+
+          if (cardNode) {
+            cardNode.classList.toggle("locked", !unlocked);
+            cardNode.classList.toggle("complete", done);
+          }
+
+          if (stateNode) {
+            stateNode.textContent = !unlocked ? "Bloqueado" : done ? "Listo" : "En progreso";
+          }
+
+          if (pillNode) {
+            pillNode.classList.toggle("done", done);
+            pillNode.classList.toggle("active", unlocked && !done);
+          }
+        });
+
+        if (guideNode) {
+          const firstPending = GUIDED_STEPS.find((step) => !isStepComplete(step));
+          if (!firstPending) {
+            guideNode.textContent = "Flujo completo. Ya puedes analizar con IA.";
+          } else {
+            const nextStepIndex = GUIDED_STEPS.findIndex((step) => step.id === firstPending.id) + 1;
+            const unlockLabel =
+              nextStepIndex < GUIDED_STEPS.length
+                ? GUIDED_STEPS[nextStepIndex].label
+                : "Analisis IA";
+            guideNode.textContent = `Completa ${firstPending.label} (${firstPending.minChars}+ caracteres) para desbloquear ${unlockLabel}.`;
+          }
+        }
+
+        updateIterationUI();
+      }
+
+      function createDefaultGameState() {
+        return {
+          xp: 0,
+          completedMissions: {},
+          badges: {},
+          appliedSuggestions: 0,
+          bestOverallScore: 0,
+          eventNote: "Completa misiones para desbloquear logros.",
+        };
+      }
+
+      function getRankByXP(xp) {
+        let rank = RANKS[0];
+        for (const candidate of RANKS) {
+          if (xp >= candidate.minXP) rank = candidate;
+        }
+        return rank;
+      }
+
+      function getNextRank(currentXP) {
+        for (const rank of RANKS) {
+          if (rank.minXP > currentXP) return rank;
+        }
+        return null;
+      }
+
+      function getCompletedMissionCount() {
+        return MISSIONS.filter((mission) => gameState.completedMissions[mission.id]).length;
+      }
+
+      function saveGameState() {
+        try {
+          localStorage.setItem(GAME_KEY, JSON.stringify(gameState));
+        } catch {
+          // Ignore storage errors.
+        }
+      }
+
+      function loadGameState() {
+        try {
+          const raw = localStorage.getItem(GAME_KEY);
+          if (!raw) {
+            gameState = createDefaultGameState();
+            updateGameUI();
+            return;
+          }
+
+          const parsed = JSON.parse(raw);
+          gameState = {
+            ...createDefaultGameState(),
+            ...parsed,
+            xp: clampToNonNegativeNumber(Number(parsed?.xp)),
+            appliedSuggestions: clampToNonNegativeNumber(Number(parsed?.appliedSuggestions)),
+            bestOverallScore: Math.max(0, Number(parsed?.bestOverallScore || 0)),
+            completedMissions:
+              parsed?.completedMissions && typeof parsed.completedMissions === "object"
+                ? parsed.completedMissions
+                : {},
+            badges:
+              parsed?.badges && typeof parsed.badges === "object" ? parsed.badges : {},
+          };
+        } catch {
+          gameState = createDefaultGameState();
+        }
+        updateGameUI();
+      }
+
+      function flashRankPill() {
+        const rankNode = document.getElementById("playerRankPill");
+        if (!rankNode) return;
+        rankNode.classList.remove("flash-level");
+        window.requestAnimationFrame(() => {
+          rankNode.classList.add("flash-level");
+        });
+      }
+
+      function updateGameUI() {
+        const rankNode = document.getElementById("playerRankPill");
+        const xpNode = document.getElementById("playerXpPill");
+        const missionNode = document.getElementById("missionCountPill");
+        const xpFill = document.getElementById("xpFill");
+        const noteNode = document.getElementById("gameEventNote");
+        const missionListNode = document.getElementById("missionList");
+        const badgeNode = document.getElementById("badgeRow");
+
+        const rank = getRankByXP(gameState.xp);
+        const nextRank = getNextRank(gameState.xp);
+        const completedMissions = getCompletedMissionCount();
+
+        if (rankNode) {
+          rankNode.textContent = `Rango: ${rank.label}`;
+        }
+        if (xpNode) {
+          xpNode.textContent = `XP: ${gameState.xp}`;
+        }
+        if (missionNode) {
+          missionNode.textContent = `Misiones: ${completedMissions}/${MISSIONS.length}`;
+        }
+        if (noteNode) {
+          noteNode.textContent = gameState.eventNote || "Completa misiones para desbloquear logros.";
+        }
+
+        if (xpFill) {
+          let progress = 100;
+          if (nextRank) {
+            const span = nextRank.minXP - rank.minXP;
+            const completed = gameState.xp - rank.minXP;
+            progress = span > 0 ? (completed / span) * 100 : 100;
+          }
+          xpFill.style.width = `${Math.max(4, Math.min(100, progress))}%`;
+        }
+
+        if (missionListNode) {
+          missionListNode.innerHTML = MISSIONS.map((mission) => {
+            const done = Boolean(gameState.completedMissions[mission.id]);
+            return `
+              <div class="mission-item ${done ? "done" : ""}">
+                <span>${done ? "Lista" : "Pendiente"}: ${escapeForHTML(mission.label)}</span>
+                <strong>${mission.xp} XP</strong>
+              </div>
+            `;
+          }).join("");
+        }
+
+        if (badgeNode) {
+          const badges = Object.values(gameState.badges || {});
+          badgeNode.innerHTML = badges.length
+            ? badges.map((label) => `<span class="badge-chip">${escapeForHTML(label)}</span>`).join("")
+            : `<span class="badge-chip empty">Sin logros todavia</span>`;
+        }
+      }
+
+      function awardXP(amount, reason) {
+        const points = clampToNonNegativeNumber(Number(amount));
+        if (!points) return;
+
+        const rankBefore = getRankByXP(gameState.xp);
+        gameState.xp += points;
+        const rankAfter = getRankByXP(gameState.xp);
+
+        if (rankAfter.label !== rankBefore.label) {
+          gameState.eventNote = `Subiste de nivel: ${rankAfter.label} (+${points} XP).`;
+          flashRankPill();
+        } else {
+          gameState.eventNote = `+${points} XP: ${reason}`;
+        }
+
+        saveGameState();
+        updateGameUI();
+      }
+
+      function completeMission(id, reasonOverride = "") {
+        const mission = MISSIONS.find((item) => item.id === id);
+        if (!mission) return false;
+        if (gameState.completedMissions[id]) return false;
+
+        gameState.completedMissions[id] = true;
+        awardXP(mission.xp, reasonOverride || mission.label);
+        gameState.eventNote = `Mision completada: ${mission.label}`;
+        saveGameState();
+        updateGameUI();
+        return true;
+      }
+
+      function unlockBadge(id, label) {
+        if (!id || !label) return false;
+        if (gameState.badges[id]) return false;
+        gameState.badges[id] = label;
+        gameState.eventNote = `Logro desbloqueado: ${label}`;
+        saveGameState();
+        updateGameUI();
+        return true;
+      }
+
+      function evaluateDraftMissions() {
+        const payload = getPayload();
+        const filledSections = Object.values(payload.sections || {}).filter(Boolean).length;
+
+        if (filledSections === 4) {
+          completeMission("full_pera");
+        }
+
+        if (payload?.settings?.audience) {
+          completeMission("audience_set");
+        }
+      }
+
+      function evaluateAnalysisMissions(analysis) {
+        const scores = analysis?.scores || {};
+        const clarity = Number(scores.clarity || 0);
+        const actionability = Number(scores.actionability || 0);
+        const coherence = Number(scores.coherence || 0);
+        const persuasion = Number(scores.persuasion || 0);
+
+        completeMission("first_analysis");
+        if (clarity >= 80) completeMission("clarity_80");
+        if (actionability >= 80) completeMission("actionability_80");
+
+        const currentAverage = (clarity + coherence + persuasion + actionability) / 4;
+        if (currentAverage > gameState.bestOverallScore) {
+          const delta = currentAverage - gameState.bestOverallScore;
+          gameState.bestOverallScore = currentAverage;
+          if (delta >= 5) {
+            awardXP(10, `mejora de ${Math.round(delta)} puntos promedio`);
+          }
+        }
+
+        if (currentAverage >= 85) {
+          unlockBadge("gold_script", "Guion de Oro");
+        }
+
+        if (getCompletedMissionCount() === MISSIONS.length) {
+          unlockBadge("mission_master", "Master de Misiones");
+        }
+
+        saveGameState();
+        updateGameUI();
       }
 
       function saveIterationState() {
@@ -842,6 +1502,7 @@
         const dailyNode = document.getElementById("dailyUsageCounter");
         const analyzeButton = document.getElementById("analyzeBtn");
         const limitReached = dailyUsageCount >= dailyLimit;
+        const flowReady = isGuidedFlowComplete();
 
         if (messageNode) {
           messageNode.textContent = `Iteraciones del mensaje: ${messageIterations}`;
@@ -853,8 +1514,14 @@
         }
 
         if (analyzeButton && analyzeButton.textContent !== "Analizando...") {
-          analyzeButton.disabled = limitReached;
-          analyzeButton.textContent = limitReached ? "Limite diario alcanzado" : "Analizar con IA";
+          analyzeButton.disabled = limitReached || !flowReady;
+          if (limitReached) {
+            analyzeButton.textContent = "Limite diario alcanzado";
+          } else if (!flowReady) {
+            analyzeButton.textContent = "Completa pasos para analizar";
+          } else {
+            analyzeButton.textContent = "Analizar con IA";
+          }
         }
       }
 
@@ -1012,6 +1679,7 @@
         node.innerHTML = script
           ? escapeForHTML(script)
           : "Escribe arriba para ver tu guion PERA aqui.";
+        updateGuidedFlow();
       }
 
       function setAnalysisStatus(text, isError = false) {
@@ -1040,6 +1708,7 @@
           const raw = localStorage.getItem(DRAFT_KEY);
           if (!raw) {
             applySettingsToForm(DEFAULT_SETTINGS);
+            evaluateDraftMissions();
             return;
           }
           const draft = JSON.parse(raw);
@@ -1050,6 +1719,7 @@
             document.getElementById("action-input").value = draft.sections.action || "";
           }
           applySettingsToForm(draft?.settings || DEFAULT_SETTINGS);
+          evaluateDraftMissions();
         } catch {
           try {
             localStorage.removeItem(DRAFT_KEY);
@@ -1057,6 +1727,7 @@
             // Ignore storage errors.
           }
           applySettingsToForm(DEFAULT_SETTINGS);
+          evaluateDraftMissions();
         }
       }
 
@@ -1155,6 +1826,9 @@
 
           <p><strong>Siguiente paso recomendado:</strong> ${escapeForHTML(analysis?.next_step || "No especificado")}</p>
         `;
+
+        awardXP(4, "iteracion analizada");
+        evaluateAnalysisMissions(analysis);
       }
 
       function renderSectionCard(field, label, data) {
@@ -1174,10 +1848,12 @@
 
       async function analyzeWithAI() {
         const payload = getPayload();
-        const hasContent = Object.values(payload.sections).some(Boolean);
-
-        if (!hasContent) {
-          setAnalysisStatus("Completa al menos una seccion antes de analizar.", true);
+        if (!isGuidedFlowComplete()) {
+          setAnalysisStatus(
+            "Completa los 4 pasos (Punto, Ejemplo, Razones y Accion) para analizar.",
+            true,
+          );
+          updateGuidedFlow();
           return;
         }
 
@@ -1241,6 +1917,7 @@
         node.addEventListener("input", () => {
           updateGenerated();
           saveDraft();
+          evaluateDraftMissions();
         });
       });
 
@@ -1260,10 +1937,24 @@
 
         const rewrite = latestRewrites[field];
         if (!rewrite || !map[field]) return;
+        const inputNode = document.getElementById(map[field]);
+        const currentValue = inputNode.value.trim();
+        if (currentValue === rewrite.trim()) return;
 
-        document.getElementById(map[field]).value = rewrite;
+        inputNode.value = rewrite;
+        gameState.appliedSuggestions += 1;
+        awardXP(6, "sugerencia aplicada");
+        if (gameState.appliedSuggestions >= 2) {
+          completeMission("apply_two_rewrites");
+        }
+        if (gameState.appliedSuggestions >= 4) {
+          unlockBadge("precision_editor", "Editor de Precision");
+        }
+        saveGameState();
+
         updateGenerated();
         saveDraft();
+        evaluateDraftMissions();
       });
 
       document.getElementById("clearBtn").addEventListener("click", () => {
@@ -1286,6 +1977,7 @@
 
         updateGenerated();
         setAnalysisStatus("Formulario reseteado.");
+        evaluateDraftMissions();
         checkBackendHealth();
       });
 
@@ -1298,6 +1990,9 @@
         a.download = "mensaje-pera.txt";
         a.click();
         URL.revokeObjectURL(url);
+
+        completeMission("export_message");
+        unlockBadge("publisher_ready", "Mensaje Publicable");
       });
 
       document.getElementById("pdfBtn").addEventListener("click", () => {
@@ -1330,15 +2025,25 @@
 
         win.document.write(html);
         win.document.close();
+
+        completeMission("export_message");
+        unlockBadge("publisher_ready", "Mensaje Publicable");
       });
 
+      document.getElementById("resetGameBtn").addEventListener("click", () => {
+        const confirmed = window.confirm(
+          "Se reiniciaran rango, XP, misiones y logros. Quieres continuar?",
+        );
+        if (!confirmed) return;
+        gameState = createDefaultGameState();
+        saveGameState();
+        updateGameUI();
+      });
+
+      loadGameState();
       loadDraft();
       loadIterationState();
       updateGenerated();
-      document.getElementById("analyzeBtn").disabled = !canUseAI();
-      document.getElementById("analyzeBtn").textContent = canUseAI()
-        ? "Analizar con IA"
-        : "Limite diario alcanzado";
       checkBackendHealth();
     </script>
   </body>
