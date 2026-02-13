@@ -135,6 +135,10 @@ function buildPrompt(payload) {
     `- Audiencia: ${normalizeInput(settings.audience) || "general"}`,
     `- Canal: ${normalizeInput(settings.channel) || "presentacion"}`,
     `- Longitud: ${normalizeInput(settings.length) || "media"}`,
+    `- Industria: ${normalizeInput(settings.industry) || "general"}`,
+    `- Urgencia: ${normalizeInput(settings.urgency) || "media"}`,
+    `- Estilo argumentativo: ${normalizeInput(settings.argument_style) || "balanceado"}`,
+    `- Tipo de llamada a la accion: ${normalizeInput(settings.cta_type) || "directa"}`,
     "",
     "CONTENIDO PERA:",
     `Punto: ${normalizeInput(sections.point) || "(vacio)"}`,
@@ -217,6 +221,10 @@ function sanitizePayload(body) {
       audience: normalizeInput(settings.audience),
       channel: normalizeInput(settings.channel),
       length: normalizeInput(settings.length),
+      industry: normalizeInput(settings.industry),
+      urgency: normalizeInput(settings.urgency),
+      argument_style: normalizeInput(settings.argument_style),
+      cta_type: normalizeInput(settings.cta_type),
     },
   };
 }

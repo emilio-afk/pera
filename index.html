@@ -106,8 +106,74 @@
       }
 
       .message-builder {
+        margin-bottom: 1.8rem;
+      }
+
+      .section-block {
+        background: var(--white);
+        border: 2px solid var(--border);
+        border-radius: 14px;
+        padding: 22px;
+        margin-bottom: 1.4rem;
+      }
+
+      .section-heading {
+        color: var(--primary);
+        font-size: 1.35rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .section-subtitle {
+        color: var(--muted);
+        margin-bottom: 1rem;
+        font-size: 0.95rem;
+      }
+
+      .construction-grid {
         display: grid;
-        gap: 1.5rem;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        border: 2px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+      }
+
+      .construction-cell {
+        padding: 16px;
+        background: #f8fbff;
+      }
+
+      .construction-cell:nth-child(odd) {
+        border-right: 2px solid var(--border);
+      }
+
+      .construction-cell:nth-child(-n + 2) {
+        border-bottom: 2px solid var(--border);
+      }
+
+      @media (max-width: 768px) {
+        .construction-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .construction-cell:nth-child(odd) {
+          border-right: none;
+        }
+
+        .construction-cell:nth-child(-n + 2),
+        .construction-cell:nth-child(3) {
+          border-bottom: 2px solid var(--border);
+        }
+      }
+
+      .message-builder .input-group textarea {
+        background: var(--white);
+        min-height: 130px;
+      }
+
+      .fine-tuning-grid {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         margin-bottom: 1.5rem;
       }
 
@@ -137,28 +203,16 @@
         resize: vertical;
       }
 
-      .options-grid {
-        display: grid;
-        gap: 1rem;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-
       @media (max-width: 1024px) {
-        .options-grid {
+        .fine-tuning-grid {
           grid-template-columns: repeat(2, minmax(0, 1fr));
         }
       }
 
       @media (max-width: 768px) {
-        .options-grid {
+        .fine-tuning-grid {
           grid-template-columns: 1fr;
         }
-      }
-
-      .section-title {
-        font-size: 1.1rem;
-        color: var(--primary);
-        font-weight: 700;
       }
 
       .actions-row {
@@ -370,95 +424,151 @@
         <p>Domina el arte de comunicar con eficacia e inspiracion</p>
       </div>
 
-      <div class="message-builder">
-        <div class="input-group">
-          <label>Punto</label>
-          <textarea
-            id="point-input"
-            placeholder="Escribe tu punto..."
-          ></textarea>
+      <section class="section-block message-builder">
+        <h2 class="section-heading">Seccion de Construccion</h2>
+        <p class="section-subtitle">
+          Estructura tu mensaje en tabla 2x2: Punto, Ejemplo, Razones y Accion.
+        </p>
+        <div class="construction-grid">
+          <div class="construction-cell">
+            <div class="input-group">
+              <label>Punto</label>
+              <textarea
+                id="point-input"
+                placeholder="Escribe tu punto..."
+              ></textarea>
+            </div>
+          </div>
+          <div class="construction-cell">
+            <div class="input-group">
+              <label>Ejemplo</label>
+              <textarea
+                id="example-input"
+                placeholder="Cuenta tu ejemplo..."
+              ></textarea>
+            </div>
+          </div>
+          <div class="construction-cell">
+            <div class="input-group">
+              <label>Razones</label>
+              <textarea
+                id="reasons-input"
+                placeholder="Explica las razones..."
+              ></textarea>
+            </div>
+          </div>
+          <div class="construction-cell">
+            <div class="input-group">
+              <label>Accion</label>
+              <textarea
+                id="action-input"
+                placeholder="Indica la accion..."
+              ></textarea>
+            </div>
+          </div>
         </div>
-        <div class="input-group">
-          <label>Ejemplo</label>
-          <textarea
-            id="example-input"
-            placeholder="Cuenta tu ejemplo..."
-          ></textarea>
-        </div>
-        <div class="input-group">
-          <label>Razones</label>
-          <textarea
-            id="reasons-input"
-            placeholder="Explica las razones..."
-          ></textarea>
-        </div>
-        <div class="input-group">
-          <label>Accion</label>
-          <textarea
-            id="action-input"
-            placeholder="Indica la accion..."
-          ></textarea>
-        </div>
-      </div>
+      </section>
 
-      <h2 class="section-title">Preferencias de IA</h2>
-      <div class="options-grid">
-        <div class="input-group">
-          <label>Tono</label>
-          <select id="tone-select">
-            <option value="formal">Formal</option>
-            <option value="informal">Informal</option>
-            <option value="inspirador">Inspirador</option>
-            <option value="directo">Directo</option>
-            <option value="tecnico">Tecnico</option>
-            <option value="empatico">Empatico</option>
-          </select>
+      <section class="section-block">
+        <h2 class="section-heading">Seccion de Fine Tuning</h2>
+        <p class="section-subtitle">
+          Ajusta el estilo y contexto para darle mejores pistas a la IA.
+        </p>
+        <div class="fine-tuning-grid">
+          <div class="input-group">
+            <label>Tono</label>
+            <select id="tone-select">
+              <option value="formal">Formal</option>
+              <option value="informal">Informal</option>
+              <option value="inspirador">Inspirador</option>
+              <option value="directo">Directo</option>
+              <option value="tecnico">Tecnico</option>
+              <option value="empatico">Empatico</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Nivel de formalidad</label>
+            <select id="formality-select">
+              <option value="alto">Alto</option>
+              <option value="medio" selected>Medio</option>
+              <option value="bajo">Bajo</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Objetivo</label>
+            <select id="objective-select">
+              <option value="informar">Informar</option>
+              <option value="persuadir">Persuadir</option>
+              <option value="motivar">Motivar</option>
+              <option value="vender">Vender</option>
+              <option value="educar">Educar</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Audiencia</label>
+            <input
+              id="audience-input"
+              type="text"
+              placeholder="Ej: equipo comercial de Latam"
+            />
+          </div>
+          <div class="input-group">
+            <label>Canal</label>
+            <select id="channel-select">
+              <option value="presentacion">Presentacion</option>
+              <option value="reunion">Reunion</option>
+              <option value="email">Email</option>
+              <option value="mensaje_corto">Mensaje corto</option>
+              <option value="redes_sociales">Redes sociales</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Longitud</label>
+            <select id="length-select">
+              <option value="corta">Corta</option>
+              <option value="media" selected>Media</option>
+              <option value="larga">Larga</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Industria</label>
+            <select id="industry-select">
+              <option value="general" selected>General</option>
+              <option value="tecnologia">Tecnologia</option>
+              <option value="salud">Salud</option>
+              <option value="educacion">Educacion</option>
+              <option value="finanzas">Finanzas</option>
+              <option value="retail">Retail</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Nivel de urgencia</label>
+            <select id="urgency-select">
+              <option value="baja">Baja</option>
+              <option value="media" selected>Media</option>
+              <option value="alta">Alta</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Estilo argumentativo</label>
+            <select id="argument-style-select">
+              <option value="balanceado" selected>Balanceado</option>
+              <option value="datos">Basado en datos</option>
+              <option value="historia">Basado en historia</option>
+              <option value="autoridad">Basado en autoridad</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Tipo de llamada a la accion</label>
+            <select id="cta-type-select">
+              <option value="directa" selected>Directa</option>
+              <option value="suave">Suave</option>
+              <option value="paso_a_paso">Paso a paso</option>
+              <option value="fecha_limite">Con fecha limite</option>
+            </select>
+          </div>
         </div>
-        <div class="input-group">
-          <label>Nivel de formalidad</label>
-          <select id="formality-select">
-            <option value="alto">Alto</option>
-            <option value="medio" selected>Medio</option>
-            <option value="bajo">Bajo</option>
-          </select>
-        </div>
-        <div class="input-group">
-          <label>Objetivo</label>
-          <select id="objective-select">
-            <option value="informar">Informar</option>
-            <option value="persuadir">Persuadir</option>
-            <option value="motivar">Motivar</option>
-            <option value="vender">Vender</option>
-            <option value="educar">Educar</option>
-          </select>
-        </div>
-        <div class="input-group">
-          <label>Audiencia</label>
-          <input
-            id="audience-input"
-            type="text"
-            placeholder="Ej: equipo comercial de Latam"
-          />
-        </div>
-        <div class="input-group">
-          <label>Canal</label>
-          <select id="channel-select">
-            <option value="presentacion">Presentacion</option>
-            <option value="reunion">Reunion</option>
-            <option value="email">Email</option>
-            <option value="mensaje_corto">Mensaje corto</option>
-            <option value="redes_sociales">Redes sociales</option>
-          </select>
-        </div>
-        <div class="input-group">
-          <label>Longitud</label>
-          <select id="length-select">
-            <option value="corta">Corta</option>
-            <option value="media" selected>Media</option>
-            <option value="larga">Larga</option>
-          </select>
-        </div>
-      </div>
+      </section>
 
       <div class="actions-row">
         <button class="ai-btn" id="analyzeBtn">Analizar con IA</button>
@@ -467,21 +577,23 @@
         >
       </div>
 
-      <div class="generated-message">
-        <h3>Tu guion completo:</h3>
+      <section class="generated-message">
+        <h2 class="section-heading" style="color: white; margin-bottom: 0.5rem">
+          Tu guion completo
+        </h2>
         <div class="generated-content" id="generated-content">
           Escribe arriba para ver tu guion PERA aqui.
         </div>
-      </div>
+      </section>
 
-      <div class="ai-output">
-        <h3>Analisis IA</h3>
+      <section class="ai-output">
+        <h2 class="section-heading" style="margin-bottom: 0.2rem">Analisis IA</h2>
         <p class="helper-text" id="aiPlaceholder">
           Completa tu mensaje y presiona "Analizar con IA" para ver
           sugerencias.
         </p>
         <div id="aiResult"></div>
-      </div>
+      </section>
 
       <div class="pera-cards">
         <div class="pera-card">
@@ -552,6 +664,32 @@
         action: "",
       };
 
+      const DEFAULT_SETTINGS = {
+        tone: "formal",
+        formality: "medio",
+        objective: "informar",
+        audience: "",
+        channel: "presentacion",
+        length: "media",
+        industry: "general",
+        urgency: "media",
+        argument_style: "balanceado",
+        cta_type: "directa",
+      };
+
+      const SETTINGS_FIELD_MAP = {
+        tone: "tone-select",
+        formality: "formality-select",
+        objective: "objective-select",
+        audience: "audience-input",
+        channel: "channel-select",
+        length: "length-select",
+        industry: "industry-select",
+        urgency: "urgency-select",
+        argument_style: "argument-style-select",
+        cta_type: "cta-type-select",
+      };
+
       function buildApiBaseCandidates() {
         const { protocol, hostname, port } = window.location;
         if (protocol === "file:") return ["http://127.0.0.1:8787"];
@@ -612,6 +750,43 @@
         return [point, example, reasons, action].filter(Boolean).join("\n\n");
       }
 
+      function getSettingsFromForm() {
+        return {
+          tone: document.getElementById("tone-select").value,
+          formality: document.getElementById("formality-select").value,
+          objective: document.getElementById("objective-select").value,
+          audience: document.getElementById("audience-input").value.trim(),
+          channel: document.getElementById("channel-select").value,
+          length: document.getElementById("length-select").value,
+          industry: document.getElementById("industry-select").value,
+          urgency: document.getElementById("urgency-select").value,
+          argument_style: document.getElementById("argument-style-select").value,
+          cta_type: document.getElementById("cta-type-select").value,
+        };
+      }
+
+      function applySettingsToForm(settings = {}) {
+        const next = { ...DEFAULT_SETTINGS, ...settings };
+        Object.entries(SETTINGS_FIELD_MAP).forEach(([key, id]) => {
+          const node = document.getElementById(id);
+          if (!node) return;
+          node.value = next[key] ?? DEFAULT_SETTINGS[key];
+        });
+      }
+
+      function clearRewrites() {
+        latestRewrites.point = "";
+        latestRewrites.example = "";
+        latestRewrites.reasons = "";
+        latestRewrites.action = "";
+      }
+
+      function resetAnalysisUI() {
+        clearRewrites();
+        document.getElementById("aiResult").innerHTML = "";
+        document.getElementById("aiPlaceholder").style.display = "block";
+      }
+
       function getPayload() {
         return {
           sections: {
@@ -620,14 +795,7 @@
             reasons: document.getElementById("reasons-input").value.trim(),
             action: document.getElementById("action-input").value.trim(),
           },
-          settings: {
-            tone: document.getElementById("tone-select").value,
-            formality: document.getElementById("formality-select").value,
-            objective: document.getElementById("objective-select").value,
-            audience: document.getElementById("audience-input").value.trim(),
-            channel: document.getElementById("channel-select").value,
-            length: document.getElementById("length-select").value,
-          },
+          settings: getSettingsFromForm(),
         };
       }
 
@@ -663,7 +831,10 @@
       function loadDraft() {
         try {
           const raw = localStorage.getItem(DRAFT_KEY);
-          if (!raw) return;
+          if (!raw) {
+            applySettingsToForm(DEFAULT_SETTINGS);
+            return;
+          }
           const draft = JSON.parse(raw);
           if (draft?.sections) {
             document.getElementById("point-input").value = draft.sections.point || "";
@@ -671,20 +842,14 @@
             document.getElementById("reasons-input").value = draft.sections.reasons || "";
             document.getElementById("action-input").value = draft.sections.action || "";
           }
-          if (draft?.settings) {
-            document.getElementById("tone-select").value = draft.settings.tone || "formal";
-            document.getElementById("formality-select").value = draft.settings.formality || "medio";
-            document.getElementById("objective-select").value = draft.settings.objective || "informar";
-            document.getElementById("audience-input").value = draft.settings.audience || "";
-            document.getElementById("channel-select").value = draft.settings.channel || "presentacion";
-            document.getElementById("length-select").value = draft.settings.length || "media";
-          }
+          applySettingsToForm(draft?.settings || DEFAULT_SETTINGS);
         } catch {
           try {
             localStorage.removeItem(DRAFT_KEY);
           } catch {
             // Ignore storage errors.
           }
+          applySettingsToForm(DEFAULT_SETTINGS);
         }
       }
 
@@ -876,11 +1041,25 @@
       });
 
       document.getElementById("clearBtn").addEventListener("click", () => {
+        const confirmed = window.confirm(
+          "Se limpiara toda la construccion, el fine tuning y el analisis. Estas seguro?",
+        );
+        if (!confirmed) return;
+
         document.querySelectorAll("textarea").forEach((t) => (t.value = ""));
-        document.getElementById("audience-input").value = "";
+        applySettingsToForm(DEFAULT_SETTINGS);
+        resetAnalysisUI();
+        BACKEND_VERIFIED = false;
+
+        try {
+          localStorage.removeItem(DRAFT_KEY);
+        } catch {
+          // Ignore storage errors.
+        }
+
         updateGenerated();
-        saveDraft();
-        setAnalysisStatus("Formulario limpio.");
+        setAnalysisStatus("Formulario reseteado.");
+        checkBackendHealth();
       });
 
       document.getElementById("downloadBtn").addEventListener("click", () => {
