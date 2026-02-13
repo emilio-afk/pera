@@ -1,5 +1,10 @@
 const MAX_BODY_SIZE = 1_000_000;
 export const OPENAI_MODEL = process.env.OPENAI_MODEL || "gpt-4.1-mini";
+const parsedRateLimit = Number(process.env.RATE_LIMIT_PER_DAY || 12);
+export const RATE_LIMIT_PER_DAY = Number.isFinite(parsedRateLimit)
+  ? Math.max(1, Math.floor(parsedRateLimit))
+  : 12;
+const rateLimitStore = new Map();
 
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
@@ -32,6 +37,42 @@ export function methodNotAllowed() {
 
 export function normalizeInput(value) {
   return typeof value === "string" ? value.trim() : "";
+}
+
+function getTodayKey() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function getClientIdentifier(event) {
+  const headers = event?.headers || {};
+  const forwarded = headers["x-forwarded-for"] || headers["X-Forwarded-For"];
+  if (typeof forwarded === "string" && forwarded.trim()) {
+    return forwarded.split(",")[0].trim();
+  }
+  return "unknown";
+}
+
+export function consumeRateLimit(event) {
+  const key = `${getClientIdentifier(event)}:${getTodayKey()}`;
+  const current = rateLimitStore.get(key) || 0;
+
+  if (current >= RATE_LIMIT_PER_DAY) {
+    return {
+      allowed: false,
+      count: current,
+      limit: RATE_LIMIT_PER_DAY,
+      remaining: 0,
+    };
+  }
+
+  const next = current + 1;
+  rateLimitStore.set(key, next);
+  return {
+    allowed: true,
+    count: next,
+    limit: RATE_LIMIT_PER_DAY,
+    remaining: Math.max(0, RATE_LIMIT_PER_DAY - next),
+  };
 }
 
 export function parseJsonBody(event) {

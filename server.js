@@ -11,7 +11,12 @@ const HOST = process.env.HOST || "127.0.0.1";
 const PORT = Number(process.env.PORT || 8787);
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY || "";
 const OPENAI_MODEL = process.env.OPENAI_MODEL || "gpt-4.1-mini";
+const parsedRateLimit = Number(process.env.RATE_LIMIT_PER_DAY || 12);
+const RATE_LIMIT_PER_DAY = Number.isFinite(parsedRateLimit)
+  ? Math.max(1, Math.floor(parsedRateLimit))
+  : 12;
 const MAX_BODY_SIZE = 1_000_000;
+const rateLimitStore = new Map();
 
 const MIME_TYPES = {
   ".html": "text/html; charset=utf-8",
@@ -71,6 +76,41 @@ function sendText(res, status, text, contentType = "text/plain; charset=utf-8") 
 
 function normalizeInput(value) {
   return typeof value === "string" ? value.trim() : "";
+}
+
+function getTodayKey() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function getClientIdentifier(req) {
+  const forwarded = req.headers["x-forwarded-for"];
+  if (typeof forwarded === "string" && forwarded.trim()) {
+    return forwarded.split(",")[0].trim();
+  }
+  return req.socket?.remoteAddress || "unknown";
+}
+
+function consumeRateLimit(clientId) {
+  const key = `${clientId}:${getTodayKey()}`;
+  const current = rateLimitStore.get(key) || 0;
+
+  if (current >= RATE_LIMIT_PER_DAY) {
+    return {
+      allowed: false,
+      count: current,
+      limit: RATE_LIMIT_PER_DAY,
+      remaining: 0,
+    };
+  }
+
+  const next = current + 1;
+  rateLimitStore.set(key, next);
+  return {
+    allowed: true,
+    count: next,
+    limit: RATE_LIMIT_PER_DAY,
+    remaining: Math.max(0, RATE_LIMIT_PER_DAY - next),
+  };
 }
 
 function readBody(req) {
@@ -274,8 +314,30 @@ const server = http.createServer(async (req, res) => {
         return;
       }
 
+      const rate = consumeRateLimit(getClientIdentifier(req));
+
+      if (!rate.allowed) {
+        sendJson(res, 429, {
+          error: `Limite diario alcanzado (${rate.limit} analisis por cliente).`,
+          code: "rate_limit_exceeded",
+          usage: {
+            count: rate.count,
+            remaining: rate.remaining,
+            limit: rate.limit,
+          },
+        });
+        return;
+      }
+
       const analysis = await analyzeWithOpenAI(payload);
-      sendJson(res, 200, { analysis });
+      sendJson(res, 200, {
+        analysis,
+        usage: {
+          count: rate.count,
+          remaining: rate.remaining,
+          limit: rate.limit,
+        },
+      });
       return;
     } catch (error) {
       const message = error instanceof Error ? error.message : "Error interno.";
@@ -289,6 +351,7 @@ const server = http.createServer(async (req, res) => {
       ok: true,
       openaiConfigured: Boolean(OPENAI_API_KEY),
       model: OPENAI_MODEL,
+      rateLimitPerDay: RATE_LIMIT_PER_DAY,
     });
     return;
   }

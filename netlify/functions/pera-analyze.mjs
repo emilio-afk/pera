@@ -1,5 +1,6 @@
 import {
   analyzeWithOpenAI,
+  consumeRateLimit,
   hasAtLeastOneSection,
   methodNotAllowed,
   optionsResponse,
@@ -20,8 +21,28 @@ export async function handler(event) {
       return response(400, { error: "Debes completar al menos una seccion PERA." });
     }
 
+    const rate = consumeRateLimit(event);
+    if (!rate.allowed) {
+      return response(429, {
+        error: `Limite diario alcanzado (${rate.limit} analisis por cliente).`,
+        code: "rate_limit_exceeded",
+        usage: {
+          count: rate.count,
+          remaining: rate.remaining,
+          limit: rate.limit,
+        },
+      });
+    }
+
     const analysis = await analyzeWithOpenAI(payload);
-    return response(200, { analysis });
+    return response(200, {
+      analysis,
+      usage: {
+        count: rate.count,
+        remaining: rate.remaining,
+        limit: rate.limit,
+      },
+    });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Error interno.";
     return response(500, { error: message });

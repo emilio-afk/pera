@@ -8,6 +8,7 @@
 ## 2) Variables de entorno (Site settings -> Environment variables)
 - `OPENAI_API_KEY` = tu clave
 - `OPENAI_MODEL` = `gpt-4.1-mini` (opcional)
+- `RATE_LIMIT_PER_DAY` = `12` (opcional, para limitar analisis por cliente/dia)
 
 ## 3) Verificar config
 Este proyecto ya incluye:

@@ -1,4 +1,10 @@
-import { OPENAI_MODEL, methodNotAllowed, optionsResponse, response } from "./_shared.mjs";
+import {
+  OPENAI_MODEL,
+  RATE_LIMIT_PER_DAY,
+  methodNotAllowed,
+  optionsResponse,
+  response,
+} from "./_shared.mjs";
 
 export async function handler(event) {
   if (event.httpMethod === "OPTIONS") return optionsResponse();
@@ -9,5 +15,6 @@ export async function handler(event) {
     provider: "netlify-functions",
     openaiConfigured: Boolean(process.env.OPENAI_API_KEY),
     model: OPENAI_MODEL,
+    rateLimitPerDay: RATE_LIMIT_PER_DAY,
   });
 }

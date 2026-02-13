@@ -10,15 +10,27 @@
     />
     <style>
       :root {
-        --bg: #f4f4f4;
-        --text: #262626;
-        --muted: rgba(38, 38, 38, 0.65);
-        --border: rgba(11, 86, 198, 0.25);
-        --primary: #0b56c6;
-        --panel: #d5eafd;
-        --danger: #dc2626;
+        --blue-indigo: #011963;
+        --blue-atlantic: #0744a8;
+        --blue-cobalt: #0a56c6;
+        --green-emerald: #00492c;
+        --green-mint: #04a45a;
+        --orange-terracotta: #e05d2e;
+        --orange-coral: #f66d3a;
+        --pink-mist: #f3b1d7;
+        --graphite: #262626;
+        --bone: #f0f2da;
+        --pastel-yellow: #fdf48b;
+        --sky: #b9d6fe;
+        --bg: var(--bone);
+        --text: var(--graphite);
+        --muted: rgba(38, 38, 38, 0.72);
+        --border: rgba(1, 25, 99, 0.2);
+        --primary: var(--blue-indigo);
+        --panel: var(--sky);
+        --danger: var(--orange-terracotta);
         --white: #ffffff;
-        --success: #16a34a;
+        --success: var(--green-mint);
       }
 
       * {
@@ -33,7 +45,9 @@
           -apple-system,
           BlinkMacSystemFont,
           sans-serif;
-        background: var(--bg);
+        background:
+          radial-gradient(circle at 15% 10%, rgba(243, 177, 215, 0.22), transparent 35%),
+          linear-gradient(145deg, var(--bg), var(--sky));
         color: var(--text);
         line-height: 1.6;
         padding: 20px;
@@ -59,32 +73,46 @@
         font-size: 0.9rem;
         cursor: pointer;
         transition: all 0.3s ease;
-        box-shadow: 0 2px 10px rgba(11, 86, 198, 0.25);
+        box-shadow: 0 8px 20px rgba(1, 25, 99, 0.25);
         min-width: 120px;
       }
 
       .control-btn:hover {
-        background: #0845a2;
+        background: var(--blue-atlantic);
         transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(11, 86, 198, 0.35);
+        box-shadow: 0 10px 20px rgba(7, 68, 168, 0.35);
+      }
+
+      #clearBtn {
+        background: var(--orange-terracotta);
+      }
+
+      #clearBtn:hover {
+        background: var(--orange-coral);
+      }
+
+      #pdfBtn {
+        background: var(--blue-cobalt);
       }
 
       .download-btn {
-        background: #22c55e;
+        background: var(--green-mint);
       }
 
       .download-btn:hover {
-        background: #16a34a;
-        box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+        background: var(--green-emerald);
+        box-shadow: 0 4px 15px rgba(4, 164, 90, 0.4);
       }
 
       .container {
         max-width: 1200px;
         margin: 0 auto;
-        background: var(--panel);
-        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.86);
+        border: 1px solid rgba(1, 25, 99, 0.15);
+        backdrop-filter: blur(4px);
+        border-radius: 16px;
         padding: 40px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 16px 40px rgba(1, 25, 99, 0.12);
       }
 
       .header {
@@ -97,6 +125,7 @@
         font-weight: 700;
         color: var(--primary);
         margin-bottom: 10px;
+        letter-spacing: 0.02em;
       }
 
       .header p {
@@ -110,11 +139,12 @@
       }
 
       .section-block {
-        background: var(--white);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(240, 242, 218, 0.72));
         border: 2px solid var(--border);
         border-radius: 14px;
         padding: 22px;
         margin-bottom: 1.4rem;
+        box-shadow: 0 10px 24px rgba(1, 25, 99, 0.08);
       }
 
       .section-heading {
@@ -139,7 +169,19 @@
 
       .construction-cell {
         padding: 16px;
-        background: #f8fbff;
+        background: rgba(255, 255, 255, 0.84);
+      }
+
+      .construction-cell:nth-child(2) {
+        background: rgba(185, 214, 254, 0.33);
+      }
+
+      .construction-cell:nth-child(3) {
+        background: rgba(240, 242, 218, 0.88);
+      }
+
+      .construction-cell:nth-child(4) {
+        background: rgba(246, 109, 58, 0.1);
       }
 
       .construction-cell:nth-child(odd) {
@@ -225,17 +267,49 @@
 
       .ai-btn {
         border: none;
-        background: var(--primary);
+        background: linear-gradient(135deg, var(--green-mint), var(--green-emerald));
         color: var(--white);
         font-weight: 700;
-        border-radius: 8px;
+        border-radius: 10px;
         padding: 12px 18px;
         cursor: pointer;
+        box-shadow: 0 10px 18px rgba(4, 164, 90, 0.28);
       }
 
       .ai-btn[disabled] {
         opacity: 0.65;
         cursor: not-allowed;
+      }
+
+      .iteration-panel {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .counter-pill {
+        display: inline-block;
+        border-radius: 999px;
+        padding: 6px 12px;
+        font-size: 0.86rem;
+        font-weight: 700;
+        background: rgba(1, 25, 99, 0.12);
+        color: var(--blue-indigo);
+      }
+
+      .counter-pill.secondary {
+        background: rgba(4, 164, 90, 0.15);
+        color: var(--green-emerald);
+      }
+
+      .counter-pill.limit {
+        background: rgba(224, 93, 46, 0.18);
+        color: var(--orange-terracotta);
+      }
+
+      #analysisStatus {
+        flex-basis: 100%;
       }
 
       .helper-text {
@@ -244,7 +318,7 @@
       }
 
       .generated-message {
-        background: var(--primary);
+        background: linear-gradient(135deg, var(--blue-indigo), var(--blue-atlantic));
         border-radius: 12px;
         padding: 24px;
         margin-top: 12px;
@@ -257,11 +331,13 @@
         padding: 16px;
         color: var(--text);
         min-height: 50px;
+        border: 1px solid rgba(255, 255, 255, 0.35);
       }
 
       .ai-output {
         background: var(--white);
         border: 2px solid var(--border);
+        border-top: 6px solid var(--orange-coral);
         border-radius: 12px;
         padding: 24px;
         margin: 1.5rem 0 2rem;
@@ -280,7 +356,7 @@
       }
 
       .score-item {
-        background: var(--panel);
+        background: rgba(185, 214, 254, 0.35);
         border-radius: 10px;
         padding: 0.7rem;
       }
@@ -316,20 +392,24 @@
       }
 
       .feedback-rewrite {
-        background: var(--panel);
+        background: rgba(253, 244, 139, 0.36);
         border-radius: 8px;
         padding: 0.7rem;
         margin: 0.6rem 0;
       }
 
       .mini-btn {
-        border: 1px solid var(--primary);
-        color: var(--primary);
+        border: 1px solid var(--blue-atlantic);
+        color: var(--blue-atlantic);
         background: transparent;
         border-radius: 8px;
         padding: 7px 10px;
         cursor: pointer;
         font-weight: 600;
+      }
+
+      .mini-btn:hover {
+        background: rgba(7, 68, 168, 0.08);
       }
 
       .alternatives {
@@ -359,6 +439,7 @@
         border: 2px solid var(--border);
         border-radius: 16px;
         padding: 24px;
+        box-shadow: 0 8px 20px rgba(1, 25, 99, 0.07);
       }
 
       .card-letter {
@@ -381,8 +462,8 @@
       }
 
       .card-example {
-        background: var(--panel);
-        border-left: 4px solid var(--primary);
+        background: rgba(185, 214, 254, 0.26);
+        border-left: 4px solid var(--orange-terracotta);
         padding: 1rem;
         border-radius: 8px;
         font-style: italic;
@@ -392,7 +473,7 @@
         position: fixed;
         bottom: 20px;
         right: 20px;
-        background: var(--success);
+        background: linear-gradient(135deg, var(--green-mint), var(--green-emerald));
         color: var(--white);
         padding: 10px 20px;
         border-radius: 8px;
@@ -572,6 +653,14 @@
 
       <div class="actions-row">
         <button class="ai-btn" id="analyzeBtn">Analizar con IA</button>
+        <div class="iteration-panel">
+          <span class="counter-pill" id="messageIterationCounter">
+            Iteraciones del mensaje: 0
+          </span>
+          <span class="counter-pill secondary" id="dailyUsageCounter">
+            Uso IA hoy: 0/12
+          </span>
+        </div>
         <span class="helper-text" id="analysisStatus"
           >La IA evaluara claridad, coherencia, persuasion y accionabilidad.</span
         >
@@ -652,10 +741,15 @@
 
     <script>
       const DRAFT_KEY = "pera_draft_v1";
+      const ITERATION_KEY = "pera_iteration_state_v1";
+      const DEFAULT_DAILY_LIMIT = 12;
       const LOCAL_HOSTS = new Set(["localhost", "127.0.0.1", "::1"]);
       const API_BASE_CANDIDATES = buildApiBaseCandidates();
       let ACTIVE_API_BASE = API_BASE_CANDIDATES[0] || "";
       let BACKEND_VERIFIED = false;
+      let dailyLimit = DEFAULT_DAILY_LIMIT;
+      let messageIterations = 0;
+      let dailyUsageCount = 0;
 
       const latestRewrites = {
         point: "",
@@ -689,6 +783,113 @@
         argument_style: "argument-style-select",
         cta_type: "cta-type-select",
       };
+
+      function getTodayKey() {
+        return new Date().toISOString().slice(0, 10);
+      }
+
+      function clampToNonNegativeNumber(value) {
+        if (!Number.isFinite(value)) return 0;
+        return Math.max(0, Math.floor(value));
+      }
+
+      function saveIterationState() {
+        try {
+          localStorage.setItem(
+            ITERATION_KEY,
+            JSON.stringify({
+              date: getTodayKey(),
+              messageIterations,
+              dailyUsageCount,
+            }),
+          );
+        } catch {
+          // Ignore storage errors.
+        }
+      }
+
+      function loadIterationState() {
+        const today = getTodayKey();
+        try {
+          const raw = localStorage.getItem(ITERATION_KEY);
+          if (!raw) {
+            messageIterations = 0;
+            dailyUsageCount = 0;
+            updateIterationUI();
+            return;
+          }
+
+          const parsed = JSON.parse(raw);
+          if (parsed?.date !== today) {
+            messageIterations = 0;
+            dailyUsageCount = 0;
+            saveIterationState();
+            updateIterationUI();
+            return;
+          }
+
+          messageIterations = clampToNonNegativeNumber(Number(parsed?.messageIterations));
+          dailyUsageCount = clampToNonNegativeNumber(Number(parsed?.dailyUsageCount));
+        } catch {
+          messageIterations = 0;
+          dailyUsageCount = 0;
+        }
+        updateIterationUI();
+      }
+
+      function updateIterationUI() {
+        const messageNode = document.getElementById("messageIterationCounter");
+        const dailyNode = document.getElementById("dailyUsageCounter");
+        const analyzeButton = document.getElementById("analyzeBtn");
+        const limitReached = dailyUsageCount >= dailyLimit;
+
+        if (messageNode) {
+          messageNode.textContent = `Iteraciones del mensaje: ${messageIterations}`;
+        }
+
+        if (dailyNode) {
+          dailyNode.textContent = `Uso IA hoy: ${dailyUsageCount}/${dailyLimit}`;
+          dailyNode.classList.toggle("limit", limitReached);
+        }
+
+        if (analyzeButton && analyzeButton.textContent !== "Analizando...") {
+          analyzeButton.disabled = limitReached;
+          analyzeButton.textContent = limitReached ? "Limite diario alcanzado" : "Analizar con IA";
+        }
+      }
+
+      function canUseAI() {
+        return dailyUsageCount < dailyLimit;
+      }
+
+      function registerAIIteration() {
+        messageIterations += 1;
+        dailyUsageCount += 1;
+        saveIterationState();
+        updateIterationUI();
+      }
+
+      function resetMessageIterations() {
+        messageIterations = 0;
+        saveIterationState();
+        updateIterationUI();
+      }
+
+      function syncUsageFromServer(usage) {
+        const serverCount = Number(usage?.count);
+        const serverLimit = Number(usage?.limit);
+
+        if (Number.isFinite(serverLimit) && serverLimit > 0) {
+          dailyLimit = Math.floor(serverLimit);
+        }
+
+        if (Number.isFinite(serverCount) && serverCount >= 0) {
+          dailyUsageCount = clampToNonNegativeNumber(serverCount);
+        }
+
+        saveIterationState();
+        updateIterationUI();
+      }
 
       function buildApiBaseCandidates() {
         const { protocol, hostname, port } = window.location;
@@ -726,6 +927,12 @@
         const raw = error instanceof Error ? error.message : String(error || "");
         if (error?.name === "AbortError") {
           return "La solicitud tardo demasiado. Intenta de nuevo.";
+        }
+        if (/insufficient_quota|quota/i.test(raw)) {
+          return "Tu cuenta OpenAI no tiene saldo/cupo disponible.";
+        }
+        if (/rate_limit|limite diario/i.test(raw)) {
+          return raw;
         }
         if (/Failed to fetch|NetworkError|Load failed|fetch/i.test(raw)) {
           return "No hay conexion con el backend IA. Si es local, ejecuta npm start. Si es Netlify, revisa redirects y variables.";
@@ -861,6 +1068,10 @@
             if (!response.ok) throw new Error("health check failed");
 
             ACTIVE_API_BASE = base;
+            if (Number.isFinite(Number(data?.rateLimitPerDay)) && Number(data.rateLimitPerDay) > 0) {
+              dailyLimit = Math.floor(Number(data.rateLimitPerDay));
+              updateIterationUI();
+            }
 
             if (!data?.openaiConfigured) {
               BACKEND_VERIFIED = false;
@@ -872,7 +1083,9 @@
             }
 
             BACKEND_VERIFIED = true;
-            setAnalysisStatus(`Backend IA conectado (${describeApiBase(base)}). Listo para analizar.`);
+            setAnalysisStatus(
+              `Backend IA conectado (${describeApiBase(base)}). Limite diario: ${dailyLimit}.`,
+            );
             return true;
           } catch {
             // Try next candidate.
@@ -968,6 +1181,15 @@
           return;
         }
 
+        if (!canUseAI()) {
+          setAnalysisStatus(
+            `Llegaste al limite diario de ${dailyLimit} analisis. Se reinicia manana.`,
+            true,
+          );
+          updateIterationUI();
+          return;
+        }
+
         const button = document.getElementById("analyzeBtn");
         button.disabled = true;
         button.textContent = "Analizando...";
@@ -977,6 +1199,7 @@
           const backendReady = await ensureBackendReady();
           if (!backendReady) return;
 
+          registerAIIteration();
           setAnalysisStatus("Analizando tu guion con IA...");
 
           const response = await fetchWithTimeout(
@@ -997,6 +1220,8 @@
             data = {};
           }
 
+          syncUsageFromServer(data?.usage);
+
           if (!response.ok) {
             throw new Error(data?.error || "No se pudo obtener analisis.");
           }
@@ -1006,8 +1231,9 @@
         } catch (error) {
           setAnalysisStatus(getFriendlyAnalyzeError(error), true);
         } finally {
-          button.disabled = false;
-          button.textContent = "Analizar con IA";
+          button.disabled = !canUseAI();
+          button.textContent = canUseAI() ? "Analizar con IA" : "Limite diario alcanzado";
+          updateIterationUI();
         }
       }
 
@@ -1042,13 +1268,14 @@
 
       document.getElementById("clearBtn").addEventListener("click", () => {
         const confirmed = window.confirm(
-          "Se limpiara toda la construccion, el fine tuning y el analisis. Estas seguro?",
+          "Se limpiara toda la construccion, el fine tuning y el analisis. Las iteraciones diarias no se reinician. Estas seguro?",
         );
         if (!confirmed) return;
 
         document.querySelectorAll("textarea").forEach((t) => (t.value = ""));
         applySettingsToForm(DEFAULT_SETTINGS);
         resetAnalysisUI();
+        resetMessageIterations();
         BACKEND_VERIFIED = false;
 
         try {
@@ -1106,7 +1333,12 @@
       });
 
       loadDraft();
+      loadIterationState();
       updateGenerated();
+      document.getElementById("analyzeBtn").disabled = !canUseAI();
+      document.getElementById("analyzeBtn").textContent = canUseAI()
+        ? "Analizar con IA"
+        : "Limite diario alcanzado";
       checkBackendHealth();
     </script>
   </body>
