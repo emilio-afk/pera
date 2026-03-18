@@ -181,73 +181,180 @@ function buildPrompt(payload) {
   const sections = payload.sections || {};
   const settings = payload.settings || {};
 
-  return [
-    "Analiza y mejora este mensaje PERA en espanol.",
-    "Devuelve solo JSON valido sin markdown.",
-    "",
-    "CONFIGURACION:",
-    `- Tono: ${normalizeInput(settings.tone) || "formal"}`,
-    `- Formalidad: ${normalizeInput(settings.formality) || "medio"}`,
-    `- Objetivo: ${normalizeInput(settings.objective) || "informar"}`,
-    `- Audiencia: ${normalizeInput(settings.audience) || "general"}`,
-    `- Canal: ${normalizeInput(settings.channel) || "presentacion"}`,
-    `- Longitud: ${normalizeInput(settings.length) || "media"}`,
-    `- Industria: ${normalizeInput(settings.industry) || "general"}`,
-    `- Urgencia: ${normalizeInput(settings.urgency) || "media"}`,
-    `- Estilo argumentativo: ${normalizeInput(settings.argument_style) || "balanceado"}`,
-    `- Tipo de llamada a la accion: ${normalizeInput(settings.cta_type) || "directa"}`,
-    "",
-    "CONTENIDO PERA:",
-    `Punto: ${normalizeInput(sections.point) || "(vacio)"}`,
-    `Ejemplo: ${normalizeInput(sections.example) || "(vacio)"}`,
-    `Razones: ${normalizeInput(sections.reasons) || "(vacio)"}`,
-    `Accion: ${normalizeInput(sections.action) || "(vacio)"}`,
-    "",
-    "JSON OBJETIVO:",
-    '{"summary":"","scores":{"clarity":0,"coherence":0,"persuasion":0,"actionability":0},"section_feedback":{"point":{"diagnosis":"","suggestion":"","rewrite":""},"example":{"diagnosis":"","suggestion":"","rewrite":""},"reasons":{"diagnosis":"","suggestion":"","rewrite":""},"action":{"diagnosis":"","suggestion":"","rewrite":""}},"full_rewrite":"","alternatives":[{"label":"","text":""},{"label":"","text":""},{"label":"","text":""}],"next_step":""}',
-    "",
-    "Reglas:",
-    "1) Puntajes entre 0 y 100.",
-    "2) Reescrituras concisas y accionables.",
-    "3) alternativas diferentes entre si.",
-    "4) Mantener coherencia con tono, formalidad y objetivo.",
-  ].join("\n");
+  const tone        = normalizeInput(settings.tone)           || "formal";
+  const formality   = normalizeInput(settings.formality)      || "medio";
+  const objective   = normalizeInput(settings.objective)      || "informar";
+  const audience    = normalizeInput(settings.audience)       || "audiencia general";
+  const channel     = normalizeInput(settings.channel)        || "presentacion";
+  const length      = normalizeInput(settings.length)         || "media";
+  const industry    = normalizeInput(settings.industry)       || "general";
+  const urgency     = normalizeInput(settings.urgency)        || "media";
+  const argStyle    = normalizeInput(settings.argument_style) || "balanceado";
+  const ctaType     = normalizeInput(settings.cta_type)       || "directa";
+
+  const point   = normalizeInput(sections.point)   || "(vacio)";
+  const example = normalizeInput(sections.example) || "(vacio)";
+  const reasons = normalizeInput(sections.reasons) || "(vacio)";
+  const action  = normalizeInput(sections.action)  || "(vacio)";
+
+  return `Eres el ultimo revisor de este mensaje PERA antes de que llegue a su audiencia. Tu trabajo es diagnosticar con precision y proponer mejoras que eleven el impacto real del mensaje.
+
+=== CONTEXTO DE ENTREGA ===
+- Objetivo comunicacional: ${objective}
+- Audiencia especifica: ${audience}
+- Canal de entrega: ${channel}
+- Tono deseado: ${tone}
+- Nivel de formalidad: ${formality}
+- Longitud esperada: ${length}
+- Industria / contexto: ${industry}
+- Nivel de urgencia: ${urgency}
+- Estilo argumentativo: ${argStyle}
+- Tipo de CTA: ${ctaType}
+
+=== MENSAJE PERA A ANALIZAR ===
+[P] PUNTO — la idea central que debe recordar la audiencia:
+${point}
+
+[E] EJEMPLO — historia especifica que ilustra el Punto:
+${example}
+
+[R] RAZONES — datos, autoridad o logica que validan el Punto:
+${reasons}
+
+[A] ACCION — instruccion especifica: quien hace que y para cuando:
+${action}
+
+=== RUBRICA DE EVALUACION (sé honesto, diferencia los puntajes) ===
+
+CLARIDAD (0-100):
+- 90-100: Cada idea se entiende en una sola lectura; vocabulario perfecto para la audiencia y el canal.
+- 70-89: Ideas claras pero con alguna ambiguedad o termino innecesariamente complejo.
+- 50-69: Requiere releer alguna parte; hay oraciones largas o conceptos que se mezclan.
+- 0-49: Confuso, ambiguo o con jerga inapropiada para la audiencia.
+
+COHERENCIA (0-100):
+- 90-100: El hilo conductor es solido; P→E→R→A fluyen como un argumento unico y sin costuras.
+- 70-89: La estructura es visible pero algun bloque no conecta de forma natural con el anterior.
+- 50-69: Los bloques existen de forma aislada; no construyen juntos hacia un argumento.
+- 0-49: La estructura PERA no es perceptible; el mensaje parece desordenado o contradictorio.
+
+PERSUASION (0-100):
+- 90-100: Combina impacto emocional + evidencia racional de forma irresistible para esta audiencia concreta.
+- 70-89: Persuade, pero le falta fuerza en alguna dimension (emocional o racional).
+- 50-69: El argumento existe pero no genera urgencia ni tension; la audiencia puede ignorarlo.
+- 0-49: Debil, predecible o generico; no mueve a esta audiencia especifica.
+
+ACCIONABILIDAD (0-100):
+- 90-100: La accion es especifica (quien, que, cuando), alcanzable y con nivel de compromiso calibrado al canal.
+- 70-89: La accion es clara pero le falta especificidad o el nivel de compromiso no es optimo.
+- 50-69: Hay una peticion pero es vaga, muy grande o mal dimensionada para el contexto.
+- 0-49: No hay accion clara, o la accion pedida es irreal o desproporcionada.
+
+=== INSTRUCCIONES PARA EL ANALISIS ===
+1. DIAGNOSTICO: identifica el problema ESPECIFICO, no generalidades. Cita el texto exacto que falla si es posible.
+2. SUGERENCIA: propone la mejora MAS IMPACTANTE, no un listado exhaustivo. Una sola direccion clara.
+3. REWRITE: reescritura completa del bloque, sustancialmente mejor (no un retoque cosmético). Debe sonar natural para el canal y la audiencia. Usa **negrita** para resaltar 2-4 palabras o frases clave dentro del rewrite.
+4. FULL_REWRITE: version integrada del mensaje completo que fluye como texto continuo, no como lista de bloques. Aplica todas las mejoras con coherencia. Usa **negrita** para resaltar los terminos y frases mas importantes del mensaje final.
+5. ALTERNATIVAS: 3 versiones con enfoques genuinamente distintos entre si. Usa **negrita** en cada una para destacar la frase de mayor impacto:
+   - "Version emocional": prioriza la conexion humana y la historia.
+   - "Version datos": prioriza evidencia, cifras y logica.
+   - "Version directa": version ultra-concisa y de alto impacto para contextos de poco tiempo.
+6. SUMMARY: 1-2 oraciones que capturan el diagnostico mas importante. Como lo que dirias al cliente en los primeros 10 segundos de retroalimentacion. Usa **negrita** en la frase mas critica.
+7. NEXT_STEP: la UNA accion mas impactante que el usuario debe hacer ahora mismo para mejorar este mensaje. Usa **negrita** en el verbo de accion principal.
+8. DIAGNOSIS y SUGGESTION: usa **negrita** para destacar el problema especifico o la mejora recomendada.
+9. Los puntajes deben ser honestos y diferenciados entre si. Evita la zona comoda de dar todo entre 70-80. Si algo es debil, refleja que es debil (40-55).
+
+=== FORMATO DE RESPUESTA ===
+Unicamente JSON valido sin ningun markdown exterior. Schema exacto:
+{"summary":"","scores":{"clarity":0,"coherence":0,"persuasion":0,"actionability":0},"section_feedback":{"point":{"diagnosis":"","suggestion":"","rewrite":""},"example":{"diagnosis":"","suggestion":"","rewrite":""},"reasons":{"diagnosis":"","suggestion":"","rewrite":""},"action":{"diagnosis":"","suggestion":"","rewrite":""}},"full_rewrite":"","alternatives":[{"label":"","text":""},{"label":"","text":""},{"label":"","text":""}],"next_step":""}`;
 }
 
 function buildQPCPrompt(payload) {
   const sections = payload.sections || {};
   const settings = payload.settings || {};
 
-  return [
-    "Analiza y mejora este mensaje QPC (Que, Por que, Como) en espanol.",
-    "Devuelve solo JSON valido sin markdown.",
-    "",
-    "CONFIGURACION:",
-    `- Tono: ${normalizeInput(settings.tone) || "formal"}`,
-    `- Formalidad: ${normalizeInput(settings.formality) || "medio"}`,
-    `- Objetivo: ${normalizeInput(settings.objective) || "informar"}`,
-    `- Audiencia: ${normalizeInput(settings.audience) || "general"}`,
-    `- Canal: ${normalizeInput(settings.channel) || "presentacion"}`,
-    `- Longitud: ${normalizeInput(settings.length) || "media"}`,
-    `- Industria: ${normalizeInput(settings.industry) || "general"}`,
-    `- Urgencia: ${normalizeInput(settings.urgency) || "media"}`,
-    `- Estilo argumentativo: ${normalizeInput(settings.argument_style) || "balanceado"}`,
-    `- Tipo de llamada a la accion: ${normalizeInput(settings.cta_type) || "directa"}`,
-    "",
-    "CONTENIDO QPC:",
-    `Que: ${normalizeInput(sections.que) || "(vacio)"}`,
-    `Por que: ${normalizeInput(sections.porque) || "(vacio)"}`,
-    `Como: ${normalizeInput(sections.como) || "(vacio)"}`,
-    "",
-    "JSON OBJETIVO:",
-    '{"summary":"","scores":{"clarity":0,"coherence":0,"persuasion":0,"actionability":0},"section_feedback":{"que":{"diagnosis":"","suggestion":"","rewrite":""},"porque":{"diagnosis":"","suggestion":"","rewrite":""},"como":{"diagnosis":"","suggestion":"","rewrite":""}},"full_rewrite":"","alternatives":[{"label":"","text":""},{"label":"","text":""},{"label":"","text":""}],"next_step":""}',
-    "",
-    "Reglas:",
-    "1) Puntajes entre 0 y 100.",
-    "2) Reescrituras concisas y accionables.",
-    "3) alternativas diferentes entre si.",
-    "4) Mantener coherencia con tono, formalidad y objetivo.",
-  ].join("\n");
+  const tone        = normalizeInput(settings.tone)           || "formal";
+  const formality   = normalizeInput(settings.formality)      || "medio";
+  const objective   = normalizeInput(settings.objective)      || "informar";
+  const audience    = normalizeInput(settings.audience)       || "audiencia general";
+  const channel     = normalizeInput(settings.channel)        || "presentacion";
+  const length      = normalizeInput(settings.length)         || "media";
+  const industry    = normalizeInput(settings.industry)       || "general";
+  const urgency     = normalizeInput(settings.urgency)        || "media";
+  const argStyle    = normalizeInput(settings.argument_style) || "balanceado";
+  const ctaType     = normalizeInput(settings.cta_type)       || "directa";
+
+  const que     = normalizeInput(sections.que)     || "(vacio)";
+  const porque  = normalizeInput(sections.porque)  || "(vacio)";
+  const como    = normalizeInput(sections.como)    || "(vacio)";
+
+  return `Eres el ultimo revisor de este mensaje QPC antes de que llegue a su audiencia. Tu trabajo es diagnosticar con precision y proponer mejoras que eleven el impacto real del mensaje.
+
+=== CONTEXTO DE ENTREGA ===
+- Objetivo comunicacional: ${objective}
+- Audiencia especifica: ${audience}
+- Canal de entrega: ${channel}
+- Tono deseado: ${tone}
+- Nivel de formalidad: ${formality}
+- Longitud esperada: ${length}
+- Industria / contexto: ${industry}
+- Nivel de urgencia: ${urgency}
+- Estilo argumentativo: ${argStyle}
+- Tipo de CTA: ${ctaType}
+
+=== MENSAJE QPC A ANALIZAR ===
+[Q] QUE — intencion clara + detonante especifico que justifica el mensaje ahora:
+${que}
+
+[P] POR QUE — evidencia concreta y relevancia para esta audiencia:
+${porque}
+
+[C] COMO — pasos operativos concretos, secuenciales y con responsables / tiempos:
+${como}
+
+=== RUBRICA DE EVALUACION (sé honesto, diferencia los puntajes) ===
+
+CLARIDAD (0-100):
+- 90-100: Intencion y detonante son inmediatamente comprensibles; vocabulario preciso para la audiencia.
+- 70-89: La idea es clara pero con algun rodeo o termino que no encaja perfectamente.
+- 50-69: El mensaje requiere esfuerzo para entenderse; hay ambiguedad en la intencion o el detonante.
+- 0-49: Confuso; la audiencia no sabra que se le esta pidiendo o por que.
+
+COHERENCIA (0-100):
+- 90-100: Q→P→C forman un argumento solido y progresivo; cada bloque refuerza al siguiente.
+- 70-89: La estructura es visible pero algun bloque rompe el flujo o repite informacion.
+- 50-69: Los tres bloques existen pero parecen independientes; no construyen un argumento unico.
+- 0-49: La piramide QPC no es perceptible; el mensaje no tiene logica interna clara.
+
+PERSUASION (0-100):
+- 90-100: La evidencia y la relevancia son irresistibles para esta audiencia; genera urgencia genuina.
+- 70-89: Persuade parcialmente; le falta fuerza en la evidencia o en la conexion con la audiencia.
+- 50-69: El argumento existe pero es generco; la audiencia puede postergar la decision.
+- 0-49: No genera urgencia ni conviction; la audiencia no ve razon para actuar.
+
+ACCIONABILIDAD (0-100):
+- 90-100: Los pasos del Como son especificos, secuenciales, con duenos y plazos claros.
+- 70-89: Los pasos son comprensibles pero les falta especificidad o algun responsable / plazo.
+- 50-69: Hay una direccion pero los pasos son vagos o dificiles de ejecutar sin mas informacion.
+- 0-49: No hay pasos claros; la audiencia no sabra por donde empezar.
+
+=== INSTRUCCIONES PARA EL ANALISIS ===
+1. DIAGNOSTICO: identifica el problema ESPECIFICO de cada bloque. Cita el texto exacto que falla si es posible.
+2. SUGERENCIA: la mejora MAS IMPACTANTE para ese bloque; una sola direccion clara, no una lista.
+3. REWRITE: reescritura completa del bloque, sustancialmente mejor. Que suene natural para el canal y la audiencia. Usa **negrita** para resaltar 2-4 palabras o frases clave dentro del rewrite.
+4. FULL_REWRITE: version integrada del mensaje completo que fluye como texto ejecutivo continuo. Aplica todas las mejoras con coherencia interna. Usa **negrita** para resaltar los terminos y frases mas importantes del mensaje final.
+5. ALTERNATIVAS: 3 versiones con enfoques genuinamente distintos entre si. Usa **negrita** en cada una para destacar la frase de mayor impacto:
+   - "Version estrategica": enmarca el mensaje como decision estrategica de alto nivel.
+   - "Version operativa": foco en los pasos concretos y la ejecucion inmediata.
+   - "Version concisa": version ultra-corta de alto impacto, maxima densidad de informacion.
+6. SUMMARY: 1-2 oraciones que capturan el diagnostico mas importante del mensaje completo. Usa **negrita** en la frase mas critica.
+7. NEXT_STEP: la UNA accion que mas impacto tendra si el usuario la hace ahora mismo. Usa **negrita** en el verbo de accion principal.
+8. DIAGNOSIS y SUGGESTION: usa **negrita** para destacar el problema especifico o la mejora recomendada.
+9. Los puntajes deben ser honestos y diferenciados. Evita la zona comoda de 70-80 para todo. Si algo es debil, muestra que es debil (40-55).
+
+=== FORMATO DE RESPUESTA ===
+Unicamente JSON valido sin ningun markdown exterior. Schema exacto:
+{"summary":"","scores":{"clarity":0,"coherence":0,"persuasion":0,"actionability":0},"section_feedback":{"que":{"diagnosis":"","suggestion":"","rewrite":""},"porque":{"diagnosis":"","suggestion":"","rewrite":""},"como":{"diagnosis":"","suggestion":"","rewrite":""}},"full_rewrite":"","alternatives":[{"label":"","text":""},{"label":"","text":""},{"label":"","text":""}],"next_step":""}`;
 }
 
 async function analyzeWithOpenAI(payload) {
@@ -256,24 +363,33 @@ async function analyzeWithOpenAI(payload) {
   }
 
   const systemPrompt =
-    "Eres un coach experto en comunicacion persuasiva. Respondes estrictamente en JSON valido.";
+    "Eres un coach senior de comunicacion ejecutiva con amplia experiencia asesorando a lideres en Latinoamerica. Tu especialidad es el framework PERA (Punto-Ejemplo-Razones-Accion). Eres directo, especifico y accionable en tu retroalimentacion — no diplomatico en exceso. Identificas exactamente donde falla el mensaje y propones la mejora mas impactante, no la mas segura. Respondes EXCLUSIVAMENTE en JSON valido segun el schema solicitado.";
 
-  const response = await fetch("https://api.openai.com/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${OPENAI_API_KEY}`,
-    },
-    body: JSON.stringify({
-      model: OPENAI_MODEL,
-      temperature: 0.4,
-      response_format: { type: "json_object" },
-      messages: [
-        { role: "system", content: systemPrompt },
-        { role: "user", content: buildPrompt(payload) },
-      ],
-    }),
-  });
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 55000);
+
+  let response;
+  try {
+    response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      signal: controller.signal,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${OPENAI_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: OPENAI_MODEL,
+        temperature: 0.5,
+        response_format: { type: "json_object" },
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content: buildPrompt(payload) },
+        ],
+      }),
+    });
+  } finally {
+    clearTimeout(timer);
+  }
 
   const raw = await response.text();
   if (!response.ok) {
@@ -302,24 +418,33 @@ async function analyzeQPCWithOpenAI(payload) {
   }
 
   const systemPrompt =
-    "Eres un coach experto en comunicacion ejecutiva y persuasiva. Respondes estrictamente en JSON valido.";
+    "Eres un coach senior de comunicacion ejecutiva con amplia experiencia asesorando a lideres en Latinoamerica. Tu especialidad es la Piramide QPC (Que-Por que-Como) para comunicacion estrategica y operativa. Eres directo, especifico y accionable — no diplomatico en exceso. Identificas exactamente donde falla el mensaje y propones la mejora mas impactante, no la mas segura. Respondes EXCLUSIVAMENTE en JSON valido segun el schema solicitado.";
 
-  const response = await fetch("https://api.openai.com/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${OPENAI_API_KEY}`,
-    },
-    body: JSON.stringify({
-      model: OPENAI_MODEL,
-      temperature: 0.4,
-      response_format: { type: "json_object" },
-      messages: [
-        { role: "system", content: systemPrompt },
-        { role: "user", content: buildQPCPrompt(payload) },
-      ],
-    }),
-  });
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 55000);
+
+  let response;
+  try {
+    response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      signal: controller.signal,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${OPENAI_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: OPENAI_MODEL,
+        temperature: 0.5,
+        response_format: { type: "json_object" },
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content: buildQPCPrompt(payload) },
+        ],
+      }),
+    });
+  } finally {
+    clearTimeout(timer);
+  }
 
   const raw = await response.text();
   if (!response.ok) {

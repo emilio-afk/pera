@@ -72,49 +72,65 @@
       .sidebar {
         width: auto;
         min-width: 0;
-        background: rgba(255, 255, 255, 0.88);
-        border: 1px solid rgba(26, 58, 168, 0.12);
-        backdrop-filter: blur(14px);
-        padding: 12px;
+        background: rgba(255, 255, 255, 0.92);
+        border: 1px solid rgba(26, 58, 168, 0.1);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        padding: 10px 14px;
         display: flex;
         align-items: center;
-        gap: 12px;
-        border-radius: 18px;
+        gap: 0;
+        border-radius: 20px;
         z-index: 50;
         margin-bottom: 18px;
-        box-shadow: 0 8px 28px rgba(13, 27, 82, 0.08);
+        box-shadow: 0 4px 24px rgba(13, 27, 82, 0.07), 0 1px 3px rgba(13,27,82,0.05);
       }
 
       .sidebar h2 {
-        font-size: 0.82rem;
-        color: var(--primary-dark);
-        margin-right: auto;
+        font-size: 0.72rem;
+        color: var(--muted);
+        font-weight: 600;
         text-transform: uppercase;
-        letter-spacing: 0.12em;
+        letter-spacing: 0.1em;
+        margin-right: auto;
+        padding: 0 16px;
+        white-space: nowrap;
+      }
+
+      .nav-tabs-wrap {
+        display: flex;
+        align-items: center;
+        background: rgba(241, 245, 249, 0.9);
+        border-radius: 12px;
+        padding: 3px;
+        gap: 2px;
       }
 
       .nav-btn {
         background: transparent;
-        border: 1px solid rgba(26, 58, 168, 0.14);
-        padding: 12px 18px;
-        border-radius: 12px;
+        border: none;
+        padding: 8px 18px;
+        border-radius: 9px;
         font-weight: 600;
-        color: var(--text);
+        font-size: 0.88rem;
+        color: var(--muted);
         text-align: center;
         cursor: pointer;
-        transition: all 0.2s;
-        min-width: 170px;
+        transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+        min-width: 0;
+        white-space: nowrap;
       }
 
       .nav-btn:hover {
-        background: rgba(26, 58, 168, 0.06);
+        color: var(--text);
+        background: rgba(255,255,255,0.6);
       }
 
       .nav-btn.active {
-        background: linear-gradient(135deg, rgba(26, 58, 168, 0.12), rgba(41, 89, 214, 0.09));
+        background: white;
         color: var(--primary-blue);
-        border-color: rgba(26, 58, 168, 0.22);
-        box-shadow: inset 0 0 0 1px rgba(26, 58, 168, 0.08);
+        font-weight: 700;
+        box-shadow: 0 2px 8px rgba(13, 27, 82, 0.1), 0 1px 2px rgba(13,27,82,0.06);
       }
 
       .main-content {
@@ -897,54 +913,124 @@
       }
       .feedback-copy {
         display: grid;
-        gap: 0.45rem;
+        gap: 0.75rem;
       }
-      .feedback-copy p {
-        color: var(--muted);
-        line-height: 1.65;
+      .feedback-section {
+        border-radius: 12px;
+        padding: 0.9rem 1rem;
+        display: grid;
+        gap: 0.4rem;
       }
-      .feedback-copy strong {
+      .feedback-section.diagnosis-section {
+        background: rgba(251, 191, 36, 0.08);
+        border: 1px solid rgba(251, 191, 36, 0.22);
+      }
+      .feedback-section.suggestion-section {
+        background: rgba(37, 99, 235, 0.05);
+        border: 1px solid rgba(37, 99, 235, 0.15);
+      }
+      .feedback-section-label {
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-size: 0.72rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        margin-bottom: 0.1rem;
+      }
+      .feedback-section.diagnosis-section .feedback-section-label {
+        color: #b45309;
+      }
+      .feedback-section.suggestion-section .feedback-section-label {
+        color: var(--primary-blue);
+      }
+      .feedback-copy .rich-text p {
         color: var(--text);
+        margin-bottom: 0.45rem;
+        line-height: 1.7;
+        font-size: 0.95rem;
       }
+      .feedback-copy .rich-text p:last-child { margin-bottom: 0; }
+      .feedback-copy .rich-text strong {
+        font-weight: 700;
+      }
+      .feedback-section.diagnosis-section .rich-text strong { color: #92400e; }
+      .feedback-section.suggestion-section .rich-text strong { color: #1d4ed8; }
       .feedback-actions {
         display: flex;
         justify-content: flex-end;
       }
       .comparison-grid {
         display: grid;
-        gap: 0.9rem;
+        gap: 0.75rem;
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
       .comparison-card {
         border-radius: 16px;
-        padding: 1rem;
+        padding: 1.15rem 1.2rem;
         border: 1px solid rgba(15, 23, 42, 0.08);
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
       }
       .comparison-card.original {
-        background: rgba(241, 245, 249, 0.9);
+        background: rgba(241, 245, 249, 0.95);
       }
       .comparison-card.proposed {
-        background: rgba(236, 253, 245, 0.9);
-        border-color: rgba(15, 159, 136, 0.2);
+        background: linear-gradient(160deg, rgba(209, 250, 229, 0.6) 0%, rgba(240, 253, 248, 0.95) 100%);
+        border-color: rgba(16, 185, 129, 0.25);
+        box-shadow: 0 2px 12px rgba(16, 185, 129, 0.08);
       }
       .comparison-label {
-        display: inline-block;
-        margin-bottom: 0.45rem;
-        font-size: 0.78rem;
-        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.72rem;
+        font-weight: 800;
         text-transform: uppercase;
-        letter-spacing: 0.04em;
+        letter-spacing: 0.07em;
+        padding-bottom: 0.6rem;
+        border-bottom: 1px solid rgba(15, 23, 42, 0.07);
       }
       .comparison-card.original .comparison-label {
         color: var(--primary-blue);
+        border-bottom-color: rgba(37, 99, 235, 0.12);
       }
       .comparison-card.proposed .comparison-label {
-        color: var(--success-green);
+        color: #059669;
+        border-bottom-color: rgba(16, 185, 129, 0.2);
+      }
+      .comparison-label-icon {
+        font-size: 0.9rem;
       }
       .comparison-body {
         white-space: pre-wrap;
-        line-height: 1.65;
+        line-height: 1.72;
         color: var(--text);
+        font-size: 0.95rem;
+      }
+      .comparison-body.proposed-rich {
+        white-space: normal;
+      }
+      .comparison-body.proposed-rich p {
+        color: #0f2d1a;
+        margin-bottom: 0.7rem;
+        line-height: 1.78;
+        font-size: 0.96rem;
+      }
+      .comparison-body.proposed-rich p:first-child {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #0a2416;
+      }
+      .comparison-body.proposed-rich p:last-child { margin-bottom: 0; }
+      .comparison-body.proposed-rich strong {
+        color: #065f46;
+        font-weight: 700;
+        background: rgba(16, 185, 129, 0.12);
+        padding: 0 3px;
+        border-radius: 3px;
       }
       .proposal-card {
         padding: 1.2rem 1.25rem;
@@ -976,16 +1062,34 @@
         grid-template-columns: repeat(3, minmax(0, 1fr));
       }
       .alternative-card {
-        padding: 1rem;
+        padding: 1rem 1.1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.55rem;
       }
       .alternative-card h5 {
-        color: var(--primary-blue);
-        font-size: 0.94rem;
-        margin-bottom: 0.45rem;
+        color: var(--primary-dark);
+        font-size: 0.85rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid var(--primary-blue);
+        display: inline-block;
+        margin-bottom: 0;
       }
-      .alternative-card p {
-        color: var(--muted);
-        line-height: 1.65;
+      .alternative-card .rich-text p {
+        color: var(--text);
+        font-size: 0.93rem;
+        line-height: 1.75;
+        margin-bottom: 0.6rem;
+      }
+      .alternative-card .rich-text p:last-child { margin-bottom: 0; }
+      .alternative-card .rich-text strong {
+        color: var(--primary-dark);
+        background: rgba(37, 99, 235, 0.08);
+        padding: 0 3px;
+        border-radius: 3px;
       }
       .analysis-deep-dive {
         padding: 0;
@@ -1095,14 +1199,19 @@
       @media (max-width: 768px) {
         .sidebar {
           flex-wrap: wrap;
+          gap: 8px;
         }
         .sidebar h2 {
-          width: 100%;
-          margin-right: 0;
-          margin-bottom: 2px;
+          display: none;
+        }
+        .nav-divider {
+          display: none;
+        }
+        .nav-tabs-wrap {
+          flex: 1;
         }
         .nav-btn {
-          flex: 1 1 180px;
+          flex: 1;
         }
         .essentials-grid,
         .fine-tuning-grid {
@@ -1281,13 +1390,32 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: 16px;
+        margin-bottom: 20px;
         gap: 12px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid rgba(26, 58, 168, 0.08);
       }
       .carousel-label {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 12px;
+        min-width: 0;
+      }
+      .carousel-icon-wrap {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        background: rgba(26, 58, 168, 0.08);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        flex-shrink: 0;
+      }
+      .carousel-label-text {
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
         min-width: 0;
       }
       .carousel-icon {
@@ -1295,18 +1423,20 @@
         flex-shrink: 0;
       }
       .carousel-title {
-        font-size: 1rem;
-        font-weight: 700;
-        color: var(--primary-blue);
+        font-size: 1.05rem;
+        font-weight: 800;
+        color: var(--primary-dark);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        line-height: 1.2;
       }
       .carousel-counter {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
         font-weight: 600;
-        color: var(--muted-text);
+        color: var(--muted);
         white-space: nowrap;
+        letter-spacing: 0.04em;
       }
       .carousel-nav {
         display: flex;
@@ -1314,10 +1444,10 @@
         flex-shrink: 0;
       }
       .carousel-arrow {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        border: 1.5px solid rgba(26, 58, 168, 0.18);
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        border: 1.5px solid rgba(26, 58, 168, 0.15);
         background: white;
         color: var(--primary-blue);
         font-size: 1rem;
@@ -1333,17 +1463,20 @@
         background: var(--primary-blue);
         color: white;
         border-color: var(--primary-blue);
-        transform: scale(1.06);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(26, 58, 168, 0.2);
       }
       .carousel-arrow:disabled {
-        opacity: 0.28;
+        opacity: 0.25;
         cursor: not-allowed;
       }
       .carousel-dots {
         display: flex;
         justify-content: center;
         gap: 6px;
-        margin-top: 18px;
+        margin-top: 20px;
+        padding-top: 16px;
+        border-top: 1px solid rgba(26, 58, 168, 0.06);
       }
       .carousel-dot {
         width: 7px;
@@ -1357,14 +1490,13 @@
       }
       .carousel-dot.active {
         background: var(--primary-blue);
-        width: 22px;
+        width: 24px;
         border-radius: 4px;
       }
       .carousel-track {
         overflow: hidden;
         position: relative;
       }
-      /* Un solo slide visible a la vez — no hay overlap */
       .carousel-slide {
         display: none;
       }
@@ -1374,6 +1506,283 @@
       }
       .carousel-slide.dir-prev.active {
         animation: carouselInReverse 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      /* ── Slide: sección kicker mejorado ─────────────── */
+      .slide-kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.72rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--primary-blue);
+        margin-bottom: 0.35rem;
+      }
+      .slide-kicker-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: currentColor;
+        flex-shrink: 0;
+      }
+      .slide-title {
+        font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+        font-weight: 800;
+        color: var(--primary-dark);
+        margin: 0 0 0.35rem;
+        line-height: 1.2;
+      }
+      .slide-desc {
+        font-size: 0.9rem;
+        color: var(--muted);
+        margin: 0 0 1.25rem;
+        line-height: 1.55;
+      }
+
+      /* ── Slide 0: Resumen ejecutivo ─────────────────── */
+      .exec-summary-card {
+        background: linear-gradient(135deg, var(--primary-dark) 0%, #1a3aa8 100%);
+        border-radius: 18px;
+        padding: 1.6rem;
+        color: white;
+        margin-bottom: 14px;
+      }
+      .exec-summary-eyebrow {
+        font-size: 0.72rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: rgba(255,255,255,0.55);
+        margin-bottom: 0.5rem;
+      }
+      .exec-summary-headline {
+        font-size: clamp(1.05rem, 1.8vw, 1.3rem);
+        font-weight: 800;
+        line-height: 1.3;
+        margin: 0 0 0.75rem;
+        color: white;
+      }
+      .exec-summary-body {
+        font-size: 0.92rem;
+        line-height: 1.65;
+        color: rgba(255,255,255,0.78);
+      }
+      .exec-insights-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+      }
+      .exec-insight-card {
+        background: white;
+        border: 1px solid rgba(26, 58, 168, 0.1);
+        border-radius: 14px;
+        padding: 1rem;
+      }
+      .exec-insight-icon {
+        font-size: 1.15rem;
+        margin-bottom: 0.4rem;
+        display: block;
+      }
+      .exec-insight-label {
+        font-size: 0.7rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        color: var(--muted);
+        margin-bottom: 0.25rem;
+      }
+      .exec-insight-value {
+        font-size: 0.93rem;
+        font-weight: 700;
+        color: var(--primary-dark);
+        line-height: 1.3;
+      }
+      .exec-insight-sub {
+        font-size: 0.78rem;
+        color: var(--muted);
+        margin-top: 0.15rem;
+      }
+
+      /* ── Slide 1: Puntuación ─────────────────────────── */
+      .score-grid-v2 {
+        display: grid;
+        gap: 12px;
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .score-item-v2 {
+        background: white;
+        border: 1px solid rgba(26, 58, 168, 0.1);
+        border-radius: 16px;
+        padding: 1.1rem 1.2rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .score-icon-wrap {
+        font-size: 1.4rem;
+        flex-shrink: 0;
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(26, 58, 168, 0.07);
+      }
+      .score-item-v2.tone-strong .score-icon-wrap { background: rgba(26, 122, 69, 0.1); }
+      .score-item-v2.tone-weak   .score-icon-wrap { background: rgba(224, 90, 53, 0.1); }
+      .score-item-v2-body { flex: 1; min-width: 0; }
+      .score-item-v2-label {
+        font-size: 0.78rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--muted);
+        margin-bottom: 0.2rem;
+      }
+      .score-item-v2-number {
+        font-size: 1.7rem;
+        font-weight: 800;
+        line-height: 1;
+        color: var(--primary-dark);
+        margin-bottom: 0.35rem;
+      }
+      .score-item-v2.tone-strong .score-item-v2-number { color: var(--success-green); }
+      .score-item-v2.tone-weak   .score-item-v2-number { color: var(--danger-orange); }
+      .score-bar-v2-wrap {
+        background: rgba(26, 58, 168, 0.08);
+        border-radius: 999px;
+        height: 5px;
+        overflow: hidden;
+      }
+      .score-bar-v2-fill {
+        height: 100%;
+        border-radius: inherit;
+        transition: width 0.5s ease;
+      }
+      .score-bar-v2-fill.low  { background: #e05d2e; }
+      .score-bar-v2-fill.mid  { background: #e5a800; }
+      .score-bar-v2-fill.high { background: #04a45a; }
+
+      /* ── Slide 2: Propuesta ──────────────────────────── */
+      .proposal-reading {
+        background: linear-gradient(160deg, rgba(239, 246, 255, 0.7) 0%, white 60%);
+        border: 1px solid rgba(26, 58, 168, 0.12);
+        border-radius: 18px;
+        padding: 1.5rem 1.6rem;
+        margin-bottom: 14px;
+        position: relative;
+        overflow: hidden;
+      }
+      .proposal-reading::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0;
+        width: 4px; height: 100%;
+        background: linear-gradient(to bottom, var(--primary-blue), var(--success-green));
+        border-radius: 18px 0 0 18px;
+      }
+      .proposal-reading .proposal-copy {
+        font-size: 1rem;
+        line-height: 1.85;
+        color: var(--text);
+      }
+      .proposal-reading .rich-text p {
+        font-size: 1.01rem;
+        line-height: 1.85;
+        margin-bottom: 1rem;
+      }
+      .proposal-reading .rich-text p:first-child {
+        font-size: 1.06rem;
+        font-weight: 500;
+        color: var(--primary-dark);
+      }
+      .proposal-reading .rich-text strong {
+        color: #1e40af;
+        background: rgba(37, 99, 235, 0.1);
+      }
+      .proposal-chips {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .proposal-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border-radius: 999px;
+        padding: 0.4rem 0.85rem;
+        font-size: 0.8rem;
+        font-weight: 700;
+        background: rgba(26, 58, 168, 0.07);
+        color: var(--primary-blue);
+        border: 1px solid rgba(26, 58, 168, 0.12);
+      }
+      .proposal-chip.green {
+        background: rgba(26, 122, 69, 0.07);
+        color: var(--success-green);
+        border-color: rgba(26, 122, 69, 0.15);
+      }
+
+      /* ── Slide 3: Detalle por bloque ─────────────────── */
+      .feedback-step-icon {
+        font-size: 1rem;
+        flex-shrink: 0;
+      }
+
+      /* ── Texto rico en slides ────────────────────────── */
+      .rich-text p {
+        margin: 0 0 1rem;
+        line-height: 1.8;
+        font-size: 0.97rem;
+        color: var(--text);
+        letter-spacing: 0.01em;
+      }
+      .rich-text p:last-child { margin-bottom: 0; }
+      .rich-text strong {
+        font-weight: 700;
+        color: var(--primary-dark);
+        background: rgba(37, 99, 235, 0.07);
+        padding: 0 3px;
+        border-radius: 3px;
+      }
+      .rich-text ul {
+        margin: 0 0 1rem;
+        padding-left: 0;
+        list-style: none;
+        display: grid;
+        gap: 0.5rem;
+      }
+      .rich-text li {
+        line-height: 1.7;
+        font-size: 0.97rem;
+        color: var(--text);
+        padding-left: 1.2rem;
+        position: relative;
+      }
+      .rich-text li::before {
+        content: "›";
+        position: absolute;
+        left: 0;
+        color: var(--primary-blue);
+        font-weight: 700;
+        font-size: 1.1rem;
+      }
+      .rich-text li strong { color: var(--primary-dark); }
+      /* Texto rico sobre fondo oscuro (exec summary) */
+      .exec-summary-card .rich-text p,
+      .exec-summary-card .rich-text li { color: rgba(255,255,255,0.85); }
+      .exec-summary-card .rich-text strong {
+        color: white;
+        background: rgba(255,255,255,0.15);
+      }
+      .exec-summary-card .rich-text li::before { color: rgba(255,255,255,0.5); }
+
+      @media (max-width: 640px) {
+        .exec-insights-row { grid-template-columns: 1fr; }
+        .score-grid-v2 { grid-template-columns: 1fr; }
       }
 
       .atab-panel { animation: fadeIn 0.2s ease; }
@@ -1452,6 +1861,369 @@
       .flash-apply {
         animation: flash-apply 0.6s ease;
       }
+
+      /* ── 0. Logo brand en sidebar ─────────────────────── */
+      .sidebar-brand {
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+      }
+      .sidebar-brand svg {
+        display: block;
+        width: auto;
+      }
+      .nav-divider {
+        width: 1px;
+        height: 22px;
+        background: rgba(26, 58, 168, 0.12);
+        margin: 0 14px;
+        flex-shrink: 0;
+      }
+
+      /* ── 1. Sticky navbar con sombra al scroll ────────── */
+      .sidebar {
+        position: sticky;
+        top: 16px;
+        z-index: 100;
+        transition: box-shadow 0.3s ease;
+      }
+      .sidebar.scrolled {
+        box-shadow: 0 16px 40px rgba(13, 27, 82, 0.18);
+      }
+
+      /* ── 2. Barra de progreso ─────────────────────────── */
+      .progress-wrap {
+        height: 6px;
+        background: rgba(26, 58, 168, 0.1);
+        border-radius: 999px;
+        overflow: hidden;
+        margin-bottom: 1rem;
+      }
+      .progress-fill {
+        height: 100%;
+        background: var(--primary-blue);
+        border-radius: inherit;
+        transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .progress-label {
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: var(--muted);
+        margin-bottom: 0.35rem;
+        display: block;
+        letter-spacing: 0.03em;
+      }
+
+      /* ── 3. Colores por framework (QPC = verde) ───────── */
+      body.mode-qpc .nav-btn#nav-qpc.active {
+        background: white;
+        color: var(--success-green);
+        box-shadow: 0 2px 8px rgba(13, 27, 82, 0.1), 0 1px 2px rgba(13,27,82,0.06);
+      }
+      body.mode-qpc .journey-pill.active {
+        background: rgba(26, 122, 69, 0.1);
+        border-color: rgba(26, 122, 69, 0.25);
+        color: var(--success-green);
+      }
+      body.mode-qpc .guided-card.is-current {
+        border-color: rgba(26, 122, 69, 0.3);
+        box-shadow: 0 14px 28px rgba(26, 122, 69, 0.09);
+      }
+      body.mode-qpc .progress-fill {
+        background: var(--success-green);
+      }
+      body.mode-qpc .section-block.message-builder {
+        border-left: 3px solid var(--success-green);
+      }
+
+      /* ── Jerarquía: border-left en builder PERA ───────── */
+      body.mode-pera .section-block.message-builder {
+        border-left: 3px solid var(--primary-blue);
+      }
+
+      /* ── 4. Indicador de draft en nav ────────────────── */
+      .nav-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+      }
+      .nav-draft-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: var(--success-green);
+        color: white;
+        font-size: 0.62rem;
+        font-weight: 800;
+        opacity: 0;
+        transform: scale(0.6);
+        transition: opacity 0.22s, transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+        flex-shrink: 0;
+      }
+      .nav-draft-badge.visible {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      /* ── 5. Empty state AI ───────────────────────────── */
+      .ai-empty-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2.5rem 1.5rem;
+        text-align: center;
+        gap: 0.75rem;
+        color: var(--muted);
+      }
+      .ai-empty-icon {
+        font-size: 2.4rem;
+        opacity: 0.45;
+      }
+      .ai-empty-title {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--primary-blue);
+        opacity: 0.6;
+        margin: 0;
+      }
+      .ai-empty-desc {
+        font-size: 0.9rem;
+        max-width: 380px;
+        line-height: 1.6;
+        margin: 0;
+      }
+
+      /* ── 6. Botón flotante Analizar ──────────────────── */
+      .float-analyze-btn {
+        position: fixed;
+        bottom: 90px;
+        right: 28px;
+        display: none;
+        align-items: center;
+        gap: 8px;
+        background: var(--success-green);
+        color: white;
+        border: none;
+        border-radius: 999px;
+        padding: 13px 22px;
+        font-family: inherit;
+        font-size: 0.93rem;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: 0 8px 28px rgba(26, 122, 69, 0.35);
+        z-index: 200;
+        animation: slideUp 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+      .float-analyze-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 32px rgba(26, 122, 69, 0.42);
+      }
+      .float-analyze-btn.visible {
+        display: flex;
+      }
+      .float-analyze-btn.is-loading {
+        background: var(--secondary-blue);
+        box-shadow: 0 8px 28px rgba(41, 89, 214, 0.35);
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+      .float-analyze-btn.is-loading::before {
+        content: "";
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        border: 2px solid rgba(255,255,255,0.35);
+        border-top-color: white;
+        animation: spin 0.7s linear infinite;
+        flex-shrink: 0;
+      }
+      .float-analyze-btn.is-done {
+        background: linear-gradient(135deg, #04a45a, #038a4c);
+        box-shadow: 0 8px 28px rgba(4, 164, 90, 0.4);
+        pointer-events: none;
+      }
+
+      /* ── 7. Footer ───────────────────────────────────── */
+      .app-footer {
+        max-width: 1420px;
+        margin: 0 auto;
+        padding: 12px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        border-top: 1px solid rgba(26, 58, 168, 0.08);
+        font-size: 0.82rem;
+        color: var(--muted);
+      }
+      .footer-brand {
+        font-weight: 700;
+        color: var(--primary-blue);
+        opacity: 0.55;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        font-size: 0.76rem;
+      }
+      .footer-usage {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-weight: 600;
+      }
+      .footer-usage-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--success-green);
+        flex-shrink: 0;
+      }
+      .footer-usage-dot.limit {
+        background: var(--danger-orange);
+      }
+
+      /* ── 9. Flash de desbloqueo en cards ─────────────── */
+      @keyframes cardUnlockFlash {
+        0%   { box-shadow: 0 0 0 0 rgba(26, 122, 69, 0.4); }
+        50%  { box-shadow: 0 0 0 10px rgba(26, 122, 69, 0.12); }
+        100% { box-shadow: 0 0 0 0 rgba(26, 122, 69, 0); }
+      }
+      .card-unlock-flash {
+        animation: cardUnlockFlash 0.7s ease;
+      }
+
+      /* ── 10. Labels en settings con mejor jerarquía ─── */
+      .essentials-grid .input-group label,
+      .fine-tuning-grid .input-group label,
+      .settings-field label {
+        font-weight: 700;
+        font-size: 0.78rem;
+        color: var(--primary-dark);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        display: block;
+        margin-bottom: 0.45rem;
+      }
+
+      /* ── Segmented control ───────────────────────────── */
+      .settings-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .settings-row-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+      }
+      .settings-field {
+        display: flex;
+        flex-direction: column;
+      }
+      .seg-control {
+        display: flex;
+        background: rgba(26, 58, 168, 0.06);
+        border-radius: 10px;
+        padding: 3px;
+        gap: 2px;
+      }
+      .seg-btn {
+        flex: 1;
+        padding: 7px 6px;
+        border: none;
+        border-radius: 8px;
+        background: transparent;
+        font-family: inherit;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--muted);
+        cursor: pointer;
+        transition: all 0.18s ease;
+        white-space: nowrap;
+        line-height: 1.2;
+      }
+      .seg-btn:hover { color: var(--primary-blue); }
+      .seg-btn.active {
+        background: white;
+        color: var(--primary-blue);
+        box-shadow: 0 2px 8px rgba(26, 58, 168, 0.13);
+      }
+
+      /* ── Pill select (más opciones) ─────────────────── */
+      .pill-select {
+        display: flex;
+        gap: 5px;
+        flex-wrap: wrap;
+      }
+      .pill-opt {
+        padding: 6px 13px;
+        border: 1.5px solid rgba(26, 58, 168, 0.15);
+        border-radius: 999px;
+        background: white;
+        font-family: inherit;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--muted);
+        cursor: pointer;
+        transition: all 0.18s ease;
+      }
+      .pill-opt:hover {
+        border-color: var(--primary-blue);
+        color: var(--primary-blue);
+      }
+      .pill-opt.active {
+        background: var(--primary-blue);
+        border-color: var(--primary-blue);
+        color: white;
+      }
+
+      /* Ocultar selects nativos — los usamos solo para el valor */
+      .hidden-select { display: none !important; }
+
+      /* ── Advanced tuning rediseñada ─────────────────── */
+      .advanced-tuning {
+        border: 1px solid rgba(26, 58, 168, 0.1);
+        border-radius: 12px;
+        padding: 0;
+        background: transparent;
+        overflow: hidden;
+      }
+      .advanced-tuning summary {
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 0.82rem;
+        color: var(--primary-blue);
+        padding: 0.7rem 0.9rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        user-select: none;
+        list-style: none;
+        background: rgba(26, 58, 168, 0.04);
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+      }
+      .advanced-tuning summary::-webkit-details-marker { display: none; }
+      .advanced-tuning summary::after {
+        content: "›";
+        font-size: 1.1rem;
+        transition: transform 0.2s ease;
+        opacity: 0.5;
+      }
+      .advanced-tuning[open] summary::after { transform: rotate(90deg); }
+      .advanced-tuning-body {
+        padding: 0.9rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.85rem;
+        border-top: 1px solid rgba(26, 58, 168, 0.08);
+      }
     </style>
   </head>
   <body>
@@ -1471,9 +2243,25 @@
 
     <div class="app-layout">
       <aside class="sidebar">
+        <div class="sidebar-brand" style="margin-right:0; padding-bottom:0; border-bottom:none;">
+          <svg height="22" viewBox="0 0 1231 213" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="astrolab">
+            <path d="M59.4675 212.235C48.1767 212.235 38.0434 210.269 29.0895 206.316C20.1355 202.385 13.0597 196.62 7.84018 189.064C2.62067 181.507 0 172.291 0 161.415C0 150.54 2.59883 141.433 7.84018 134.095C13.0597 126.735 20.3102 121.21 29.5699 117.476C38.8296 113.741 49.4434 111.885 61.3674 111.885H101.638C103.407 111.885 104.827 110.443 104.827 108.696V102.953C104.827 95.5055 102.49 89.3688 97.7948 84.5642C93.0995 79.7596 85.6524 77.3792 75.4099 77.3792C65.1674 77.3792 57.9387 79.6723 53.025 84.2585C48.8756 88.1458 45.9273 92.994 44.2239 98.7814C43.7216 100.507 41.8653 101.468 40.1618 100.9L9.39076 90.5481C7.64364 89.9584 6.79192 88.0584 7.44709 86.3332C10.0241 79.4757 13.7585 73.1206 18.6505 67.3114C24.2849 60.6069 31.863 55.169 41.3411 51.0196C50.8192 46.8702 62.3939 44.7955 76.0214 44.7955C96.8994 44.7955 113.41 50.015 125.574 60.454C137.716 70.893 143.788 86.0274 143.788 105.835V164.975C143.788 171.374 146.78 174.563 152.742 174.563H162.329C164.098 174.563 165.517 176.004 165.517 177.751V204.613C165.517 206.382 164.076 207.801 162.329 207.801H138.677C122.495 207.801 115.943 200.944 113.3 195.419C112.274 193.257 109.369 192.951 107.906 194.829C102.403 201.839 89.2121 212.278 59.4019 212.278L59.4675 212.235ZM66.4996 179.651C77.7903 179.651 87.0064 176.506 94.1477 170.217C101.289 163.927 104.849 155.563 104.849 145.124C104.849 143.355 103.407 141.935 101.66 141.935H64.2502C56.7813 141.935 50.9284 143.529 46.6698 146.718C41.9308 150.278 39.8342 155.388 40.3584 162.114C40.4457 163.294 40.686 164.451 41.0572 165.565C44.2894 174.977 52.7629 179.651 66.4778 179.651H66.4996Z" fill="#0A56C6"/>
+            <path d="M865.171 212.235C853.881 212.235 843.747 210.269 834.793 206.316C825.839 202.385 818.764 196.62 813.544 189.064C808.325 181.507 805.704 172.291 805.704 161.415C805.704 150.54 808.303 141.433 813.544 134.095C818.764 126.735 826.014 121.21 835.274 117.476C844.533 113.741 855.147 111.885 867.071 111.885H907.342C909.111 111.885 910.531 110.443 910.531 108.696V102.953C910.531 95.5055 908.194 89.3688 903.499 84.5642C898.803 79.7596 891.356 77.3792 881.114 77.3792C870.871 77.3792 863.643 79.6723 858.729 84.2585C854.58 88.1458 851.631 92.994 849.928 98.7814C849.425 100.507 847.569 101.468 845.866 100.9L815.095 90.5481C813.347 89.9584 812.496 88.0584 813.151 86.3332C815.728 79.4757 819.462 73.1206 824.354 67.3114C829.989 60.6069 837.567 55.169 847.045 51.0196C856.523 46.8702 868.098 44.7955 881.725 44.7955C902.603 44.7955 919.114 50.015 931.278 60.454C943.42 70.893 949.492 86.0274 949.492 105.835V164.975C949.492 171.374 952.483 174.563 958.446 174.563H968.033C969.802 174.563 971.221 176.004 971.221 177.751V204.613C971.221 206.382 969.78 207.801 968.033 207.801H944.381C928.199 207.801 921.647 200.944 919.004 195.419C917.978 193.257 915.073 192.951 913.61 194.829C908.107 201.839 894.916 212.278 865.106 212.278L865.171 212.235ZM872.204 179.651C883.494 179.651 892.71 176.506 899.852 170.217C906.993 163.927 910.553 155.563 910.553 145.124C910.553 143.355 909.111 141.935 907.364 141.935H869.954C862.485 141.935 856.632 143.529 852.374 146.718C847.635 150.278 845.538 155.388 846.062 162.114C846.15 163.294 846.39 164.451 846.761 165.565C849.993 174.977 858.467 179.651 872.182 179.651H872.204Z" fill="#0A56C6"/>
+            <path d="M248.044 212.233C227.363 212.233 210.438 207.756 197.225 198.802C184.799 190.394 177.002 178.579 173.814 163.379C173.464 161.741 174.535 160.103 176.151 159.689L207.162 151.674C208.865 151.237 210.613 152.263 211.049 153.967C212.578 159.972 214.849 164.777 217.863 168.424C221.379 172.683 225.747 175.718 230.966 177.531C236.186 179.344 241.886 180.239 248.066 180.239C257.435 180.239 264.358 178.601 268.835 175.282C273.312 171.984 275.54 167.878 275.54 162.964C275.54 158.051 273.4 154.294 269.141 151.608C264.882 148.944 258.069 146.76 248.678 145.056L239.724 143.462C228.651 141.344 218.518 138.396 209.346 134.661C200.173 130.927 192.836 125.773 187.289 119.155C181.741 112.56 178.968 104.021 178.968 93.582C178.968 77.8143 184.712 65.7155 196.221 57.3075C207.73 48.8995 222.864 44.6846 241.602 44.6846C259.292 44.6846 273.989 48.6374 285.717 56.5213C296.44 63.7281 303.778 73.0097 307.709 84.3223C308.32 86.0476 307.381 87.9475 305.634 88.4717L274.535 98.0371C272.832 98.5613 271.041 97.5567 270.539 95.8532C268.66 89.4107 265.45 84.7154 260.951 81.7671C255.732 78.3602 249.289 76.6568 241.602 76.6568C233.915 76.6568 228.062 77.989 224.022 80.6533C219.981 83.3177 217.95 86.9866 217.95 91.682C217.95 96.7923 220.069 100.592 224.349 103.038C228.608 105.484 234.373 107.362 241.602 108.629L250.556 110.223C262.48 112.363 273.29 115.181 283.009 118.697C292.705 122.213 300.371 127.214 306.027 133.722C311.661 140.23 314.5 149.009 314.5 160.103C314.5 176.723 308.473 189.564 296.44 198.627C284.406 207.691 268.246 212.211 248.023 212.211L248.044 212.233Z" fill="#0A56C6"/>
+            <path d="M393.165 207.775C382.726 207.775 374.252 204.521 367.744 198.035C361.236 191.527 358.004 182.857 358.004 171.981V85.6732C358.004 83.9043 356.563 82.4847 354.815 82.4847H321.577C319.808 82.4847 318.388 81.0434 318.388 79.2962V52.4343C318.388 50.6654 319.829 49.2458 321.577 49.2458H354.815C356.584 49.2458 358.004 47.8045 358.004 46.0573V3.23115C358.004 1.46219 359.445 0.0426636 361.192 0.0426636H395.086C396.855 0.0426636 398.275 1.48403 398.275 3.23115V46.0573C398.275 47.8263 399.716 49.2458 401.463 49.2458H438.546C440.315 49.2458 441.734 50.6872 441.734 52.4343V79.2962C441.734 81.0652 440.293 82.4847 438.546 82.4847H401.463C399.694 82.4847 398.275 83.9261 398.275 85.6732V164.949C398.275 171.347 401.267 174.536 407.229 174.536H434.724C436.493 174.536 437.913 175.977 437.913 177.724V204.586C437.913 206.355 436.471 207.775 434.724 207.775H393.165Z" fill="#0A56C6"/>
+            <path d="M461.629 204.566V52.414C461.629 50.6451 463.071 49.2255 464.818 49.2255H498.057C499.826 49.2255 501.245 50.6669 501.245 52.414V56.76C501.245 59.6209 504.674 61.0186 506.727 58.9876C511.772 54.0083 521.075 48.5704 537.694 48.5704H553.681C555.45 48.5704 556.869 50.0117 556.869 51.7589V81.176C556.869 82.9449 555.428 84.3644 553.681 84.3644H537.061C526.84 84.3644 518.411 87.0724 511.815 92.5103C505.198 97.9482 501.9 106.313 501.9 117.603V204.544C501.9 206.313 500.459 207.733 498.712 207.733H464.818C463.049 207.733 461.629 206.291 461.629 204.544V204.566Z" fill="#0A56C6"/>
+            <path d="M645.122 212.231C629.355 212.231 615.181 209.042 602.602 202.644C590.023 196.245 580.108 186.985 572.879 174.843C565.629 162.7 562.003 148.112 562.003 131.056V125.945C562.003 108.889 565.629 94.3006 572.879 82.1582C580.13 70.0157 590.023 60.7341 602.602 54.3572C615.181 47.9584 629.333 44.7699 645.122 44.7699C660.912 44.7699 675.064 47.9584 687.643 54.3572C700.222 60.756 710.115 70.0157 717.366 82.1582C724.616 94.3006 728.241 108.911 728.241 125.945V131.056C728.241 148.112 724.616 162.7 717.366 174.843C710.115 186.985 700.2 196.267 687.643 202.644C675.064 209.042 660.89 212.231 645.122 212.231ZM645.122 176.437C657.483 176.437 667.704 172.44 675.806 164.447C683.908 156.454 687.949 145.011 687.949 130.095V126.906C687.949 111.99 683.952 100.525 675.959 92.5535C667.966 84.5604 657.68 80.5639 645.122 80.5639C632.565 80.5639 622.541 84.5604 614.439 92.5535C606.336 100.547 602.296 112.012 602.296 126.906V130.095C602.296 145.011 606.336 156.476 614.439 164.447C622.541 172.44 632.762 176.437 645.122 176.437Z" fill="#0A56C6"/>
+            <path d="M746.21 204.565V3.18849C746.21 1.41953 747.651 0 749.398 0H783.292C785.061 0 786.481 1.44137 786.481 3.18849V204.565C786.481 206.334 785.039 207.754 783.292 207.754H749.398C747.629 207.754 746.21 206.313 746.21 204.565Z" fill="#0A56C6"/>
+            <path d="M1083.16 212.231C1057.48 212.231 1040.75 200.962 1032.85 193.974C1030.77 192.139 1027.54 193.602 1027.54 196.376V204.565C1027.54 206.334 1026.1 207.754 1024.35 207.754H991.111C989.342 207.754 987.923 206.313 987.923 204.565V3.18849C987.923 1.41953 989.364 0 991.111 0H1024.35C1026.12 0 1027.54 1.44137 1027.54 3.18849V59.8606C1027.54 62.5904 1030.71 64.0755 1032.8 62.3065C1040.69 55.602 1057.41 44.748 1083.16 44.748C1120.38 44.748 1138.24 69.6881 1144.86 81.8306C1151.45 93.973 1154.77 108.671 1154.77 125.945V131.056C1154.77 148.308 1151.47 163.028 1144.86 175.17C1138.24 187.313 1120.38 212.253 1083.16 212.253V212.231ZM1071.02 177.07C1083.38 177.07 1093.71 173.074 1102.03 165.081C1110.33 157.088 1114.5 145.426 1114.5 130.073V126.884C1114.5 111.532 1110.4 99.8695 1102.18 91.8765C1093.97 83.8834 1083.6 79.8869 1071.02 79.8869C1058.44 79.8869 1048.33 83.8834 1040.01 91.8765C1031.69 99.8695 1027.54 111.532 1027.54 126.884V130.073C1027.54 145.426 1031.69 157.088 1040.01 165.081C1048.33 173.074 1058.66 177.07 1071.02 177.07Z" fill="#0A56C6"/>
+            <path d="M1200.42 212.232C1194.63 212.232 1189.45 210.966 1184.87 208.41C1180.28 205.855 1176.68 202.317 1174.01 197.775C1171.37 193.254 1170.04 188.035 1170.04 182.16C1170.04 176.285 1171.37 171.066 1174.01 166.545C1176.66 162.025 1180.28 158.465 1184.87 155.91C1189.45 153.354 1194.63 152.088 1200.42 152.088C1206.2 152.088 1211.38 153.376 1215.97 155.91C1220.55 158.465 1224.16 162.003 1226.82 166.545C1229.46 171.088 1230.8 176.285 1230.8 182.16C1230.8 188.035 1229.46 193.254 1226.82 197.775C1224.16 202.317 1220.55 205.855 1215.97 208.41C1211.38 210.966 1206.2 212.232 1200.42 212.232ZM1200.42 206.161C1207.65 206.161 1213.45 203.977 1217.84 199.588C1222.23 195.198 1224.42 189.389 1224.42 182.16C1224.42 174.931 1222.23 169.122 1217.84 164.733C1213.45 160.343 1207.65 158.159 1200.42 158.159C1193.19 158.159 1187.38 160.343 1182.99 164.733C1178.6 169.122 1176.42 174.931 1176.42 182.16C1176.42 189.389 1178.6 195.198 1182.99 199.588C1187.38 203.977 1193.19 206.161 1200.42 206.161ZM1190 197.163V166.567C1190 166.152 1190.33 165.825 1190.74 165.825H1202.3C1205.85 165.825 1208.56 166.698 1210.4 168.423C1212.23 170.149 1213.15 172.18 1213.15 174.495C1213.15 176.329 1212.69 177.945 1211.77 179.343C1210.86 180.741 1209.39 181.833 1207.36 182.597C1209 182.662 1210.18 183.208 1210.9 184.169C1211.62 185.13 1211.99 186.441 1211.99 188.078V197.185C1211.99 197.6 1211.66 197.928 1211.25 197.928H1206.68C1206.27 197.928 1205.94 197.6 1205.94 197.185V189.258C1205.94 187.576 1204.59 186.222 1202.91 186.222H1196.68C1196.38 186.222 1196.11 186.484 1196.11 186.79V197.185C1196.11 197.6 1195.79 197.928 1195.37 197.928H1190.81C1190.39 197.928 1190.07 197.6 1190.07 197.185L1190 197.163ZM1196.09 180.151C1196.09 180.457 1196.36 180.719 1196.66 180.719H1202.32C1203.95 180.719 1205.16 180.238 1205.94 179.277C1206.71 178.316 1207.1 177.203 1207.1 175.958C1207.1 174.604 1206.71 173.49 1205.94 172.638C1205.18 171.765 1203.95 171.328 1202.32 171.328H1196.66C1196.36 171.328 1196.09 171.59 1196.09 171.896V180.173V180.151Z" fill="#0A56C6"/>
+          </svg>
+        </div>
+        <div class="nav-divider"></div>
         <h2>Herramientas</h2>
-        <button class="nav-btn active" id="nav-pera">Estructura PERA</button>
-        <button class="nav-btn" id="nav-qpc">Pirámide QPC</button>
+        <div class="nav-tabs-wrap">
+          <button class="nav-btn active" id="nav-pera">Estructura PERA <span class="nav-draft-badge" id="pera-draft-badge">✓</span></button>
+          <button class="nav-btn" id="nav-qpc">Pirámide QPC <span class="nav-draft-badge" id="qpc-draft-badge">✓</span></button>
+        </div>
         <!-- Misiones ocultas por ahora; toggle desactivado -->
         <button class="nav-btn" id="nav-game" title="Ver misiones y progreso" style="display:none">🎯 Misiones</button>
       </aside>
@@ -1513,6 +2301,10 @@
                     </p>
                   </div>
                   <span class="section-index">Framework PERA</span>
+                </div>
+                <span class="progress-label" id="pera-progress-label">0 de 4 pasos completados</span>
+                <div class="progress-wrap">
+                  <div class="progress-fill" id="pera-progress-fill" style="width:0%"></div>
                 </div>
                 <div class="journey-pills">
                   <span class="journey-pill" id="step-pill-point">1. Punto</span>
@@ -1616,6 +2408,10 @@
                   </div>
                   <span class="section-index">Framework QPC</span>
                 </div>
+                <span class="progress-label" id="qpc-progress-label">0 de 3 pasos completados</span>
+                <div class="progress-wrap">
+                  <div class="progress-fill" id="qpc-progress-fill" style="width:0%"></div>
+                </div>
                 <div class="journey-pills">
                   <span class="journey-pill" id="step-pill-que">1. Qué</span>
                   <span class="journey-pill" id="step-pill-porque">2. Por qué</span>
@@ -1715,98 +2511,158 @@
               <section class="section-block settings-panel">
                 <h2 class="section-heading">Contexto de entrega</h2>
                 <p class="section-subtitle">
-                  Ajusta lo esencial para que la propuesta de IA salga más útil y alineada al contexto.
+                  Ajusta el contexto para que la IA calibre mejor el análisis.
                 </p>
 
-                <div class="essentials-grid">
-                  <div class="input-group">
-                    <label>Objetivo</label>
-                    <select id="objective-select">
-                      <option value="informar">Informar</option>
-                      <option value="persuadir">Persuadir</option>
-                      <option value="motivar">Motivar</option>
-                      <option value="vender">Vender</option>
-                      <option value="educar">Educar</option>
-                    </select>
-                  </div>
-                  <div class="input-group">
-                    <label>Audiencia</label>
-                    <input
-                      id="audience-input"
-                      type="text"
-                      placeholder="Ej: equipo comercial de Latam"
-                    />
-                  </div>
-                  <div class="input-group">
-                    <label>Canal</label>
-                    <select id="channel-select">
-                      <option value="presentacion">Presentación</option>
-                      <option value="reunion">Reunión</option>
-                      <option value="email">Email</option>
-                      <option value="mensaje_corto">Mensaje corto</option>
-                    </select>
-                  </div>
-                  <div class="input-group">
-                    <label>Tono</label>
-                    <select id="tone-select">
-                      <option value="formal">Formal</option>
-                      <option value="informal">Informal</option>
-                      <option value="inspirador">Inspirador</option>
-                      <option value="directo">Directo</option>
-                    </select>
-                  </div>
-                </div>
+                <!-- Selects ocultos — usados solo por getSettingsFromForm() -->
+                <select id="objective-select" class="hidden-select">
+                  <option value="informar">Informar</option>
+                  <option value="persuadir">Persuadir</option>
+                  <option value="motivar">Motivar</option>
+                  <option value="vender">Vender</option>
+                  <option value="educar">Educar</option>
+                </select>
+                <select id="channel-select" class="hidden-select">
+                  <option value="presentacion">Presentación</option>
+                  <option value="reunion">Reunión</option>
+                  <option value="email">Email</option>
+                  <option value="mensaje_corto">Mensaje corto</option>
+                </select>
+                <select id="tone-select" class="hidden-select">
+                  <option value="formal">Formal</option>
+                  <option value="informal">Informal</option>
+                  <option value="inspirador">Inspirador</option>
+                  <option value="directo">Directo</option>
+                </select>
+                <select id="formality-select" class="hidden-select">
+                  <option value="alto">Alto</option>
+                  <option value="medio" selected>Medio</option>
+                  <option value="bajo">Bajo</option>
+                </select>
+                <select id="length-select" class="hidden-select">
+                  <option value="corta">Corta</option>
+                  <option value="media" selected>Media</option>
+                  <option value="larga">Larga</option>
+                </select>
+                <select id="industry-select" class="hidden-select">
+                  <option value="general" selected>General</option>
+                  <option value="tecnologia">Tecnología</option>
+                  <option value="salud">Salud</option>
+                </select>
+                <select id="urgency-select" class="hidden-select">
+                  <option value="media" selected>Media</option>
+                  <option value="alta">Alta</option>
+                </select>
+                <select id="argument-style-select" class="hidden-select">
+                  <option value="balanceado" selected>Balanceado</option>
+                  <option value="datos">Basado en datos</option>
+                </select>
+                <select id="cta-type-select" class="hidden-select">
+                  <option value="directa" selected>Directa</option>
+                  <option value="suave">Suave</option>
+                </select>
 
-                <details class="advanced-tuning">
-                  <summary>Ajustes avanzados</summary>
-                  <div class="fine-tuning-grid">
-                    <div class="input-group">
-                      <label>Nivel de formalidad</label>
-                      <select id="formality-select">
-                        <option value="alto">Alto</option>
-                        <option value="medio" selected>Medio</option>
-                        <option value="bajo">Bajo</option>
-                      </select>
-                    </div>
-                    <div class="input-group">
-                      <label>Longitud</label>
-                      <select id="length-select">
-                        <option value="corta">Corta</option>
-                        <option value="media" selected>Media</option>
-                        <option value="larga">Larga</option>
-                      </select>
-                    </div>
-                    <div class="input-group">
-                      <label>Industria</label>
-                      <select id="industry-select">
-                        <option value="general" selected>General</option>
-                        <option value="tecnologia">Tecnología</option>
-                        <option value="salud">Salud</option>
-                      </select>
-                    </div>
-                    <div class="input-group">
-                      <label>Urgencia</label>
-                      <select id="urgency-select">
-                        <option value="media" selected>Media</option>
-                        <option value="alta">Alta</option>
-                      </select>
-                    </div>
-                    <div class="input-group">
-                      <label>Estilo argumentativo</label>
-                      <select id="argument-style-select">
-                        <option value="balanceado" selected>Balanceado</option>
-                        <option value="datos">Basado en datos</option>
-                      </select>
-                    </div>
-                    <div class="input-group">
-                      <label>Tipo de CTA</label>
-                      <select id="cta-type-select">
-                        <option value="directa" selected>Directa</option>
-                        <option value="suave">Suave</option>
-                      </select>
+                <!-- UI visible -->
+                <div class="settings-stack">
+
+                  <div class="settings-field">
+                    <label>Objetivo</label>
+                    <div class="pill-select" data-target="objective-select">
+                      <button class="pill-opt active" data-value="informar">Informar</button>
+                      <button class="pill-opt" data-value="persuadir">Persuadir</button>
+                      <button class="pill-opt" data-value="motivar">Motivar</button>
+                      <button class="pill-opt" data-value="vender">Vender</button>
+                      <button class="pill-opt" data-value="educar">Educar</button>
                     </div>
                   </div>
-                </details>
+
+                  <div class="settings-field">
+                    <label>Audiencia</label>
+                    <div class="input-group" style="margin:0">
+                      <input id="audience-input" type="text" placeholder="Ej: equipo comercial de Latam" />
+                    </div>
+                  </div>
+
+                  <div class="settings-field">
+                    <label>Canal</label>
+                    <div class="seg-control" data-target="channel-select">
+                      <button class="seg-btn active" data-value="presentacion">Presentación</button>
+                      <button class="seg-btn" data-value="reunion">Reunión</button>
+                      <button class="seg-btn" data-value="email">Email</button>
+                      <button class="seg-btn" data-value="mensaje_corto">Mensaje</button>
+                    </div>
+                  </div>
+
+                  <div class="settings-field">
+                    <label>Tono</label>
+                    <div class="seg-control" data-target="tone-select">
+                      <button class="seg-btn active" data-value="formal">Formal</button>
+                      <button class="seg-btn" data-value="informal">Informal</button>
+                      <button class="seg-btn" data-value="inspirador">Inspirador</button>
+                      <button class="seg-btn" data-value="directo">Directo</button>
+                    </div>
+                  </div>
+
+                  <details class="advanced-tuning">
+                    <summary>Ajustes avanzados</summary>
+                    <div class="advanced-tuning-body">
+
+                      <div class="settings-field">
+                        <label>Formalidad</label>
+                        <div class="seg-control" data-target="formality-select">
+                          <button class="seg-btn" data-value="alto">Alta</button>
+                          <button class="seg-btn active" data-value="medio">Media</button>
+                          <button class="seg-btn" data-value="bajo">Baja</button>
+                        </div>
+                      </div>
+
+                      <div class="settings-field">
+                        <label>Longitud del mensaje</label>
+                        <div class="seg-control" data-target="length-select">
+                          <button class="seg-btn" data-value="corta">Corta</button>
+                          <button class="seg-btn active" data-value="media">Media</button>
+                          <button class="seg-btn" data-value="larga">Larga</button>
+                        </div>
+                      </div>
+
+                      <div class="settings-field">
+                        <label>Industria</label>
+                        <div class="seg-control" data-target="industry-select">
+                          <button class="seg-btn active" data-value="general">General</button>
+                          <button class="seg-btn" data-value="tecnologia">Tecnología</button>
+                          <button class="seg-btn" data-value="salud">Salud</button>
+                        </div>
+                      </div>
+
+                      <div class="settings-row-2">
+                        <div class="settings-field">
+                          <label>Urgencia</label>
+                          <div class="seg-control" data-target="urgency-select">
+                            <button class="seg-btn active" data-value="media">Media</button>
+                            <button class="seg-btn" data-value="alta">Alta</button>
+                          </div>
+                        </div>
+                        <div class="settings-field">
+                          <label>Argumento</label>
+                          <div class="seg-control" data-target="argument-style-select">
+                            <button class="seg-btn active" data-value="balanceado">Balanceado</button>
+                            <button class="seg-btn" data-value="datos">Datos</button>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="settings-field">
+                        <label>Tipo de llamada a la acción</label>
+                        <div class="seg-control" data-target="cta-type-select">
+                          <button class="seg-btn active" data-value="directa">Directa — "Haz esto ahora"</button>
+                          <button class="seg-btn" data-value="suave">Suave — "Te invito a considerar"</button>
+                        </div>
+                      </div>
+
+                    </div>
+                  </details>
+
+                </div>
               </section>
 
               <section class="section-block action-panel">
@@ -1852,102 +2708,31 @@
             <h2 class="section-heading" style="margin-bottom: 0.2rem">
               Lectura ejecutiva de la IA
             </h2>
-            <p class="helper-text" id="aiPlaceholder">
-              Completa tu mensaje y lanza el análisis para ver resumen, propuesta y contraste accionable.
-            </p>
+            <div id="aiPlaceholder" class="ai-empty-state">
+              <div class="ai-empty-icon">🧠</div>
+              <p class="ai-empty-title">Análisis listo para ejecutarse</p>
+              <p class="ai-empty-desc">Completa los pasos del framework y presiona <strong>Analizar con IA</strong> para ver resumen ejecutivo, puntuación, propuesta y contraste por bloque.</p>
+            </div>
             <div id="aiResult"></div>
           </section>
 
-          <!-- THEORY PERA -->
-          <details
-            class="section-block theory-block pera-only"
-            id="theory-pera"
-          >
-            <summary>Ver teoría PERA completa</summary>
-            <div class="pera-cards">
-              <div class="pera-card">
-                <div class="card-letter">P</div>
-                <div class="card-title">Punto</div>
-                <div class="card-description">
-                  Disparador + Respuesta. Conecta claramente causa y efecto.
-                </div>
-                <div class="card-example">
-                  "Las empresas pierden talento por no dar trabajo flexible."
-                </div>
-              </div>
-              <div class="pera-card">
-                <div class="card-letter">E</div>
-                <div class="card-title">Ejemplo</div>
-                <div class="card-description">
-                  Cuenta una historia específica con lugar, tiempo y personajes.
-                </div>
-                <div class="card-example">
-                  "El martes pasado, Sarah renunció en plena junta..."
-                </div>
-              </div>
-              <div class="pera-card">
-                <div class="card-letter">R</div>
-                <div class="card-title">Razones</div>
-                <div class="card-description">
-                  Sustenta con datos o argumentos.
-                </div>
-                <div class="card-example">
-                  "Según McKinsey 2024, 87% de empleados dejaría su trabajo."
-                </div>
-              </div>
-              <div class="pera-card">
-                <div class="card-letter">A</div>
-                <div class="card-title">Accion</div>
-                <div class="card-description">
-                  Da instrucciones accionables.
-                </div>
-                <div class="card-example">
-                  "Encuesta a tu equipo antes del viernes."
-                </div>
-              </div>
-            </div>
-          </details>
-
-          <!-- THEORY QPC -->
-          <details class="section-block theory-block qpc-only" id="theory-qpc">
-            <summary>Ver teoría Pirámide QPC completa</summary>
-            <div class="pera-cards">
-              <div class="pera-card">
-                <div class="card-letter">Q</div>
-                <div class="card-title">Qué</div>
-                <div class="card-description">
-                  Punto = Intención + Detonante.
-                </div>
-                <div class="card-example">
-                  "Necesitamos eliminar 13 SKUs porque solo representan 1.8% de
-                  ventas."
-                </div>
-              </div>
-              <div class="pera-card">
-                <div class="card-letter">P</div>
-                <div class="card-title">Por qué</div>
-                <div class="card-description">
-                  Evidencia y Relevancia. Contexto del impacto.
-                </div>
-                <div class="card-example">
-                  "Consumen recursos sin añadir valor. Eliminar permitirá reenfocar."
-                </div>
-              </div>
-              <div class="pera-card">
-                <div class="card-letter">C</div>
-                <div class="card-title">Cómo</div>
-                <div class="card-description">
-                  Pasos Operativos. Qué sigue concretamente.
-                </div>
-                <div class="card-example">
-                  "La próxima semana haremos piloto con 20% de SKUs."
-                </div>
-              </div>
-            </div>
-          </details>
         </div>
       </main>
     </div>
+
+    <!-- Botón flotante Analizar -->
+    <button class="float-analyze-btn" id="floatAnalyzeBtn" type="button">
+      <span>⚡</span> Analizar con IA
+    </button>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <span class="footer-brand">Herramientas de Comunicación</span>
+      <div class="footer-usage">
+        <span class="footer-usage-dot" id="footer-usage-dot"></span>
+        <span id="footer-usage-text">Uso IA hoy: 0/12</span>
+      </div>
+    </footer>
 
     <script>
       let currentMode = "pera"; // 'pera' | 'qpc'
@@ -2167,6 +2952,11 @@
                 () => cardNode.classList.remove("is-revealing"),
                 460,
               );
+              // Flash verde al desbloquear
+              cardNode.classList.remove("card-unlock-flash");
+              void cardNode.offsetWidth;
+              cardNode.classList.add("card-unlock-flash");
+              window.setTimeout(() => cardNode.classList.remove("card-unlock-flash"), 750);
             }
           }
           if (stateNode) {
@@ -2211,6 +3001,8 @@
           }
         }
         updateIterationUI();
+        updateProgressBar();
+        updateFloatBtn();
       }
 
       function saveIterationState() {
@@ -2276,6 +3068,11 @@
           "error",
           "ready",
         );
+
+        // Sincronizar botón flotante aquí — antes de cualquier return temprano
+        if (typeof syncFloatBtnState === 'function') syncFloatBtnState();
+        if (typeof updateFooter === 'function') updateFooter();
+        if (typeof updateFloatBtn === 'function') updateFloatBtn();
 
         if (analysisPhase === "loading") {
           analyzeButton.disabled = true;
@@ -2346,7 +3143,7 @@
         return ADMIN_TOKEN ? { "X-Admin-Token": ADMIN_TOKEN } : {};
       }
 
-      async function fetchWithTimeout(url, options = {}, timeoutMs = 25000) {
+      async function fetchWithTimeout(url, options = {}, timeoutMs = 60000) {
         const controller = new AbortController();
         const timer = window.setTimeout(() => controller.abort(), timeoutMs);
         // Inject admin header into all requests
@@ -2376,8 +3173,66 @@
           .replace(/>/g, "&gt;");
         return safe
           .trim()
-          .split(/\n{2,}/)                                // divide por doble salto (párrafos)
+          .split(/\n{2,}/)
           .map(para => `<p>${para.trim().replace(/\n/g, "<br>")}</p>`)
+          .join("");
+      }
+
+      // Escapa HTML y convierte **bold** en una sola línea (sin párrafos)
+      function boldify(value) {
+        if (typeof value !== "string" || !value.trim()) return "";
+        return value
+          .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+          .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+      }
+
+      // Convierte texto con **negritas** en HTML rico con párrafos y espaciado
+      function formatRichText(value) {
+        if (typeof value !== "string" || !value.trim()) return "";
+
+        // 1. Escape HTML entities
+        const safe = value
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
+
+        // 2. Convert **bold** → <strong>
+        const withBold = safe.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+
+        // 3. Normalize line endings, then split into blocks.
+        //    Accept double-newline OR a single newline followed by a bullet/dash as block boundaries.
+        const normalized = withBold.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+
+        // Split on 2+ newlines. Also treat a single newline before a bullet as a block break.
+        const rawBlocks = normalized.split(/\n{2,}/);
+
+        const blocks = [];
+        rawBlocks.forEach(block => {
+          // If the block contains single-newline-separated lines that are bullets, keep as one list block
+          // Otherwise, further split on single newlines for long paragraphs
+          if (/\n[-•·–▸]\s/.test(block) || /^[-•·–▸]\s/.test(block.trim())) {
+            blocks.push(block);
+          } else {
+            // Split single newlines as separate paragraphs
+            block.split(/\n/).forEach(line => { if (line.trim()) blocks.push(line.trim()); });
+          }
+        });
+
+        return blocks
+          .map(block => {
+            const line = block.trim();
+            if (!line) return "";
+
+            // Bullet list block
+            if (/^[-•·–▸]\s/.test(line) || /\n[-•·–▸]\s/.test(line)) {
+              const lines = line.split(/\n/);
+              const items = lines.map(l => l.replace(/^[-•·–▸]\s*/, "").trim()).filter(Boolean);
+              return `<ul>${items.map(i => `<li>${i}</li>`).join("")}</ul>`;
+            }
+
+            return `<p>${line}</p>`;
+          })
+          .filter(Boolean)
           .join("");
       }
 
@@ -2409,6 +3264,41 @@
           const node = document.getElementById(id);
           if (node) node.value = next[key] ?? DEFAULT_SETTINGS[key];
         });
+        syncCustomControls();
+      }
+
+      // ── Sync custom seg/pill controls from hidden selects ──
+      function syncCustomControls() {
+        document.querySelectorAll('.seg-control, .pill-select').forEach(ctrl => {
+          const targetId = ctrl.dataset.target;
+          if (!targetId) return;
+          const select = document.getElementById(targetId);
+          if (!select) return;
+          const val = select.value;
+          ctrl.querySelectorAll('.seg-btn, .pill-opt').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.value === val);
+          });
+        });
+      }
+
+      // ── Init custom controls: clicks → hidden select → saveDraft ──
+      function initCustomControls() {
+        document.querySelectorAll('.seg-control, .pill-select').forEach(ctrl => {
+          ctrl.addEventListener('click', e => {
+            const btn = e.target.closest('.seg-btn, .pill-opt');
+            if (!btn) return;
+            const targetId = ctrl.dataset.target;
+            const select = document.getElementById(targetId);
+            if (!select) return;
+            // Update active state
+            ctrl.querySelectorAll('.seg-btn, .pill-opt').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            // Sync hidden select
+            select.value = btn.dataset.value;
+            // Trigger existing input pipeline
+            select.dispatchEvent(new Event('input', { bubbles: true }));
+          });
+        });
       }
 
       function clearRewrites() {
@@ -2417,7 +3307,8 @@
       function resetAnalysisUI() {
         clearRewrites();
         document.getElementById("aiResult").innerHTML = "";
-        document.getElementById("aiPlaceholder").style.display = "block";
+        const placeholder = document.getElementById("aiPlaceholder");
+        if (placeholder) placeholder.style.display = "";
         setAnalysisState("idle");
       }
 
@@ -2427,12 +3318,12 @@
         return `
           <div class="comparison-grid">
             <div class="comparison-card original">
-              <div class="comparison-label">Tu version</div>
+              <div class="comparison-label"><span class="comparison-label-icon">📝</span>Tu version</div>
               <div class="comparison-body">${escapeForHTML(original)}</div>
             </div>
             <div class="comparison-card proposed">
-              <div class="comparison-label">Propuesta IA</div>
-              <div class="comparison-body">${escapeForHTML(proposed)}</div>
+              <div class="comparison-label"><span class="comparison-label-icon">✨</span>Propuesta IA</div>
+              <div class="comparison-body rich-text proposed-rich">${formatRichText(proposed)}</div>
             </div>
           </div>
         `;
@@ -2505,6 +3396,7 @@
           const key = currentMode === "pera" ? DRAFT_KEY_PERA : DRAFT_KEY_QPC;
           localStorage.setItem(key, JSON.stringify(getPayload()));
           showSaveStatus();
+          if (typeof updateDraftBadges === 'function') updateDraftBadges();
         } catch {}
       }
 
@@ -2569,7 +3461,8 @@
       }
 
       function renderAnalysis(analysis) {
-        document.getElementById("aiPlaceholder").style.display = "none";
+        const placeholder = document.getElementById("aiPlaceholder");
+        if (placeholder) placeholder.style.display = "none";
 
         const sectionFeedback = analysis?.section_feedback || {};
         let feedbackHTML = "";
@@ -2580,12 +3473,10 @@
           const originalText =
             document.getElementById(step.inputId)?.value.trim() || "";
           latestRewrites[step.id] = fb.rewrite || "";
-          const summaryPreview =
-            (fb.suggestion || fb.diagnosis || "Revisa el detalle y aplica la mejora que te sirva.")
-              .trim()
-              .slice(0, 140);
-          const summaryLine =
-            summaryPreview.length >= 140 ? `${summaryPreview}...` : summaryPreview;
+          // Strip markdown asterisks para el preview del summary
+          const rawPreview = (fb.suggestion || fb.diagnosis || "Revisa el detalle y aplica la mejora que te sirva.")
+            .trim().replace(/\*\*(.+?)\*\*/g, "$1");
+          const summaryLine = rawPreview.length > 140 ? rawPreview.slice(0, 140) + "..." : rawPreview;
           feedbackHTML += `
             <details class="feedback-card feedback-detail">
               <summary class="feedback-summary">
@@ -2605,8 +3496,14 @@
               </summary>
               <div class="feedback-detail-body">
                 <div class="feedback-copy">
-                  <p><strong>Diagnostico:</strong> ${escapeForHTML(fb.diagnosis)}</p>
-                  <p><strong>Sugerencia:</strong> ${escapeForHTML(fb.suggestion)}</p>
+                  <div class="feedback-section diagnosis-section">
+                    <div class="feedback-section-label">⚠️ Diagnóstico</div>
+                    <div class="rich-text">${formatRichText(fb.diagnosis || "Sin diagnóstico.")}</div>
+                  </div>
+                  <div class="feedback-section suggestion-section">
+                    <div class="feedback-section-label">💡 Sugerencia</div>
+                    <div class="rich-text">${formatRichText(fb.suggestion || "Sin sugerencia.")}</div>
+                  </div>
                 </div>
                 ${renderComparisonBlock(originalText, fb.rewrite)}
                 <div class="feedback-actions">
@@ -2627,33 +3524,35 @@
           "Aplica la mejora más útil, vuelve a analizar y compara si sube la accionabilidad.";
 
         // Build carousel slides data
+        const SCORE_ICONS = { clarity: "💡", coherence: "🔗", persuasion: "🎯", actionability: "⚡" };
+
         const carouselSlides = [
           {
             icon: "📊",
             title: "Resumen ejecutivo",
             content: `
-              <div class="analysis-overview-shell">
-                <article class="analysis-summary-card">
-                  <span class="overview-kicker">Lectura ejecutiva</span>
-                  <h3 class="analysis-summary-title">${escapeForHTML(analysis?.summary || "La IA ya terminó su lectura del mensaje.")}</h3>
-                  <p class="analysis-summary-copy">${escapeForHTML(nextStep)}</p>
-                </article>
-                <div class="analysis-rail">
-                  <article class="analysis-sidecard">
-                    <span class="overview-kicker">Mayor fortaleza</span>
-                    <strong>${escapeForHTML(strongest.label)} · ${strongest.value}/100</strong>
-                    <p>${escapeForHTML(getScoreDescriptor(strongest.value))}</p>
-                  </article>
-                  <article class="analysis-sidecard">
-                    <span class="overview-kicker">Mayor riesgo</span>
-                    <strong>${escapeForHTML(weakest.label)} · ${weakest.value}/100</strong>
-                    <p>${escapeForHTML(getScoreDescriptor(weakest.value))}</p>
-                  </article>
-                  <article class="analysis-sidecard">
-                    <span class="overview-kicker">Siguiente movimiento</span>
-                    <strong>Refina y vuelve a medir</strong>
-                    <p>${escapeForHTML(nextStep)}</p>
-                  </article>
+              <div class="exec-summary-card">
+                <div class="exec-summary-eyebrow">Lectura ejecutiva</div>
+                <h3 class="exec-summary-headline">${boldify(analysis?.summary || "La IA ya terminó su lectura del mensaje.")}</h3>
+                <div class="rich-text exec-summary-body">${formatRichText(nextStep)}</div>
+              </div>
+              <div class="exec-insights-row">
+                <div class="exec-insight-card">
+                  <span class="exec-insight-icon">💪</span>
+                  <div class="exec-insight-label">Mayor fortaleza</div>
+                  <div class="exec-insight-value">${escapeForHTML(strongest.label)}</div>
+                  <div class="exec-insight-sub">${strongest.value}/100 · ${escapeForHTML(getScoreDescriptor(strongest.value))}</div>
+                </div>
+                <div class="exec-insight-card">
+                  <span class="exec-insight-icon">⚠️</span>
+                  <div class="exec-insight-label">Mayor riesgo</div>
+                  <div class="exec-insight-value">${escapeForHTML(weakest.label)}</div>
+                  <div class="exec-insight-sub">${weakest.value}/100 · ${escapeForHTML(getScoreDescriptor(weakest.value))}</div>
+                </div>
+                <div class="exec-insight-card">
+                  <span class="exec-insight-icon">🚀</span>
+                  <div class="exec-insight-label">Siguiente movimiento</div>
+                  <div class="exec-insight-value" style="font-size:0.83rem;font-weight:600">${boldify(nextStep.slice(0,90))}${nextStep.length > 90 ? '…' : ''}</div>
                 </div>
               </div>`
           },
@@ -2661,43 +3560,44 @@
             icon: "🎯",
             title: "Puntuación",
             content: `
-              <div class="analysis-section-head" style="margin-bottom:1rem">
-                <span class="overview-kicker">Lectura por criterio</span>
-                <h4 class="comparison-section-title">Dónde está fuerte y dónde conviene intervenir</h4>
-                <p>Usa estos puntajes como señal de prioridad.</p>
+              <div style="margin-bottom:1.25rem">
+                <span class="slide-kicker"><span class="slide-kicker-dot"></span>Lectura por criterio</span>
+                <h3 class="slide-title">Dónde está fuerte y dónde intervenir</h3>
+                <p class="slide-desc">Cada puntaje señala cuánto impacto tiene mejorar ese criterio.</p>
               </div>
-              <div class="score-grid">
-                ${scoreEntries.map((entry) => renderScoreItem(entry.label, entry.value)).join("")}
+              <div class="score-grid-v2">
+                ${scoreEntries.map(e => {
+                  const tone = e.value >= 85 ? 'tone-strong' : e.value >= 70 ? 'tone-mid' : 'tone-weak';
+                  const barClass = e.value >= 80 ? 'high' : e.value >= 60 ? 'mid' : 'low';
+                  const icon = SCORE_ICONS[e.key] || '📊';
+                  return `<div class="score-item-v2 ${tone}">
+                    <div class="score-icon-wrap">${icon}</div>
+                    <div class="score-item-v2-body">
+                      <div class="score-item-v2-label">${escapeForHTML(e.label)}</div>
+                      <div class="score-item-v2-number">${e.value}<span style="font-size:0.9rem;font-weight:600;opacity:0.45">/100</span></div>
+                      <div class="score-bar-v2-wrap"><div class="score-bar-v2-fill ${barClass}" style="width:${e.value}%"></div></div>
+                    </div>
+                  </div>`;
+                }).join("")}
               </div>`
           },
           {
             icon: "✍️",
             title: "Propuesta",
             content: `
-              <div class="analysis-section-head" style="margin-bottom:1rem">
-                <span class="overview-kicker">Resultado recomendado</span>
-                <h4 class="comparison-section-title">Versión propuesta para reutilizar o editar</h4>
-                <p>Esta es la mejor base para usar ya mismo.</p>
+              <div style="margin-bottom:1.25rem">
+                <span class="slide-kicker"><span class="slide-kicker-dot"></span>Versión recomendada</span>
+                <h3 class="slide-title">Mensaje listo para usar o editar</h3>
               </div>
-              <article class="proposal-card proposal-card-main">
-                <div class="proposal-copy">${formatProseHTML(analysis?.full_rewrite || "Sin propuesta completa generada.")}</div>
-                <div class="proposal-meta">
-                  <div class="proposal-note">
-                    <strong>Fortaleza principal</strong>
-                    <span>${escapeForHTML(strongest.label)} es tu punto más sólido hoy.</span>
-                  </div>
-                  <div class="proposal-note">
-                    <strong>Mejora prioritaria</strong>
-                    <span>Sube primero ${escapeForHTML(weakest.label.toLowerCase())} para notar el mayor impacto.</span>
-                  </div>
-                  <div class="proposal-note">
-                    <strong>Próximo paso</strong>
-                    <span>${escapeForHTML(nextStep)}</span>
-                  </div>
-                </div>
-              </article>
+              <div class="proposal-reading">
+                <div class="proposal-copy rich-text">${formatRichText(analysis?.full_rewrite || "Sin propuesta completa generada.")}</div>
+              </div>
+              <div class="proposal-chips">
+                <span class="proposal-chip green">💪 ${escapeForHTML(strongest.label)} es tu punto más sólido</span>
+                <span class="proposal-chip">⚠️ Sube ${escapeForHTML(weakest.label.toLowerCase())} para mayor impacto</span>
+              </div>
               <details class="analysis-deep-dive" style="margin-top:14px">
-                <summary>Ver comparación completa del guión</summary>
+                <summary>Ver comparación original vs propuesta</summary>
                 <div class="analysis-deep-dive-body">
                   ${renderComparisonBlock(originalScript, analysis?.full_rewrite)}
                 </div>
@@ -2707,10 +3607,10 @@
             icon: "🔍",
             title: "Detalle por bloque",
             content: `
-              <div class="analysis-section-head" style="margin-bottom:1rem">
-                <span class="overview-kicker">Antes vs después</span>
-                <h4 class="comparison-section-title">Contraste por bloque</h4>
-                <p>Abre solo el bloque que quieres trabajar.</p>
+              <div style="margin-bottom:1.25rem">
+                <span class="slide-kicker"><span class="slide-kicker-dot"></span>Antes vs después</span>
+                <h3 class="slide-title">Contraste por bloque</h3>
+                <p class="slide-desc">Abre solo el bloque que quieres trabajar y aplica la sugerencia.</p>
               </div>
               <div class="feedback-list">${feedbackHTML}</div>`
           },
@@ -2718,16 +3618,16 @@
             icon: "🔀",
             title: "Alternativas",
             content: `
-              <div class="analysis-section-head" style="margin-bottom:1rem">
-                <span class="overview-kicker">Rutas alternativas</span>
-                <h4 class="comparison-section-title">Otras formas de contarlo</h4>
-                <p>Prueba una de estas rutas si la versión principal no encaja con tu contexto.</p>
+              <div style="margin-bottom:1.25rem">
+                <span class="slide-kicker"><span class="slide-kicker-dot"></span>Rutas alternativas</span>
+                <h3 class="slide-title">Otras formas de contarlo</h3>
+                <p class="slide-desc">Prueba una si la versión principal no encaja con tu contexto.</p>
               </div>
               <div class="alternatives-grid">
                 ${alternatives.slice(0, 3).map((a) => `
                   <article class="alternative-card">
                     <h5>${escapeForHTML(a.label)}</h5>
-                    <div>${formatProseHTML(a.text)}</div>
+                    <div class="rich-text">${formatRichText(a.text)}</div>
                   </article>`).join("")}
               </div>`
           }] : [])
@@ -2745,9 +3645,13 @@
           <div class="analysis-report carousel-shell">
             <div class="carousel-header">
               <div class="carousel-label">
-                <span class="carousel-icon" id="carouselIcon">${carouselSlides[0].icon}</span>
-                <span class="carousel-title" id="carouselTitle">${carouselSlides[0].title}</span>
-                <span class="carousel-counter" id="carouselCounter">1 / ${total}</span>
+                <div class="carousel-icon-wrap" id="carouselIconWrap">
+                  <span id="carouselIcon">${carouselSlides[0].icon}</span>
+                </div>
+                <div class="carousel-label-text">
+                  <span class="carousel-title" id="carouselTitle">${carouselSlides[0].title}</span>
+                  <span class="carousel-counter" id="carouselCounter">Sección 1 de ${total}</span>
+                </div>
               </div>
               <div class="carousel-nav">
                 <button class="carousel-arrow" id="carouselPrev" aria-label="Anterior" disabled>&#8592;</button>
@@ -2768,7 +3672,8 @@
           const slides = track.querySelectorAll(".carousel-slide");
           const dots   = document.querySelectorAll(".carousel-dot");
 
-          // Guardar scroll ANTES de cambiar el DOM para evitar el salto de altura
+          // Anclar altura del track para evitar salto de layout
+          track.style.minHeight = track.offsetHeight + "px";
           const savedY = window.scrollY;
 
           // 1. Ocultar slide actual
@@ -2778,22 +3683,26 @@
           currentSlide = next;
           const incoming = slides[currentSlide];
           incoming.classList.toggle("dir-prev", dir < 0);
-          void incoming.offsetWidth; // reflow para reiniciar la animación CSS
+          void incoming.offsetWidth;
           incoming.classList.add("active");
 
-          // 3. Restaurar scroll inmediatamente — evita el salto de posición
+          // 3. Restaurar scroll en dos frames para cubrir el reflow
           window.scrollTo({ top: savedY, behavior: "instant" });
+          requestAnimationFrame(() => window.scrollTo({ top: savedY, behavior: "instant" }));
 
-          // 4. Actualizar encabezado
+          // 4. Liberar la altura anclada tras la animación
+          setTimeout(() => { track.style.minHeight = ""; }, 320);
+
+          // 5. Actualizar encabezado
           document.getElementById("carouselIcon").textContent    = carouselSlides[currentSlide].icon;
           document.getElementById("carouselTitle").textContent   = carouselSlides[currentSlide].title;
-          document.getElementById("carouselCounter").textContent = `${currentSlide + 1} / ${total}`;
+          document.getElementById("carouselCounter").textContent = `Sección ${currentSlide + 1} de ${total}`;
 
-          // 5. Flechas
+          // 6. Flechas
           document.getElementById("carouselPrev").disabled = currentSlide === 0;
           document.getElementById("carouselNext").disabled = currentSlide === total - 1;
 
-          // 6. Dots
+          // 7. Dots
           dots.forEach((d, i) => d.classList.toggle("active", i === currentSlide));
         }
 
@@ -2977,10 +3886,102 @@
         });
       });
 
+      // ── Sticky navbar: sombra al hacer scroll ──────────
+      (function initStickyNav() {
+        const sidebar = document.querySelector('.sidebar');
+        window.addEventListener('scroll', () => {
+          sidebar.classList.toggle('scrolled', window.scrollY > 10);
+        }, { passive: true });
+      })();
+
+      // ── Botón flotante Analizar ────────────────────────
+      const floatBtn = document.getElementById('floatAnalyzeBtn');
+      floatBtn.addEventListener('click', () => {
+        document.querySelector('.ai-output').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        analyzeWithAI();
+      });
+
+      function updateFloatBtn() {
+        const ready = isGuidedFlowComplete() &&
+          (IS_ADMIN || dailyUsageCount < dailyLimit);
+        floatBtn.classList.toggle('visible', ready);
+      }
+
+      function syncFloatBtnState() {
+        if (!floatBtn) return;
+        floatBtn.classList.remove('is-loading', 'is-done');
+        if (analysisPhase === 'loading') {
+          floatBtn.classList.add('is-loading');
+          floatBtn.innerHTML = 'Analizando...';
+        } else if (analysisPhase === 'success') {
+          floatBtn.classList.add('is-done');
+          floatBtn.innerHTML = '<span>✓</span> Listo';
+          // Volver al estado normal tras 2.5s
+          setTimeout(() => {
+            floatBtn.classList.remove('is-done');
+            floatBtn.innerHTML = '<span>⚡</span> Analizar con IA';
+          }, 2500);
+        } else {
+          floatBtn.innerHTML = '<span>⚡</span> Analizar con IA';
+        }
+      }
+
+      // ── Actualizar barra de progreso ───────────────────
+      function updateProgressBar() {
+        const steps = getActiveSteps();
+        const done = steps.filter(s => isStepComplete(s)).length;
+        const total = steps.length;
+        const pct = Math.round((done / total) * 100);
+        const isPera = currentMode === 'pera';
+        const fillId = isPera ? 'pera-progress-fill' : 'qpc-progress-fill';
+        const labelId = isPera ? 'pera-progress-label' : 'qpc-progress-label';
+        const fillEl = document.getElementById(fillId);
+        const labelEl = document.getElementById(labelId);
+        if (fillEl) fillEl.style.width = pct + '%';
+        if (labelEl) {
+          labelEl.textContent = done === total
+            ? `✓ ${total} de ${total} pasos completados — listo para analizar`
+            : `${done} de ${total} pasos completados`;
+          labelEl.style.color = done === total ? 'var(--success-green)' : '';
+        }
+      }
+
+      // ── Indicador de draft en botones de nav ──────────
+      function updateDraftBadges() {
+        ['pera', 'qpc'].forEach(mode => {
+          const key = mode === 'pera' ? DRAFT_KEY_PERA : DRAFT_KEY_QPC;
+          const steps = mode === 'pera' ? GUIDED_STEPS_PERA : GUIDED_STEPS_QPC;
+          let hasDraft = false;
+          try {
+            const raw = localStorage.getItem(key);
+            if (raw) {
+              const draft = JSON.parse(raw);
+              hasDraft = draft?.sections && steps.some(s => (draft.sections[s.id] || '').trim().length > 0);
+            }
+          } catch {}
+          const badge = document.getElementById(mode + '-draft-badge');
+          if (badge) badge.classList.toggle('visible', hasDraft);
+        });
+      }
+
+      // ── Actualizar footer con uso diario ───────────────
+      function updateFooter() {
+        const text = IS_ADMIN
+          ? `Uso IA hoy: ${dailyUsageCount} (sin límite)`
+          : `Uso IA hoy: ${dailyUsageCount}/${dailyLimit}`;
+        const limitReached = !IS_ADMIN && dailyUsageCount >= dailyLimit;
+        const dot = document.getElementById('footer-usage-dot');
+        const textEl = document.getElementById('footer-usage-text');
+        if (textEl) textEl.textContent = text;
+        if (dot) dot.classList.toggle('limit', limitReached);
+      }
+
       // Init
+      initCustomControls();
       loadIterationState();
       setMode("pera"); // This loads the draft and updates UI
       checkBackendHealth();
+      updateDraftBadges();
     </script>
   </body>
 </html>
