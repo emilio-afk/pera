@@ -15,6 +15,7 @@ const parsedRateLimit = Number(process.env.RATE_LIMIT_PER_DAY || 12);
 const RATE_LIMIT_PER_DAY = Number.isFinite(parsedRateLimit)
   ? Math.max(1, Math.floor(parsedRateLimit))
   : 12;
+const ADMIN_TOKEN = process.env.ADMIN_TOKEN || "";
 const MAX_BODY_SIZE = 1_000_000;
 const rateLimitStore = new Map();
 
@@ -90,7 +91,23 @@ function getClientIdentifier(req) {
   return req.socket?.remoteAddress || "unknown";
 }
 
-function consumeRateLimit(clientId) {
+function isAdminRequest(req) {
+  if (!ADMIN_TOKEN) return false;
+  const auth = req.headers["x-admin-token"] || "";
+  return auth === ADMIN_TOKEN;
+}
+
+function consumeRateLimit(clientId, isAdmin = false) {
+  // Admin users bypass rate limiting completely
+  if (isAdmin) {
+    return {
+      allowed: true,
+      count: 0,
+      limit: Infinity,
+      remaining: Infinity,
+    };
+  }
+
   const key = `${clientId}:${getTodayKey()}`;
   const current = rateLimitStore.get(key) || 0;
 
@@ -197,6 +214,42 @@ function buildPrompt(payload) {
   ].join("\n");
 }
 
+function buildQPCPrompt(payload) {
+  const sections = payload.sections || {};
+  const settings = payload.settings || {};
+
+  return [
+    "Analiza y mejora este mensaje QPC (Que, Por que, Como) en espanol.",
+    "Devuelve solo JSON valido sin markdown.",
+    "",
+    "CONFIGURACION:",
+    `- Tono: ${normalizeInput(settings.tone) || "formal"}`,
+    `- Formalidad: ${normalizeInput(settings.formality) || "medio"}`,
+    `- Objetivo: ${normalizeInput(settings.objective) || "informar"}`,
+    `- Audiencia: ${normalizeInput(settings.audience) || "general"}`,
+    `- Canal: ${normalizeInput(settings.channel) || "presentacion"}`,
+    `- Longitud: ${normalizeInput(settings.length) || "media"}`,
+    `- Industria: ${normalizeInput(settings.industry) || "general"}`,
+    `- Urgencia: ${normalizeInput(settings.urgency) || "media"}`,
+    `- Estilo argumentativo: ${normalizeInput(settings.argument_style) || "balanceado"}`,
+    `- Tipo de llamada a la accion: ${normalizeInput(settings.cta_type) || "directa"}`,
+    "",
+    "CONTENIDO QPC:",
+    `Que: ${normalizeInput(sections.que) || "(vacio)"}`,
+    `Por que: ${normalizeInput(sections.porque) || "(vacio)"}`,
+    `Como: ${normalizeInput(sections.como) || "(vacio)"}`,
+    "",
+    "JSON OBJETIVO:",
+    '{"summary":"","scores":{"clarity":0,"coherence":0,"persuasion":0,"actionability":0},"section_feedback":{"que":{"diagnosis":"","suggestion":"","rewrite":""},"porque":{"diagnosis":"","suggestion":"","rewrite":""},"como":{"diagnosis":"","suggestion":"","rewrite":""}},"full_rewrite":"","alternatives":[{"label":"","text":""},{"label":"","text":""},{"label":"","text":""}],"next_step":""}',
+    "",
+    "Reglas:",
+    "1) Puntajes entre 0 y 100.",
+    "2) Reescrituras concisas y accionables.",
+    "3) alternativas diferentes entre si.",
+    "4) Mantener coherencia con tono, formalidad y objetivo.",
+  ].join("\n");
+}
+
 async function analyzeWithOpenAI(payload) {
   if (!OPENAI_API_KEY) {
     throw new Error("Falta OPENAI_API_KEY en el entorno del servidor.");
@@ -243,6 +296,52 @@ async function analyzeWithOpenAI(payload) {
   return analysis;
 }
 
+async function analyzeQPCWithOpenAI(payload) {
+  if (!OPENAI_API_KEY) {
+    throw new Error("Falta OPENAI_API_KEY en el entorno del servidor.");
+  }
+
+  const systemPrompt =
+    "Eres un coach experto en comunicacion ejecutiva y persuasiva. Respondes estrictamente en JSON valido.";
+
+  const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${OPENAI_API_KEY}`,
+    },
+    body: JSON.stringify({
+      model: OPENAI_MODEL,
+      temperature: 0.4,
+      response_format: { type: "json_object" },
+      messages: [
+        { role: "system", content: systemPrompt },
+        { role: "user", content: buildQPCPrompt(payload) },
+      ],
+    }),
+  });
+
+  const raw = await response.text();
+  if (!response.ok) {
+    throw new Error(`Error OpenAI (${response.status}): ${raw.slice(0, 300)}`);
+  }
+
+  let parsedApi;
+  try {
+    parsedApi = JSON.parse(raw);
+  } catch {
+    throw new Error("No se pudo interpretar la respuesta del API de OpenAI.");
+  }
+
+  const content = parsedApi?.choices?.[0]?.message?.content;
+  const analysis = safeJsonParse(content);
+  if (!analysis) {
+    throw new Error("La IA no devolvio JSON valido para el analisis.");
+  }
+
+  return analysis;
+}
+
 function sanitizePayload(body) {
   const sections = body?.sections || {};
   const settings = body?.settings || {};
@@ -253,6 +352,31 @@ function sanitizePayload(body) {
       example: normalizeInput(sections.example),
       reasons: normalizeInput(sections.reasons),
       action: normalizeInput(sections.action),
+    },
+    settings: {
+      tone: normalizeInput(settings.tone),
+      formality: normalizeInput(settings.formality),
+      objective: normalizeInput(settings.objective),
+      audience: normalizeInput(settings.audience),
+      channel: normalizeInput(settings.channel),
+      length: normalizeInput(settings.length),
+      industry: normalizeInput(settings.industry),
+      urgency: normalizeInput(settings.urgency),
+      argument_style: normalizeInput(settings.argument_style),
+      cta_type: normalizeInput(settings.cta_type),
+    },
+  };
+}
+
+function sanitizeQPCPayload(body) {
+  const sections = body?.sections || {};
+  const settings = body?.settings || {};
+
+  return {
+    sections: {
+      que: normalizeInput(sections.que),
+      porque: normalizeInput(sections.porque),
+      como: normalizeInput(sections.como),
     },
     settings: {
       tone: normalizeInput(settings.tone),
@@ -314,7 +438,7 @@ const server = http.createServer(async (req, res) => {
         return;
       }
 
-      const rate = consumeRateLimit(getClientIdentifier(req));
+      const rate = consumeRateLimit(getClientIdentifier(req), isAdminRequest(req));
 
       if (!rate.allowed) {
         sendJson(res, 429, {
@@ -346,12 +470,56 @@ const server = http.createServer(async (req, res) => {
     }
   }
 
+  if (req.method === "POST" && pathname === "/api/qpc/analyze") {
+    try {
+      const body = await readBody(req);
+      const payload = sanitizeQPCPayload(body);
+
+      if (!hasAtLeastOneSection(payload)) {
+        sendJson(res, 400, { error: "Debes completar al menos una seccion QPC." });
+        return;
+      }
+
+      const rate = consumeRateLimit(getClientIdentifier(req), isAdminRequest(req));
+
+      if (!rate.allowed) {
+        sendJson(res, 429, {
+          error: `Limite diario alcanzado (${rate.limit} analisis por cliente).`,
+          code: "rate_limit_exceeded",
+          usage: {
+            count: rate.count,
+            remaining: rate.remaining,
+            limit: rate.limit,
+          },
+        });
+        return;
+      }
+
+      const analysis = await analyzeQPCWithOpenAI(payload);
+      sendJson(res, 200, {
+        analysis,
+        usage: {
+          count: rate.count,
+          remaining: rate.remaining,
+          limit: rate.limit,
+        },
+      });
+      return;
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Error interno.";
+      sendJson(res, 500, { error: message });
+      return;
+    }
+  }
+
   if (req.method === "GET" && pathname === "/api/health") {
+    const admin = isAdminRequest(req);
     sendJson(res, 200, {
       ok: true,
       openaiConfigured: Boolean(OPENAI_API_KEY),
       model: OPENAI_MODEL,
-      rateLimitPerDay: RATE_LIMIT_PER_DAY,
+      rateLimitPerDay: admin ? 999999 : RATE_LIMIT_PER_DAY,
+      admin,
     });
     return;
   }

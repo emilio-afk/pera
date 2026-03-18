@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Node Dev Server",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["--watch", "server.js"],
+      "port": 8787
+    },
+    {
+      "name": "Node Start",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["server.js"],
+      "port": 8787
+    }
+  ]
+}

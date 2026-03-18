@@ -10,6 +10,11 @@
   status = 200
 
 [[redirects]]
+  from = "/api/qpc/analyze"
+  to = "/.netlify/functions/qpc-analyze"
+  status = 200
+
+[[redirects]]
   from = "/api/health"
   to = "/.netlify/functions/health"
   status = 200

@@ -121,6 +121,31 @@ export function sanitizePayload(body) {
   };
 }
 
+export function sanitizeQPCPayload(body) {
+  const sections = body?.sections || {};
+  const settings = body?.settings || {};
+
+  return {
+    sections: {
+      que: normalizeInput(sections.que),
+      porque: normalizeInput(sections.porque),
+      como: normalizeInput(sections.como),
+    },
+    settings: {
+      tone: normalizeInput(settings.tone),
+      formality: normalizeInput(settings.formality),
+      objective: normalizeInput(settings.objective),
+      audience: normalizeInput(settings.audience),
+      channel: normalizeInput(settings.channel),
+      length: normalizeInput(settings.length),
+      industry: normalizeInput(settings.industry),
+      urgency: normalizeInput(settings.urgency),
+      argument_style: normalizeInput(settings.argument_style),
+      cta_type: normalizeInput(settings.cta_type),
+    },
+  };
+}
+
 export function hasAtLeastOneSection(payload) {
   return Object.values(payload.sections || {}).some(Boolean);
 }
@@ -177,36 +202,134 @@ function buildPrompt(payload) {
   ].join("\n");
 }
 
-export async function analyzeWithOpenAI(payload) {
+function buildQPCPrompt(payload) {
+  const sections = payload.sections || {};
+  const settings = payload.settings || {};
+
+  return [
+    "Analiza y mejora este mensaje QPC (Qué, Por qué, Cómo) en espanol.",
+    "Devuelve solo JSON valido sin markdown.",
+    "",
+    "CONFIGURACION:",
+    `- Tono: ${normalizeInput(settings.tone) || "formal"}`,
+    `- Formalidad: ${normalizeInput(settings.formality) || "medio"}`,
+    `- Objetivo: ${normalizeInput(settings.objective) || "informar"}`,
+    `- Audiencia: ${normalizeInput(settings.audience) || "general"}`,
+    `- Canal: ${normalizeInput(settings.channel) || "presentacion"}`,
+    `- Longitud: ${normalizeInput(settings.length) || "media"}`,
+    `- Industria: ${normalizeInput(settings.industry) || "general"}`,
+    `- Urgencia: ${normalizeInput(settings.urgency) || "media"}`,
+    `- Estilo argumentativo: ${normalizeInput(settings.argument_style) || "balanceado"}`,
+    `- Tipo de llamada a la accion: ${normalizeInput(settings.cta_type) || "directa"}`,
+    "",
+    "CONTENIDO QPC:",
+    `Qué: ${normalizeInput(sections.que) || "(vacio)"}`,
+    `Por qué: ${normalizeInput(sections.porque) || "(vacio)"}`,
+    `Cómo: ${normalizeInput(sections.como) || "(vacio)"}`,
+    "",
+    "JSON OBJETIVO:",
+    '{"summary":"","scores":{"clarity":0,"coherence":0,"persuasion":0,"actionability":0},"section_feedback":{"que":{"diagnosis":"","suggestion":"","rewrite":""},"porque":{"diagnosis":"","suggestion":"","rewrite":""},"como":{"diagnosis":"","suggestion":"","rewrite":""}},"full_rewrite":"","alternatives":[{"label":"","text":""},{"label":"","text":""},{"label":"","text":""}],"next_step":""}',
+    "",
+    "Reglas:",
+    "1) Puntajes entre 0 y 100.",
+    "2) Reescrituras concisas y accionables.",
+    "3) Alternativas diferentes entre si.",
+    "4) Mantener coherencia con tono, formalidad y objetivo.",
+  ].join("\n");
+}
+
+export async function analyzeQPCWithOpenAI(payload) {
   const apiKey = process.env.OPENAI_API_KEY || "";
   if (!apiKey) {
-    throw new Error("Falta OPENAI_API_KEY en las variables de entorno de Netlify.");
+    throw new Error(
+      "Falta OPENAI_API_KEY en las variables de entorno de Netlify.",
+    );
   }
 
-  const responseApi = await fetch("https://api.openai.com/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${apiKey}`,
+  const responseApi = await fetch(
+    "https://api.openai.com/v1/chat/completions",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model: OPENAI_MODEL,
+        temperature: 0.4,
+        response_format: { type: "json_object" },
+        messages: [
+          {
+            role: "system",
+            content:
+              "Eres un coach experto en comunicacion ejecutiva y persuasiva. Respondes estrictamente en JSON valido.",
+          },
+          { role: "user", content: buildQPCPrompt(payload) },
+        ],
+      }),
     },
-    body: JSON.stringify({
-      model: OPENAI_MODEL,
-      temperature: 0.4,
-      response_format: { type: "json_object" },
-      messages: [
-        {
-          role: "system",
-          content:
-            "Eres un coach experto en comunicacion persuasiva. Respondes estrictamente en JSON valido.",
-        },
-        { role: "user", content: buildPrompt(payload) },
-      ],
-    }),
-  });
+  );
 
   const raw = await responseApi.text();
   if (!responseApi.ok) {
-    throw new Error(`Error OpenAI (${responseApi.status}): ${raw.slice(0, 300)}`);
+    throw new Error(
+      `Error OpenAI (${responseApi.status}): ${raw.slice(0, 300)}`,
+    );
+  }
+
+  let parsedApi;
+  try {
+    parsedApi = JSON.parse(raw);
+  } catch {
+    throw new Error("No se pudo interpretar la respuesta del API de OpenAI.");
+  }
+
+  const content = parsedApi?.choices?.[0]?.message?.content;
+  const analysis = safeJsonParse(content);
+  if (!analysis) {
+    throw new Error("La IA no devolvio JSON valido para el analisis.");
+  }
+
+  return analysis;
+}
+
+export async function analyzeWithOpenAI(payload) {
+  const apiKey = process.env.OPENAI_API_KEY || "";
+  if (!apiKey) {
+    throw new Error(
+      "Falta OPENAI_API_KEY en las variables de entorno de Netlify.",
+    );
+  }
+
+  const responseApi = await fetch(
+    "https://api.openai.com/v1/chat/completions",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model: OPENAI_MODEL,
+        temperature: 0.4,
+        response_format: { type: "json_object" },
+        messages: [
+          {
+            role: "system",
+            content:
+              "Eres un coach experto en comunicacion persuasiva. Respondes estrictamente en JSON valido.",
+          },
+          { role: "user", content: buildPrompt(payload) },
+        ],
+      }),
+    },
+  );
+
+  const raw = await responseApi.text();
+  if (!responseApi.ok) {
+    throw new Error(
+      `Error OpenAI (${responseApi.status}): ${raw.slice(0, 300)}`,
+    );
   }
 
   let parsedApi;

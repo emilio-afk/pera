@@ -3,34 +3,41 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Guia de Estructura PERA</title>
+    <title>Herramientas de Comunicación</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <style>
       :root {
-        --blue-indigo: #011963;
-        --blue-atlantic: #0744a8;
-        --blue-cobalt: #0a56c6;
-        --green-emerald: #00492c;
-        --green-mint: #04a45a;
-        --orange-terracotta: #e05d2e;
-        --orange-coral: #f66d3a;
-        --pink-mist: #f3b1d7;
-        --graphite: #262626;
-        --bone: #f0f2da;
-        --pastel-yellow: #fdf48b;
-        --sky: #b9d6fe;
-        --bg: var(--bone);
-        --text: var(--graphite);
-        --muted: rgba(38, 38, 38, 0.72);
-        --border: rgba(1, 25, 99, 0.2);
-        --primary: var(--blue-indigo);
-        --panel: var(--sky);
-        --danger: var(--orange-terracotta);
+        color-scheme: light; /* Fuerza tema claro sin importar el OS */
+        /* ── Paleta Astrolab ─────────────────────────────── */
+        --primary-blue: #1A3AA8;      /* Azul royal */
+        --secondary-blue: #2959D6;    /* Azul brillante */
+        --primary-dark: #0D1B52;      /* Navy profundo */
+        --primary-light: #A8C6F0;     /* Azul claro */
+        --success-green: #1A7A45;     /* Verde Astrolab */
+        --secondary-green: #2DB870;   /* Verde brillante */
+        --danger-orange: #E05A35;
+        --neutral-dark: #0D1B52;
+        --neutral-light: #F5F7FF;
         --white: #ffffff;
-        --success: var(--green-mint);
+        --background-light: #F0F3FF;
+        --text-color: #0D1B52;
+        --muted-text: rgba(13, 27, 82, 0.52);
+        --border-color: rgba(26, 58, 168, 0.13);
+        --accent-yellow: #F5F07C;
+        --accent-pink: #F0AED4;
+        --accent-cream: #EEF5E2;
+
+        --bg: var(--background-light);
+        --text: var(--text-color);
+        --muted: var(--muted-text);
+        --border: var(--border-color);
+        --primary: var(--primary-blue);
+        --panel: var(--background-light);
+        --danger: var(--danger-orange);
+        --success: var(--success-green);
       }
 
       * {
@@ -41,26 +48,88 @@
 
       body {
         font-family:
-          "DM Sans",
+          "Plus Jakarta Sans",
           -apple-system,
           BlinkMacSystemFont,
           sans-serif;
         background:
-          radial-gradient(circle at 15% 10%, rgba(243, 177, 215, 0.22), transparent 35%),
-          linear-gradient(145deg, var(--bg), var(--sky));
+          radial-gradient(circle at top left, rgba(26, 58, 168, 0.1), transparent 28%),
+          radial-gradient(circle at bottom right, rgba(45, 184, 112, 0.07), transparent 24%),
+          linear-gradient(180deg, #F0F3FF 0%, #E8EDFF 100%);
         color: var(--text);
         line-height: 1.6;
-        padding: 20px;
+      }
+
+      .app-layout {
+        display: block;
+        min-height: 100vh;
+        position: relative;
+        max-width: 1420px;
+        margin: 0 auto;
+        padding: 28px 24px 56px;
+      }
+
+      .sidebar {
+        width: auto;
+        min-width: 0;
+        background: rgba(255, 255, 255, 0.88);
+        border: 1px solid rgba(26, 58, 168, 0.12);
+        backdrop-filter: blur(14px);
+        padding: 12px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        border-radius: 18px;
+        z-index: 50;
+        margin-bottom: 18px;
+        box-shadow: 0 8px 28px rgba(13, 27, 82, 0.08);
+      }
+
+      .sidebar h2 {
+        font-size: 0.82rem;
+        color: var(--primary-dark);
+        margin-right: auto;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+      }
+
+      .nav-btn {
+        background: transparent;
+        border: 1px solid rgba(26, 58, 168, 0.14);
+        padding: 12px 18px;
+        border-radius: 12px;
+        font-weight: 600;
+        color: var(--text);
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        min-width: 170px;
+      }
+
+      .nav-btn:hover {
+        background: rgba(26, 58, 168, 0.06);
+      }
+
+      .nav-btn.active {
+        background: linear-gradient(135deg, rgba(26, 58, 168, 0.12), rgba(41, 89, 214, 0.09));
+        color: var(--primary-blue);
+        border-color: rgba(26, 58, 168, 0.22);
+        box-shadow: inset 0 0 0 1px rgba(26, 58, 168, 0.08);
+      }
+
+      .main-content {
+        padding: 0;
+        position: relative;
+        min-width: 0;
       }
 
       .controls {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        z-index: 1000;
-        display: flex;
+        position: static;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 10px;
-        flex-direction: column;
+        z-index: auto;
+        width: 100%;
       }
 
       .control-btn {
@@ -73,78 +142,101 @@
         font-size: 0.9rem;
         cursor: pointer;
         transition: all 0.3s ease;
-        box-shadow: 0 8px 20px rgba(1, 25, 99, 0.25);
-        min-width: 120px;
+        box-shadow: none;
+        min-width: 0;
+        width: 100%;
+        min-height: 48px;
+        white-space: normal;
+        line-height: 1.2;
       }
 
       .control-btn:hover {
-        background: var(--blue-atlantic);
-        transform: translateY(-2px);
-        box-shadow: 0 10px 20px rgba(7, 68, 168, 0.35);
+        background: var(--secondary-blue);
+        transform: translateY(-1px);
+        box-shadow: 0 10px 20px rgba(26, 58, 168, 0.18);
       }
 
       #clearBtn {
-        background: var(--orange-terracotta);
+        background: var(--danger-orange);
       }
-
       #clearBtn:hover {
-        background: var(--orange-coral);
+        background: rgba(224, 93, 46, 0.9);
       }
 
       #pdfBtn {
-        background: var(--blue-cobalt);
+        background: var(--primary-blue);
       }
 
       .download-btn {
-        background: var(--green-mint);
+        background: var(--success-green);
       }
-
       .download-btn:hover {
-        background: var(--green-emerald);
-        box-shadow: 0 4px 15px rgba(4, 164, 90, 0.4);
+        background: rgba(4, 164, 90, 0.9);
+        box-shadow: 0 2px 8px rgba(4, 164, 90, 0.2);
       }
 
       .container {
-        max-width: 1200px;
+        max-width: none;
         margin: 0 auto;
-        background: rgba(255, 255, 255, 0.86);
-        border: 1px solid rgba(1, 25, 99, 0.15);
-        backdrop-filter: blur(4px);
-        border-radius: 16px;
-        padding: 40px;
-        box-shadow: 0 16px 40px rgba(1, 25, 99, 0.12);
+        background: rgba(255, 255, 255, 0.90);
+        border: 1px solid rgba(26, 58, 168, 0.1);
+        border-radius: 28px;
+        padding: 28px;
+        box-shadow: 0 16px 48px rgba(13, 27, 82, 0.07);
+        backdrop-filter: blur(12px);
       }
 
       .header {
-        text-align: center;
-        margin-bottom: 40px;
+        text-align: left;
+        margin-bottom: 24px;
       }
 
       .header h1 {
-        font-size: 2.5rem;
-        font-weight: 700;
+        font-size: clamp(2.4rem, 3vw, 3.2rem);
+        font-weight: 800;
         color: var(--primary);
-        margin-bottom: 10px;
+        margin-bottom: 8px;
         letter-spacing: 0.02em;
       }
 
       .header p {
         color: var(--muted);
-        font-size: 1.1rem;
+        font-size: 1rem;
         font-weight: 500;
+        max-width: 760px;
       }
 
-      .message-builder {
-        margin-bottom: 1.8rem;
+      .workspace-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.45fr) minmax(320px, 0.85fr);
+        gap: 22px;
+        align-items: start;
+      }
+
+      .workspace-main,
+      .workspace-side {
+        display: grid;
+        gap: 18px;
+      }
+
+      .workspace-main > .section-block,
+      .workspace-side > .section-block,
+      .workspace-main > .generated-message,
+      .workspace-main > .ai-output {
+        margin-bottom: 0;
+      }
+
+      .workspace-side {
+        position: static;
       }
 
       .section-block {
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(240, 242, 218, 0.72));
-        border: 2px solid var(--border);
-        border-radius: 14px;
-        padding: 22px;
-        margin-bottom: 1.4rem;
-        box-shadow: 0 10px 24px rgba(1, 25, 99, 0.08);
+        background: var(--white);
+        border: 1px solid rgba(26, 58, 168, 0.1);
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 1.2rem;
+        box-shadow: 0 2px 8px rgba(13, 27, 82, 0.05);
       }
 
       .section-heading {
@@ -163,27 +255,34 @@
         display: flex;
         gap: 0.5rem;
         flex-wrap: wrap;
-        margin-bottom: 0.7rem;
+        margin-bottom: 0.9rem;
       }
 
       .journey-pill {
         border-radius: 999px;
-        border: 1px solid var(--border);
+        border: 1px solid rgba(26, 58, 168, 0.18);
         padding: 0.35rem 0.75rem;
         font-weight: 600;
         font-size: 0.84rem;
-        background: rgba(255, 255, 255, 0.75);
-        color: var(--blue-indigo);
+        background: var(--white);
+        color: var(--primary-blue);
+        transition:
+          transform 0.22s ease,
+          background 0.22s ease,
+          border-color 0.22s ease,
+          box-shadow 0.22s ease;
       }
-
       .journey-pill.active {
-        background: rgba(10, 86, 198, 0.14);
-        border-color: rgba(10, 86, 198, 0.35);
+        background: rgba(26, 58, 168, 0.1);
+        border-color: rgba(26, 58, 168, 0.25);
       }
-
       .journey-pill.done {
-        background: rgba(4, 164, 90, 0.16);
-        border-color: rgba(4, 164, 90, 0.38);
+        background: rgba(26, 122, 69, 0.1);
+        border-color: rgba(26, 122, 69, 0.22);
+        color: var(--success-green);
+      }
+      .journey-pill.is-unlocking {
+        animation: pillUnlock 0.55s cubic-bezier(0.22, 1, 0.36, 1);
       }
 
       .guide-status {
@@ -192,24 +291,52 @@
 
       .guided-stack {
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 0.9rem;
+        grid-template-columns: 1fr;
+        gap: 1rem;
       }
 
       .guided-card {
-        border: 2px solid var(--border);
-        border-radius: 12px;
-        padding: 0.9rem;
-        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(26, 58, 168, 0.12);
+        border-radius: 18px;
+        padding: 1rem;
+        background: var(--white);
+        transition:
+          border-color 0.2s ease,
+          box-shadow 0.2s ease,
+          transform 0.2s ease;
       }
-
       .guided-card.complete {
-        border-color: rgba(4, 164, 90, 0.5);
-        background: rgba(4, 164, 90, 0.09);
+        border-color: rgba(26, 122, 69, 0.22);
+        background: rgba(238, 245, 226, 0.4);
       }
-
       .guided-card.locked {
-        opacity: 0.68;
+        opacity: 0.38;
+        pointer-events: none;
+        filter: grayscale(0.25);
+        position: relative;
+      }
+      .guided-card.locked::after {
+        content: "🔒 Completa el paso anterior para desbloquear";
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--primary);
+        background: rgba(247, 251, 250, 0.72);
+        border-radius: 18px;
+        pointer-events: none;
+      }
+      .guided-card.is-current {
+        border-color: rgba(26, 58, 168, 0.3);
+        box-shadow: 0 14px 28px rgba(13, 27, 82, 0.09);
+        transform: translateY(-1px);
+      }
+      .guided-card.is-revealing {
+        animation: stepReveal 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+        transform-origin: top center;
       }
 
       .guided-head {
@@ -221,7 +348,7 @@
       }
 
       .guided-head h3 {
-        color: var(--blue-indigo);
+        color: var(--primary-blue);
         font-size: 1.02rem;
       }
 
@@ -230,8 +357,8 @@
         padding: 0.2rem 0.58rem;
         font-size: 0.75rem;
         font-weight: 700;
-        color: var(--blue-indigo);
-        background: rgba(1, 25, 99, 0.12);
+        color: var(--primary-blue);
+        background: rgba(26, 58, 168, 0.08);
       }
 
       .guided-question {
@@ -243,17 +370,15 @@
       .inline-theory {
         margin-bottom: 0.55rem;
         border-radius: 10px;
-        border: 1px dashed rgba(1, 25, 99, 0.3);
-        background: rgba(185, 214, 254, 0.14);
+        border: 1px dashed rgba(26, 58, 168, 0.18);
+        background: rgba(168, 198, 240, 0.1);
         padding: 0.45rem 0.6rem;
       }
-
       .inline-theory summary {
         cursor: pointer;
         font-weight: 600;
-        color: var(--blue-indigo);
+        color: var(--primary-blue);
       }
-
       .inline-theory p {
         margin-top: 0.45rem;
         font-size: 0.9rem;
@@ -266,20 +391,52 @@
         color: var(--muted);
       }
 
+      .input-group label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--primary);
+      }
+
+      .input-group textarea,
+      .input-group input,
+      .input-group select {
+        width: 100%;
+        min-height: 46px;
+        padding: 12px;
+        border: 1px solid rgba(15, 118, 110, 0.16);
+        border-radius: 12px;
+        background: var(--white);
+        color: var(--text);
+        font-family: inherit;
+        font-size: 0.97rem;
+        transition:
+          border-color 0.2s ease,
+          box-shadow 0.2s ease,
+          background 0.2s ease;
+      }
+
+      .input-group textarea {
+        min-height: 100px;
+        resize: vertical;
+      }
+
       .guided-card textarea:disabled {
-        background: rgba(38, 38, 38, 0.06);
+        background: rgba(22, 53, 52, 0.04);
         cursor: not-allowed;
       }
 
-      @media (max-width: 768px) {
-        .guided-stack {
-          grid-template-columns: 1fr;
-        }
-      }
-
-      .message-builder .input-group textarea {
-        background: var(--white);
-        min-height: 130px;
+      .input-group textarea:focus,
+      .input-group input:focus,
+      .input-group select:focus,
+      .nav-btn:focus-visible,
+      .control-btn:focus-visible,
+      .ai-btn:focus-visible,
+      .mini-btn:focus-visible,
+      summary:focus-visible {
+        outline: none;
+        border-color: rgba(41, 89, 214, 0.5);
+        box-shadow: 0 0 0 4px rgba(26, 58, 168, 0.12);
       }
 
       .fine-tuning-grid {
@@ -297,86 +454,77 @@
       }
 
       .advanced-tuning {
-        border: 1px dashed rgba(1, 25, 99, 0.32);
-        border-radius: 12px;
-        padding: 0.7rem 0.8rem;
-        background: rgba(255, 255, 255, 0.7);
+        border: 1px dashed var(--border-color);
+        border-radius: 8px;
+        padding: 0.6rem 0.7rem;
+        background: var(--white);
       }
-
       .advanced-tuning summary {
         cursor: pointer;
         font-weight: 700;
-        color: var(--blue-indigo);
+        color: var(--primary-blue);
         margin-bottom: 0.6rem;
       }
 
-      .input-group label {
-        display: block;
-        font-weight: 600;
-        margin-bottom: 0.5rem;
-        color: var(--primary);
-      }
-
-      .input-group textarea,
-      .input-group input,
-      .input-group select {
-        width: 100%;
-        min-height: 46px;
-        padding: 12px;
-        border: 2px solid var(--border);
-        border-radius: 8px;
-        background: var(--white);
-        color: var(--text);
-        font-family: inherit;
-        font-size: 0.97rem;
-      }
-
-      .input-group textarea {
-        min-height: 100px;
-        resize: vertical;
-      }
-
-      @media (max-width: 1024px) {
-        .essentials-grid,
-        .fine-tuning-grid {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-      }
-
-      @media (max-width: 768px) {
-        .essentials-grid,
-        .fine-tuning-grid {
-          grid-template-columns: 1fr;
-        }
-      }
-
       .actions-row {
-        display: flex;
-        gap: 0.75rem;
-        align-items: center;
-        flex-wrap: wrap;
-        margin-bottom: 1.75rem;
+        display: grid;
+        gap: 0.85rem;
+        margin-bottom: 0;
       }
 
       .ai-btn {
         border: none;
-        background: linear-gradient(135deg, var(--green-mint), var(--green-emerald));
+        background: var(--success-green);
         color: var(--white);
-        font-weight: 700;
-        border-radius: 10px;
-        padding: 12px 18px;
+        font-weight: 600;
+        border-radius: 8px;
+        padding: 10px 16px;
         cursor: pointer;
-        box-shadow: 0 10px 18px rgba(4, 164, 90, 0.28);
+        box-shadow: 0 2px 8px rgba(4, 164, 90, 0.2);
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease,
+          background 0.2s ease,
+          opacity 0.2s ease;
+        min-width: 210px;
+        justify-self: stretch;
       }
-
+      .ai-btn:hover:not([disabled]) {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(4, 164, 90, 0.22);
+      }
       .ai-btn[disabled] {
         opacity: 0.65;
         cursor: not-allowed;
       }
+      .ai-btn.is-loading {
+        background: var(--secondary-blue);
+        box-shadow: 0 2px 10px rgba(7, 68, 168, 0.22);
+      }
+      .ai-btn.is-loading::after {
+        content: "";
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        margin-left: 10px;
+        border-radius: 50%;
+        border: 2px solid rgba(255, 255, 255, 0.35);
+        border-top-color: var(--white);
+        vertical-align: -2px;
+        animation: spin 0.8s linear infinite;
+      }
+      .ai-btn.is-complete {
+        background: linear-gradient(135deg, #04a45a, #038a4c);
+        box-shadow: 0 4px 14px rgba(4, 164, 90, 0.24);
+      }
+      .ai-btn.is-error {
+        background: var(--danger-orange);
+        box-shadow: 0 4px 14px rgba(224, 93, 46, 0.22);
+      }
 
       .iteration-panel {
         display: flex;
-        gap: 0.5rem;
+        gap: 0.6rem;
         align-items: center;
         flex-wrap: wrap;
       }
@@ -387,290 +535,525 @@
         padding: 6px 12px;
         font-size: 0.86rem;
         font-weight: 700;
-        background: rgba(1, 25, 99, 0.12);
-        color: var(--blue-indigo);
+        background: rgba(26, 58, 168, 0.08);
+        color: var(--primary-blue);
       }
-
       .counter-pill.secondary {
-        background: rgba(4, 164, 90, 0.15);
-        color: var(--green-emerald);
+        background: rgba(26, 122, 69, 0.1);
+        color: var(--success-green);
       }
-
       .counter-pill.limit {
-        background: rgba(224, 93, 46, 0.18);
-        color: var(--orange-terracotta);
-      }
-
-      #analysisStatus {
-        flex-basis: 100%;
+        background: rgba(224, 90, 53, 0.1);
+        color: var(--danger-orange);
       }
 
       .helper-text {
         color: var(--muted);
         font-size: 0.93rem;
       }
-
-      .game-panel {
-        background: linear-gradient(135deg, rgba(1, 25, 99, 0.08), rgba(4, 164, 90, 0.08));
-      }
-
-      .game-top {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        gap: 1rem;
-        flex-wrap: wrap;
-      }
-
-      .game-meta {
-        display: flex;
-        gap: 0.5rem;
-        flex-wrap: wrap;
-        margin: 0.4rem 0 0.8rem;
-      }
-
-      .xp-track {
-        width: 100%;
-        height: 14px;
-        border-radius: 999px;
-        background: rgba(1, 25, 99, 0.15);
-        overflow: hidden;
-      }
-
-      .xp-fill {
-        height: 100%;
-        width: 0%;
-        border-radius: inherit;
-        background: linear-gradient(90deg, var(--orange-coral), var(--green-mint));
-        transition: width 0.35s ease;
-      }
-
-      .game-note {
-        color: var(--blue-indigo);
-        font-size: 0.92rem;
-        font-weight: 600;
-        margin: 0.65rem 0;
-      }
-
-      .mission-list {
-        display: grid;
-        gap: 0.55rem;
-        margin: 0.8rem 0 1rem;
-      }
-
-      .mission-item {
-        display: flex;
-        justify-content: space-between;
+      .analysis-status {
+        display: inline-flex;
         align-items: center;
-        gap: 0.8rem;
-        padding: 0.62rem 0.75rem;
-        border-radius: 10px;
-        border: 1px solid var(--border);
-        background: rgba(255, 255, 255, 0.72);
-      }
-
-      .mission-item.done {
-        border-color: rgba(4, 164, 90, 0.5);
-        background: rgba(4, 164, 90, 0.14);
-      }
-
-      .mission-item strong {
-        color: var(--blue-indigo);
-        font-size: 0.82rem;
-      }
-
-      .badge-row {
-        display: flex;
         gap: 0.5rem;
-        flex-wrap: wrap;
+        min-height: 24px;
+        padding: 0.85rem 0.95rem;
+        border-radius: 14px;
+        border: 1px solid rgba(26, 58, 168, 0.1);
+        background: rgba(240, 243, 255, 0.88);
       }
-
-      .badge-chip {
+      .analysis-status::before {
+        content: "";
+        width: 9px;
+        height: 9px;
         border-radius: 999px;
-        padding: 0.33rem 0.72rem;
-        font-size: 0.82rem;
-        font-weight: 700;
-        color: var(--white);
-        background: linear-gradient(135deg, var(--orange-terracotta), var(--orange-coral));
+        background: rgba(13, 27, 82, 0.22);
+        flex: 0 0 auto;
+      }
+      .analysis-status.loading::before {
+        background: var(--secondary-blue);
+        box-shadow: 0 0 0 0 rgba(26, 58, 168, 0.35);
+        animation: pulse 1.1s infinite;
+      }
+      .analysis-status.success::before {
+        background: var(--success-green);
+      }
+      .analysis-status.error::before {
+        background: var(--danger-orange);
+      }
+      .analysis-status.ready::before {
+        background: rgba(4, 164, 90, 0.65);
+      }
+      .is-hidden {
+        display: none !important;
       }
 
-      .badge-chip.empty {
-        color: var(--blue-indigo);
-        background: rgba(1, 25, 99, 0.08);
-      }
-
-      .flash-level {
-        animation: pulse-level 650ms ease;
-      }
-
-      @keyframes pulse-level {
-        0% {
-          transform: scale(1);
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
         }
-        35% {
-          transform: scale(1.08);
-        }
-        100% {
-          transform: scale(1);
-        }
+      }
+      @keyframes pulse {
+        0%   { box-shadow: 0 0 0 0 rgba(26, 58, 168, 0.35); }
+        70%  { box-shadow: 0 0 0 10px rgba(26, 58, 168, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(26, 58, 168, 0); }
       }
 
+      /* AI Output */
       .generated-message {
-        background: linear-gradient(135deg, var(--blue-indigo), var(--blue-atlantic));
-        border-radius: 12px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.98));
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        border-radius: 22px;
         padding: 24px;
-        margin-top: 12px;
+        color: var(--text);
+        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.05);
+      }
+      .generated-content {
+        background: rgba(248, 250, 252, 0.9);
+        border-radius: 16px;
+        padding: 18px;
+        color: var(--text);
+        min-height: 110px;
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        white-space: pre-wrap;
+        line-height: 1.72;
+      }
+      .ai-output {
+        margin-top: 22px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.995), rgba(248, 250, 252, 0.985));
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        border-radius: 24px;
+        padding: 28px;
+        box-shadow: 0 14px 36px rgba(15, 23, 42, 0.06);
+      }
+
+      .settings-panel,
+      .action-panel {
+        border-radius: 22px;
+        padding: 22px;
+      }
+
+      .action-panel {
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(240, 253, 250, 0.98));
+      }
+
+      .action-header {
+        margin-bottom: 0.8rem;
+      }
+
+      .secondary-actions {
+        display: block;
+        margin-top: 0.85rem;
+      }
+
+      .analysis-report {
+        display: grid;
+        gap: 24px;
+      }
+
+      .analysis-overview-shell {
+        display: grid;
+        grid-template-columns: minmax(0, 1.45fr) minmax(300px, 0.9fr);
+        gap: 16px;
+      }
+
+      .analysis-summary-card,
+      .analysis-sidecard,
+      .score-item,
+      .feedback-card,
+      .proposal-card,
+      .alternative-card,
+      .analysis-deep-dive {
+        border-radius: 20px;
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.995), rgba(248, 250, 252, 0.98));
+        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
+      }
+
+      .analysis-summary-card {
+        padding: 1.5rem;
+        background: linear-gradient(160deg, rgba(15, 23, 42, 0.98), rgba(30, 41, 59, 0.96));
         color: var(--white);
       }
 
-      .generated-content {
-        background: var(--white);
-        border-radius: 8px;
-        padding: 16px;
-        color: var(--text);
-        min-height: 50px;
-        border: 1px solid rgba(255, 255, 255, 0.35);
+      .analysis-summary-title {
+        margin: 0 0 0.7rem;
+        font-size: clamp(1.35rem, 2vw, 1.85rem);
+        line-height: 1.2;
       }
 
-      .ai-output {
-        background: var(--white);
-        border: 2px solid var(--border);
-        border-top: 6px solid var(--orange-coral);
-        border-radius: 12px;
-        padding: 24px;
-        margin: 1.5rem 0 2rem;
+      .analysis-summary-copy {
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 0.98rem;
+        line-height: 1.72;
       }
 
-      .ai-output h3 {
-        color: var(--primary);
-        margin-bottom: 0.75rem;
+      .analysis-rail {
+        display: grid;
+        gap: 12px;
       }
 
+      .analysis-sidecard {
+        padding: 1rem 1.05rem;
+      }
+
+      .analysis-summary-card .overview-kicker {
+        color: rgba(255, 255, 255, 0.68);
+      }
+
+      .analysis-summary-card strong,
+      .analysis-summary-card p {
+        color: var(--white);
+      }
+
+      .overview-kicker {
+        display: inline-block;
+        margin-bottom: 0.45rem;
+        font-size: 0.74rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--primary-blue);
+      }
+
+      .analysis-summary-card strong,
+      .analysis-sidecard strong {
+        display: block;
+        margin-bottom: 0.35rem;
+        font-size: 1rem;
+      }
+
+      .analysis-summary-card p,
+      .analysis-sidecard p {
+        font-size: 0.92rem;
+        line-height: 1.68;
+      }
+
+      .section-frame {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 0.85rem;
+      }
+
+      .section-index {
+        border-radius: 999px;
+        padding: 0.4rem 0.75rem;
+        background: rgba(26, 58, 168, 0.1);
+        color: var(--primary-blue);
+        font-weight: 700;
+        font-size: 0.8rem;
+      }
+      .analysis-section {
+        display: grid;
+        gap: 0.95rem;
+      }
+      .analysis-section-head {
+        display: grid;
+        gap: 0.25rem;
+      }
+      .analysis-section-head p {
+        color: var(--muted);
+        font-size: 0.95rem;
+        max-width: 780px;
+        line-height: 1.65;
+      }
+      .comparison-section-title {
+        margin-bottom: 0.1rem;
+        color: #0f172a;
+        font-size: 1.2rem;
+      }
       .score-grid {
         display: grid;
-        gap: 0.7rem;
+        gap: 0.95rem;
         grid-template-columns: repeat(4, minmax(0, 1fr));
-        margin-bottom: 1rem;
       }
-
       .score-item {
-        background: rgba(185, 214, 254, 0.35);
-        border-radius: 10px;
-        padding: 0.7rem;
+        padding: 1rem;
       }
-
       .score-item strong {
         color: var(--primary);
         display: block;
       }
+      .score-value {
+        display: block;
+        margin-top: 0.3rem;
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: var(--text);
+      }
+      .score-caption {
+        display: block;
+        margin-top: 0.4rem;
+        color: var(--muted);
+        font-size: 0.84rem;
+        line-height: 1.5;
+      }
+      .score-item.tone-strong {
+        border-color: rgba(4, 164, 90, 0.18);
+        background: linear-gradient(180deg, rgba(240, 253, 244, 0.95), rgba(255, 255, 255, 0.98));
+      }
+      .score-item.tone-mid {
+        border-color: rgba(26, 58, 168, 0.16);
+      }
+      .score-item.tone-weak {
+        border-color: rgba(224, 93, 46, 0.18);
+        background: linear-gradient(180deg, rgba(255, 247, 237, 0.95), rgba(255, 255, 255, 0.98));
+      }
+      .feedback-list {
+        display: grid;
+        gap: 0.95rem;
+        grid-template-columns: 1fr;
+      }
+      .feedback-card {
+        padding: 0;
+        overflow: hidden;
+      }
+      .feedback-detail summary {
+        list-style: none;
+      }
+      .feedback-detail summary::-webkit-details-marker,
+      .analysis-deep-dive summary::-webkit-details-marker {
+        display: none;
+      }
+      .feedback-summary {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 1rem 1.05rem;
+        cursor: pointer;
+      }
+      .feedback-summary-main {
+        display: grid;
+        gap: 0.45rem;
+        min-width: 0;
+      }
+      .feedback-summary-copy h4 {
+        margin-bottom: 0.2rem;
+      }
+      .feedback-summary-copy p {
+        color: var(--muted);
+        line-height: 1.55;
+      }
+      .feedback-toggle {
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        border-radius: 999px;
+        padding: 0.3rem 0.72rem;
+        background: rgba(15, 23, 42, 0.05);
+        color: var(--primary-blue);
+        font-size: 0.8rem;
+        font-weight: 700;
+        white-space: nowrap;
+        user-select: none;
+      }
+      .feedback-toggle .chevron {
+        display: inline-block;
+        transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .feedback-detail[open] .feedback-toggle .chevron {
+        transform: rotate(180deg);
+      }
+      .feedback-detail[open] .feedback-toggle {
+        background: rgba(26, 58, 168, 0.1);
+      }
 
-      .feedback-grid {
+      /* Formato de lectura para propuesta y alternativas */
+      .proposal-copy {
+        color: var(--text);
+        line-height: 1.85;
+        font-size: 1rem;
+      }
+      .proposal-copy p {
+        margin-bottom: 0.9rem;
+      }
+      .proposal-copy p:last-child { margin-bottom: 0; }
+
+      .alternative-card p,
+      .alternative-card div {
+        line-height: 1.8;
+        font-size: 0.94rem;
+        color: var(--muted);
+      }
+      .alternative-card p + p,
+      .alternative-card div p + p { margin-top: 0.75rem; }
+      .feedback-step-tag {
+        border-radius: 999px;
+        padding: 0.28rem 0.65rem;
+        background: rgba(26, 58, 168, 0.08);
+        color: var(--primary-blue);
+        font-size: 0.76rem;
+        font-weight: 700;
+      }
+      .feedback-detail-body {
         display: grid;
         gap: 1rem;
+        padding: 0 1.05rem 1.05rem;
+        border-top: 1px solid rgba(15, 23, 42, 0.06);
+      }
+      .feedback-copy {
+        display: grid;
+        gap: 0.45rem;
+      }
+      .feedback-copy p {
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .feedback-copy strong {
+        color: var(--text);
+      }
+      .feedback-actions {
+        display: flex;
+        justify-content: flex-end;
+      }
+      .comparison-grid {
+        display: grid;
+        gap: 0.9rem;
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        margin: 1rem 0;
       }
-
-      @media (max-width: 768px) {
-        .feedback-grid,
-        .score-grid {
-          grid-template-columns: 1fr;
-        }
-      }
-
-      .feedback-card {
-        border: 1px solid var(--border);
-        border-radius: 10px;
+      .comparison-card {
+        border-radius: 16px;
         padding: 1rem;
+        border: 1px solid rgba(15, 23, 42, 0.08);
       }
-
-      .feedback-card h4 {
-        color: var(--primary);
-        margin-bottom: 0.4rem;
+      .comparison-card.original {
+        background: rgba(241, 245, 249, 0.9);
       }
-
-      .feedback-rewrite {
-        background: rgba(253, 244, 139, 0.36);
-        border-radius: 8px;
-        padding: 0.7rem;
-        margin: 0.6rem 0;
+      .comparison-card.proposed {
+        background: rgba(236, 253, 245, 0.9);
+        border-color: rgba(15, 159, 136, 0.2);
       }
-
-      .mini-btn {
-        border: 1px solid var(--blue-atlantic);
-        color: var(--blue-atlantic);
-        background: transparent;
-        border-radius: 8px;
-        padding: 7px 10px;
-        cursor: pointer;
-        font-weight: 600;
+      .comparison-label {
+        display: inline-block;
+        margin-bottom: 0.45rem;
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
       }
-
-      .mini-btn:hover {
-        background: rgba(7, 68, 168, 0.08);
+      .comparison-card.original .comparison-label {
+        color: var(--primary-blue);
       }
-
-      .alternatives {
+      .comparison-card.proposed .comparison-label {
+        color: var(--success-green);
+      }
+      .comparison-body {
+        white-space: pre-wrap;
+        line-height: 1.65;
+        color: var(--text);
+      }
+      .proposal-card {
+        padding: 1.2rem 1.25rem;
+      }
+      .proposal-card-main {
+        background: linear-gradient(180deg, rgba(240, 253, 250, 0.96), rgba(255, 255, 255, 0.99));
+        border-color: rgba(26, 58, 168, 0.16);
+      }
+      /* .proposal-copy estilos movidos a sección de lectura arriba */
+      .proposal-meta {
+        display: grid;
+        gap: 0.85rem;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         margin-top: 1rem;
       }
-
-      .alternatives li {
-        margin-left: 1rem;
-        margin-bottom: 0.6rem;
+      .proposal-note {
+        border-radius: 14px;
+        padding: 0.8rem 0.9rem;
+        background: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(15, 23, 42, 0.06);
+      }
+      .proposal-note strong {
+        display: block;
+        margin-bottom: 0.3rem;
+      }
+      .alternatives-grid {
+        display: grid;
+        gap: 0.95rem;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      .alternative-card {
+        padding: 1rem;
+      }
+      .alternative-card h5 {
+        color: var(--primary-blue);
+        font-size: 0.94rem;
+        margin-bottom: 0.45rem;
+      }
+      .alternative-card p {
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .analysis-deep-dive {
+        padding: 0;
+        overflow: hidden;
+      }
+      .analysis-deep-dive summary {
+        cursor: pointer;
+        padding: 1rem 1.05rem;
+        font-weight: 700;
+        color: var(--primary-blue);
+      }
+      .analysis-deep-dive-body {
+        padding: 0 1.05rem 1.05rem;
+        border-top: 1px solid rgba(15, 23, 42, 0.06);
+      }
+      .mini-btn {
+        border: 1px solid var(--secondary-blue);
+        color: var(--secondary-blue);
+        background: transparent;
+        border-radius: 6px;
+        padding: 6px 9px;
+        cursor: pointer;
+        font-weight: 500;
+      }
+      .mini-btn:hover {
+        background: rgba(7, 68, 168, 0.05);
       }
 
       .theory-block summary {
         cursor: pointer;
         font-weight: 700;
-        color: var(--blue-indigo);
+        color: var(--primary-blue);
         margin-bottom: 1rem;
       }
-
       .pera-cards {
         display: grid;
         gap: 1.75rem;
         margin-bottom: 1rem;
         grid-template-columns: repeat(2, 1fr);
       }
-
-      @media (max-width: 768px) {
-        .pera-cards {
-          grid-template-columns: 1fr;
-        }
-      }
-
       .pera-card {
         background: var(--white);
-        border: 2px solid var(--border);
-        border-radius: 16px;
-        padding: 24px;
-        box-shadow: 0 8px 20px rgba(1, 25, 99, 0.07);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
       }
-
       .card-letter {
         font-size: 3rem;
         font-weight: 700;
         color: var(--primary);
         margin-bottom: 0.5rem;
       }
-
       .card-title {
         font-size: 1.3rem;
         font-weight: 600;
         margin-bottom: 0.5rem;
       }
-
       .card-description {
         font-size: 1rem;
         color: var(--muted);
         margin-bottom: 1rem;
       }
-
       .card-example {
-        background: rgba(185, 214, 254, 0.26);
-        border-left: 4px solid var(--orange-terracotta);
-        padding: 1rem;
-        border-radius: 8px;
+        background: rgba(185, 214, 254, 0.15);
+        border-left: 3px solid var(--danger-orange);
+        padding: 0.8rem;
+        border-radius: 6px;
         font-style: italic;
       }
 
@@ -678,404 +1061,917 @@
         position: fixed;
         bottom: 20px;
         right: 20px;
-        background: linear-gradient(135deg, var(--green-mint), var(--green-emerald));
+        background: linear-gradient(135deg, #04a45a, #038a4c);
         color: var(--white);
         padding: 10px 20px;
         border-radius: 8px;
         opacity: 0;
         transition: opacity 0.3s ease;
+        z-index: 1000;
       }
-
       .save-status.show {
         opacity: 1;
       }
-
       .error {
         color: var(--danger);
+      }
+
+      /* Mobile responsivenes */
+      @media (max-width: 1024px) {
+        .workspace-grid,
+        .analysis-overview-shell,
+        .proposal-meta,
+        .alternatives-grid {
+          grid-template-columns: 1fr;
+        }
+        .workspace-side {
+          position: static;
+        }
+        .essentials-grid,
+        .fine-tuning-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+      @media (max-width: 768px) {
+        .sidebar {
+          flex-wrap: wrap;
+        }
+        .sidebar h2 {
+          width: 100%;
+          margin-right: 0;
+          margin-bottom: 2px;
+        }
+        .nav-btn {
+          flex: 1 1 180px;
+        }
+        .essentials-grid,
+        .fine-tuning-grid {
+          grid-template-columns: 1fr;
+        }
+        .feedback-grid,
+        .score-grid,
+        .comparison-grid {
+          grid-template-columns: 1fr;
+        }
+        .feedback-summary {
+          flex-direction: column;
+        }
+        .pera-cards {
+          grid-template-columns: 1fr;
+        }
+        .secondary-actions {
+          display: block;
+        }
+        .controls {
+          grid-template-columns: 1fr;
+        }
+        .container {
+          padding: 20px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation: none !important;
+          transition: none !important;
+          scroll-behavior: auto !important;
+        }
+      }
+
+      @keyframes stepReveal {
+        0% {
+          opacity: 0;
+          transform: translateY(10px) scale(0.985);
+          box-shadow: 0 0 0 rgba(15, 118, 110, 0);
+        }
+        65% {
+          opacity: 1;
+          transform: translateY(-2px) scale(1);
+          box-shadow: 0 16px 28px rgba(15, 118, 110, 0.12);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+          box-shadow: 0 8px 18px rgba(15, 118, 110, 0.06);
+        }
+      }
+
+      @keyframes pillUnlock {
+        0% {
+          transform: scale(0.96);
+          box-shadow: 0 0 0 0 rgba(26, 58, 168, 0);
+        }
+        55% {
+          transform: scale(1.04);
+          box-shadow: 0 0 0 8px rgba(26, 58, 168, 0.1);
+        }
+        100% {
+          transform: scale(1);
+          box-shadow: 0 0 0 0 rgba(26, 58, 168, 0);
+        }
+      }
+
+      body.mode-pera .qpc-only {
+        display: none !important;
+      }
+      body.mode-qpc .pera-only {
+        display: none !important;
+      }
+
+      /* ── Confirm Modal ─────────────────────────────────── */
+      .confirm-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.42);
+        backdrop-filter: blur(6px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        animation: fadeIn 0.18s ease;
+      }
+      .confirm-overlay.is-hidden { display: none !important; }
+      .confirm-dialog {
+        background: var(--white);
+        border-radius: 22px;
+        padding: 28px 28px 22px;
+        max-width: 390px;
+        width: 92%;
+        box-shadow: 0 28px 64px rgba(0, 0, 0, 0.18);
+        border: 1px solid var(--border);
+        animation: slideUp 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .confirm-dialog h3 {
+        color: var(--text);
+        font-size: 1.18rem;
+        margin-bottom: 0.5rem;
+      }
+      .confirm-dialog p {
+        color: var(--muted);
+        font-size: 0.94rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+      }
+      .confirm-actions {
+        display: flex;
+        gap: 0.7rem;
+        justify-content: flex-end;
+      }
+      .confirm-cancel {
+        background: transparent;
+        border: 1px solid var(--border);
+        padding: 10px 20px;
+        border-radius: 9px;
+        font-weight: 600;
+        font-size: 0.93rem;
+        cursor: pointer;
+        color: var(--text);
+        font-family: inherit;
+        transition: background 0.18s;
+      }
+      .confirm-cancel:hover { background: rgba(15, 118, 110, 0.07); }
+      .confirm-ok {
+        background: var(--danger-orange);
+        border: none;
+        padding: 10px 22px;
+        border-radius: 9px;
+        font-weight: 700;
+        font-size: 0.93rem;
+        color: white;
+        cursor: pointer;
+        font-family: inherit;
+        transition: opacity 0.18s;
+      }
+      .confirm-ok:hover { opacity: 0.88; }
+
+      /* ── Daily limit tooltip ───────────────────────────── */
+      .counter-pill[data-tip] {
+        position: relative;
+        cursor: help;
+      }
+      .counter-pill[data-tip]::after {
+        content: attr(data-tip);
+        position: absolute;
+        bottom: calc(100% + 8px);
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--neutral-dark);
+        color: white;
+        font-size: 0.78rem;
+        font-weight: 500;
+        padding: 5px 10px;
+        border-radius: 7px;
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.15s;
+      }
+      .counter-pill[data-tip]:hover::after { opacity: 1; }
+
+      /* ── Dark mode (Navy Astrolab) ─────────────────────── */
+      /* Dark mode desactivado — la app siempre usa tema claro */
+
+      /* ── Analysis carousel ──────────────────────────────── */
+      .carousel-shell {
+        position: relative;
+      }
+      .carousel-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 16px;
+        gap: 12px;
+      }
+      .carousel-label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 0;
+      }
+      .carousel-icon {
+        font-size: 1.2rem;
+        flex-shrink: 0;
+      }
+      .carousel-title {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--primary-blue);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .carousel-counter {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--muted-text);
+        white-space: nowrap;
+      }
+      .carousel-nav {
+        display: flex;
+        gap: 6px;
+        flex-shrink: 0;
+      }
+      .carousel-arrow {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 1.5px solid rgba(26, 58, 168, 0.18);
+        background: white;
+        color: var(--primary-blue);
+        font-size: 1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.18s ease;
+        font-family: inherit;
+        flex-shrink: 0;
+      }
+      .carousel-arrow:hover:not(:disabled) {
+        background: var(--primary-blue);
+        color: white;
+        border-color: var(--primary-blue);
+        transform: scale(1.06);
+      }
+      .carousel-arrow:disabled {
+        opacity: 0.28;
+        cursor: not-allowed;
+      }
+      .carousel-dots {
+        display: flex;
+        justify-content: center;
+        gap: 6px;
+        margin-top: 18px;
+      }
+      .carousel-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: rgba(26, 58, 168, 0.15);
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .carousel-dot.active {
+        background: var(--primary-blue);
+        width: 22px;
+        border-radius: 4px;
+      }
+      .carousel-track {
+        overflow: hidden;
+        position: relative;
+      }
+      /* Un solo slide visible a la vez — no hay overlap */
+      .carousel-slide {
+        display: none;
+      }
+      .carousel-slide.active {
+        display: block;
+        animation: carouselIn 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .carousel-slide.dir-prev.active {
+        animation: carouselInReverse 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      .atab-panel { animation: fadeIn 0.2s ease; }
+      .atab-panel.is-hidden { display: none !important; }
+
+      @keyframes carouselIn        { from { opacity:0; transform:translateX(20px);  } to { opacity:1; transform:translateX(0); } }
+      @keyframes carouselInReverse { from { opacity:0; transform:translateX(-20px); } to { opacity:1; transform:translateX(0); } }
+
+      @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+      @keyframes slideUp {
+        from { opacity: 0; transform: translateY(12px) scale(0.97); }
+        to   { opacity: 1; transform: translateY(0) scale(1); }
+      }
+
+      .score-bar-wrap {
+        margin-top: 0.4rem;
+        background: rgba(1, 25, 99, 0.1);
+        border-radius: 999px;
+        height: 8px;
+        overflow: hidden;
+      }
+
+      .score-bar-fill {
+        height: 100%;
+        border-radius: inherit;
+        transition: width 0.5s ease;
+      }
+
+      .score-bar-fill.low  { background: #e05d2e; }
+      .score-bar-fill.mid  { background: #e5a800; }
+      .score-bar-fill.high { background: #04a45a; }
+
+      .score-item .score-value {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: var(--primary);
+      }
+
+      .generated-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+      }
+
+      .copy-btn {
+        background: rgba(255, 255, 255, 0.2);
+        color: var(--white);
+        border: 1px solid rgba(255, 255, 255, 0.45);
+        border-radius: 8px;
+        padding: 6px 14px;
+        font-size: 0.87rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+
+      .copy-btn:hover {
+        background: rgba(255, 255, 255, 0.32);
+      }
+
+      .ai-output.fade-in {
+        animation: fadeInUp 0.4s ease both;
+      }
+
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(12px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      @keyframes flash-apply {
+        0%   { background: rgba(4, 164, 90, 0.25); }
+        100% { background: transparent; }
+      }
+
+      .flash-apply {
+        animation: flash-apply 0.6s ease;
       }
     </style>
   </head>
   <body>
-    <div class="save-status" id="saveStatus">Guardado automatico</div>
+    <div class="save-status" id="saveStatus">Guardado automático</div>
 
-    <div class="controls">
-      <button class="control-btn" id="clearBtn">Limpiar</button>
-      <button class="control-btn download-btn" id="downloadBtn">Descargar</button>
-      <button class="control-btn" id="pdfBtn">PDF</button>
+    <!-- Modal de confirmación para Limpiar -->
+    <div class="confirm-overlay is-hidden" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+      <div class="confirm-dialog">
+        <h3 id="confirmTitle">¿Limpiar todo?</h3>
+        <p>Se borrarán todos los textos y las configuraciones. Esta acción no se puede deshacer.</p>
+        <div class="confirm-actions">
+          <button class="confirm-cancel" id="confirmCancel">Cancelar</button>
+          <button class="confirm-ok" id="confirmOk">Sí, limpiar</button>
+        </div>
+      </div>
     </div>
 
-    <div class="container">
-      <div class="header">
-        <h1>PERA</h1>
-        <p>Domina el arte de comunicar con eficacia e inspiracion</p>
-      </div>
+    <div class="app-layout">
+      <aside class="sidebar">
+        <h2>Herramientas</h2>
+        <button class="nav-btn active" id="nav-pera">Estructura PERA</button>
+        <button class="nav-btn" id="nav-qpc">Pirámide QPC</button>
+        <!-- Misiones ocultas por ahora; toggle desactivado -->
+        <button class="nav-btn" id="nav-game" title="Ver misiones y progreso" style="display:none">🎯 Misiones</button>
+      </aside>
 
-      <section class="section-block message-builder">
-        <h2 class="section-heading">Construccion Guiada</h2>
-        <p class="section-subtitle">
-          Completa un paso y desbloquea el siguiente. Asi reduces friccion y tomas foco.
-        </p>
-        <div class="journey-pills">
-          <span class="journey-pill" id="step-pill-point">1. Punto</span>
-          <span class="journey-pill" id="step-pill-example">2. Ejemplo</span>
-          <span class="journey-pill" id="step-pill-reasons">3. Razones</span>
-          <span class="journey-pill" id="step-pill-action">4. Accion</span>
-        </div>
-        <p class="helper-text guide-status" id="constructionGuideStatus">
-          Empieza en Punto. Al completarlo, se desbloquea Ejemplo.
-        </p>
-
-        <div class="guided-stack">
-          <article class="guided-card" id="step-point-card">
-            <div class="guided-head">
-              <h3>Paso 1: Punto</h3>
-              <span class="guided-state" id="state-point">En progreso</span>
-            </div>
-            <p class="guided-question">
-              Pregunta guia: cual es la idea central que quieres que recuerden en una frase?
+      <main class="main-content">
+        <div class="container">
+          <div class="header">
+            <p
+              style="
+                font-size: 0.82rem;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                font-weight: 800;
+                color: var(--primary-blue);
+                margin-bottom: 0.45rem;
+              "
+            >
+              Workspace de Comunicación
             </p>
-            <details class="inline-theory">
-              <summary>Teoria rapida (opcional)</summary>
-              <p>
-                Un buen Punto conecta causa y efecto: X ocurre por Y. Debe ser claro y debatible.
-              </p>
-            </details>
-            <div class="input-group">
-              <label>Punto</label>
-              <textarea
-                id="point-input"
-                placeholder="Ej: Estamos perdiendo talento porque el modelo actual no da flexibilidad."
-              ></textarea>
-            </div>
-            <p class="unlock-note">Minimo recomendado: 24 caracteres.</p>
-          </article>
-
-          <article class="guided-card" id="step-example-card">
-            <div class="guided-head">
-              <h3>Paso 2: Ejemplo</h3>
-              <span class="guided-state" id="state-example">Bloqueado</span>
-            </div>
-            <p class="guided-question">
-              Pregunta guia: que historia real ilustra mejor tu Punto? Incluye tiempo, lugar y persona.
-            </p>
-            <details class="inline-theory">
-              <summary>Teoria rapida (opcional)</summary>
-              <p>
-                El Ejemplo vuelve concreto el mensaje. Si agregas un detalle inesperado, sube la recordacion.
-              </p>
-            </details>
-            <div class="input-group">
-              <label>Ejemplo</label>
-              <textarea
-                id="example-input"
-                placeholder="Ej: El martes, en la reunion de equipo, una senior aviso que se iba por falta de flexibilidad."
-                disabled
-              ></textarea>
-            </div>
-            <p class="unlock-note">Se activa al completar Punto.</p>
-          </article>
-
-          <article class="guided-card" id="step-reasons-card">
-            <div class="guided-head">
-              <h3>Paso 3: Razones</h3>
-              <span class="guided-state" id="state-reasons">Bloqueado</span>
-            </div>
-            <p class="guided-question">
-              Pregunta guia: con que datos, autoridad o logica vas a demostrar que tu Punto es valido?
-            </p>
-            <details class="inline-theory">
-              <summary>Teoria rapida (opcional)</summary>
-              <p>
-                Agrega 2 o 3 razones fuertes. Mezcla evidencia (dato) y criterio (interpretacion).
-              </p>
-            </details>
-            <div class="input-group">
-              <label>Razones</label>
-              <textarea
-                id="reasons-input"
-                placeholder="Ej: Estudios 2024 muestran mayor retencion con esquemas flexibles."
-                disabled
-              ></textarea>
-            </div>
-            <p class="unlock-note">Se activa al completar Ejemplo.</p>
-          </article>
-
-          <article class="guided-card" id="step-action-card">
-            <div class="guided-head">
-              <h3>Paso 4: Accion</h3>
-              <span class="guided-state" id="state-action">Bloqueado</span>
-            </div>
-            <p class="guided-question">
-              Pregunta guia: que quieres que hagan exactamente, quien lo hace y para cuando?
-            </p>
-            <details class="inline-theory">
-              <summary>Teoria rapida (opcional)</summary>
-              <p>
-                La Accion debe ser ejecutable hoy: verbo claro, responsable y fecha limite.
-              </p>
-            </details>
-            <div class="input-group">
-              <label>Accion</label>
-              <textarea
-                id="action-input"
-                placeholder="Ej: Antes del viernes, lideres completan encuesta y agendan 1:1 con su equipo."
-                disabled
-              ></textarea>
-            </div>
-            <p class="unlock-note">Se activa al completar Razones.</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section-block">
-        <h2 class="section-heading">Fine Tuning Inteligente</h2>
-        <p class="section-subtitle">
-          Primero llena lo esencial. Lo avanzado es opcional y esta colapsado.
-        </p>
-
-        <div class="essentials-grid">
-          <div class="input-group">
-            <label>Objetivo (esencial)</label>
-            <select id="objective-select">
-              <option value="informar">Informar</option>
-              <option value="persuadir">Persuadir</option>
-              <option value="motivar">Motivar</option>
-              <option value="vender">Vender</option>
-              <option value="educar">Educar</option>
-            </select>
-          </div>
-          <div class="input-group">
-            <label>Audiencia (esencial)</label>
-            <input
-              id="audience-input"
-              type="text"
-              placeholder="Ej: equipo comercial de Latam"
-            />
-          </div>
-          <div class="input-group">
-            <label>Canal (esencial)</label>
-            <select id="channel-select">
-              <option value="presentacion">Presentacion</option>
-              <option value="reunion">Reunion</option>
-              <option value="email">Email</option>
-              <option value="mensaje_corto">Mensaje corto</option>
-              <option value="redes_sociales">Redes sociales</option>
-            </select>
-          </div>
-          <div class="input-group">
-            <label>Tono (esencial)</label>
-            <select id="tone-select">
-              <option value="formal">Formal</option>
-              <option value="informal">Informal</option>
-              <option value="inspirador">Inspirador</option>
-              <option value="directo">Directo</option>
-              <option value="tecnico">Tecnico</option>
-              <option value="empatico">Empatico</option>
-            </select>
-          </div>
-        </div>
-        <p class="helper-text">
-          Con estos 4 campos suele bastar para un gran resultado.
-        </p>
-
-        <details class="advanced-tuning">
-          <summary>Abrir opciones avanzadas (opcionales)</summary>
-          <p class="helper-text">
-            Solo completa lo que realmente necesites afinar.
-          </p>
-          <div class="fine-tuning-grid">
-            <div class="input-group">
-              <label>Nivel de formalidad</label>
-              <select id="formality-select">
-                <option value="alto">Alto</option>
-                <option value="medio" selected>Medio</option>
-                <option value="bajo">Bajo</option>
-              </select>
-            </div>
-            <div class="input-group">
-              <label>Longitud</label>
-              <select id="length-select">
-                <option value="corta">Corta</option>
-                <option value="media" selected>Media</option>
-                <option value="larga">Larga</option>
-              </select>
-            </div>
-            <div class="input-group">
-              <label>Industria</label>
-              <select id="industry-select">
-                <option value="general" selected>General</option>
-                <option value="tecnologia">Tecnologia</option>
-                <option value="salud">Salud</option>
-                <option value="educacion">Educacion</option>
-                <option value="finanzas">Finanzas</option>
-                <option value="retail">Retail</option>
-              </select>
-            </div>
-            <div class="input-group">
-              <label>Nivel de urgencia</label>
-              <select id="urgency-select">
-                <option value="baja">Baja</option>
-                <option value="media" selected>Media</option>
-                <option value="alta">Alta</option>
-              </select>
-            </div>
-            <div class="input-group">
-              <label>Estilo argumentativo</label>
-              <select id="argument-style-select">
-                <option value="balanceado" selected>Balanceado</option>
-                <option value="datos">Basado en datos</option>
-                <option value="historia">Basado en historia</option>
-                <option value="autoridad">Basado en autoridad</option>
-              </select>
-            </div>
-            <div class="input-group">
-              <label>Tipo de llamada a la accion</label>
-              <select id="cta-type-select">
-                <option value="directa" selected>Directa</option>
-                <option value="suave">Suave</option>
-                <option value="paso_a_paso">Paso a paso</option>
-                <option value="fecha_limite">Con fecha limite</option>
-              </select>
-            </div>
-          </div>
-        </details>
-      </section>
-
-      <div class="actions-row">
-        <button class="ai-btn" id="analyzeBtn">Analizar con IA</button>
-        <div class="iteration-panel">
-          <span class="counter-pill" id="messageIterationCounter">
-            Iteraciones del mensaje: 0
-          </span>
-          <span class="counter-pill secondary" id="dailyUsageCounter">
-            Uso IA hoy: 0/12
-          </span>
-        </div>
-        <span class="helper-text" id="analysisStatus"
-          >La IA evaluara claridad, coherencia, persuasion y accionabilidad.</span
-        >
-      </div>
-
-      <section class="section-block game-panel">
-        <div class="game-top">
-          <div>
-            <h2 class="section-heading">Modo Story Game</h2>
-            <p class="section-subtitle">
-              Mejora tu mensaje como si fuera una mision: calidad, precision y cierre.
+            <h1 id="main-title">Framework PERA</h1>
+            <p id="main-desc">
+              Domina el arte de comunicar con eficacia e inspiración
             </p>
           </div>
-          <button class="mini-btn" id="resetGameBtn" type="button">Reiniciar progreso</button>
-        </div>
+          <div class="workspace-grid">
+            <div class="workspace-main">
+              <!-- PERA BUILDER -->
+              <section
+                class="section-block message-builder pera-only"
+                id="builder-pera"
+              >
+                <div class="section-frame">
+                  <div>
+                    <h2 class="section-heading">Construcción guiada</h2>
+                    <p class="section-subtitle">
+                      Escribe paso por paso. La IA se activa cuando el argumento ya tiene estructura.
+                    </p>
+                  </div>
+                  <span class="section-index">Framework PERA</span>
+                </div>
+                <div class="journey-pills">
+                  <span class="journey-pill" id="step-pill-point">1. Punto</span>
+                  <span class="journey-pill" id="step-pill-example"
+                    >2. Ejemplo</span
+                  >
+                  <span class="journey-pill" id="step-pill-reasons"
+                    >3. Razones</span
+                  >
+                  <span class="journey-pill" id="step-pill-action">4. Acción</span>
+                </div>
+                <p class="helper-text guide-status" id="peraGuideStatus">
+                  Empieza en Punto. Al completarlo, se desbloqueará Ejemplo.
+                </p>
 
-        <div class="game-meta">
-          <span class="counter-pill" id="playerRankPill">Rango: Aprendiz</span>
-          <span class="counter-pill secondary" id="playerXpPill">XP: 0</span>
-          <span class="counter-pill" id="missionCountPill">Misiones: 0/0</span>
-        </div>
+                <div class="guided-stack">
+                  <article class="guided-card" id="step-point-card">
+                    <div class="guided-head">
+                      <h3>Paso 1: Punto</h3>
+                      <span class="guided-state" id="state-point">En progreso</span>
+                    </div>
+                    <p class="guided-question">
+                      ¿Cuál es la idea central que quieres que recuerden en una frase?
+                    </p>
+                    <div class="input-group">
+                      <textarea
+                        id="point-input"
+                        placeholder="Ej: Estamos perdiendo talento porque el modelo actual no da flexibilidad."
+                      ></textarea>
+                    </div>
+                    <p class="unlock-note">Minimo recomendado: 24 caracteres.</p>
+                  </article>
 
-        <div class="xp-track" aria-hidden="true">
-          <div class="xp-fill" id="xpFill"></div>
-        </div>
-        <p class="game-note" id="gameEventNote">Completa misiones para desbloquear logros.</p>
-        <div class="mission-list" id="missionList"></div>
-        <div class="badge-row" id="badgeRow"></div>
-      </section>
+                  <article class="guided-card locked" id="step-example-card">
+                    <div class="guided-head">
+                      <h3>Paso 2: Ejemplo</h3>
+                      <span class="guided-state" id="state-example">Bloqueado</span>
+                    </div>
+                    <p class="guided-question">
+                      ¿Qué historia real ilustra mejor tu Punto?
+                    </p>
+                    <div class="input-group">
+                      <textarea
+                        id="example-input"
+                        placeholder="Ej: El martes, en la reunión de equipo, una senior avisó que se iba por falta de flexibilidad."
+                        disabled
+                      ></textarea>
+                    </div>
+                    <p class="unlock-note">Se activa al completar Punto.</p>
+                  </article>
 
-      <section class="generated-message">
-        <h2 class="section-heading" style="color: white; margin-bottom: 0.5rem">
-          Tu guion completo
-        </h2>
-        <div class="generated-content" id="generated-content">
-          Escribe arriba para ver tu guion PERA aqui.
-        </div>
-      </section>
+                  <article class="guided-card locked" id="step-reasons-card">
+                    <div class="guided-head">
+                      <h3>Paso 3: Razones</h3>
+                      <span class="guided-state" id="state-reasons">Bloqueado</span>
+                    </div>
+                    <p class="guided-question">
+                      ¿Con qué datos, autoridad o lógica vas a demostrar que tu Punto es válido?
+                    </p>
+                    <div class="input-group">
+                      <textarea
+                        id="reasons-input"
+                        placeholder="Ej: Estudios 2024 muestran mayor retención con esquemas flexibles."
+                        disabled
+                      ></textarea>
+                    </div>
+                    <p class="unlock-note">Se activa al completar Ejemplo.</p>
+                  </article>
 
-      <section class="ai-output">
-        <h2 class="section-heading" style="margin-bottom: 0.2rem">Analisis IA</h2>
-        <p class="helper-text" id="aiPlaceholder">
-          Completa tu mensaje y presiona "Analizar con IA" para ver
-          sugerencias.
-        </p>
-        <div id="aiResult"></div>
-      </section>
+                  <article class="guided-card locked" id="step-action-card">
+                    <div class="guided-head">
+                      <h3>Paso 4: Accion</h3>
+                      <span class="guided-state" id="state-action">Bloqueado</span>
+                    </div>
+                    <p class="guided-question">
+                      ¿Qué quieres que hagan exactamente, quién lo hace y para cuándo?
+                    </p>
+                    <div class="input-group">
+                      <textarea
+                        id="action-input"
+                        placeholder="Ej: Antes del viernes, líderes completan encuesta y agendan 1:1 con su equipo."
+                        disabled
+                      ></textarea>
+                    </div>
+                    <p class="unlock-note">Se activa al completar Razones.</p>
+                  </article>
+                </div>
+              </section>
 
-      <details class="section-block theory-block">
-        <summary>Ver teoria PERA completa (opcional)</summary>
-        <div class="pera-cards">
-          <div class="pera-card">
-            <div class="card-letter">P</div>
-            <div class="card-title">Punto</div>
-            <div class="card-description">
-              Estructura: Disparador + Respuesta (X por Y, o Y por lo tanto X).
-              Conecta claramente causa y efecto.
+              <!-- QPC BUILDER -->
+              <section
+                class="section-block message-builder qpc-only"
+                id="builder-qpc"
+              >
+                <div class="section-frame">
+                  <div>
+                    <h2 class="section-heading">Construcción guiada QPC</h2>
+                    <p class="section-subtitle">
+                      Trabaja una idea a la vez: qué propones, por qué importa y cómo se ejecuta.
+                    </p>
+                  </div>
+                  <span class="section-index">Framework QPC</span>
+                </div>
+                <div class="journey-pills">
+                  <span class="journey-pill" id="step-pill-que">1. Qué</span>
+                  <span class="journey-pill" id="step-pill-porque">2. Por qué</span>
+                  <span class="journey-pill" id="step-pill-como">3. Cómo</span>
+                </div>
+                <p class="helper-text guide-status" id="qpcGuideStatus">
+                  Empieza en Qué. Al completarlo, se desbloqueará Por qué.
+                </p>
+
+                <div class="guided-stack">
+                  <article class="guided-card" id="step-que-card">
+                    <div class="guided-head">
+                      <h3>Paso 1: Que</h3>
+                      <span class="guided-state" id="state-que">En progreso</span>
+                    </div>
+                    <p class="guided-question">
+                      Punto = intención + detonante. ¿Qué propones o buscas?
+                    </p>
+                    <details class="inline-theory">
+                      <summary>Teoría rápida</summary>
+                      <p>
+                        Intención: Necesitamos eliminar 13 SKUs de la marca X.<br />Detonante:
+                        "Actualmente estos representan el 10% de los productos, pero
+                        solo el 1.8% de ventas."
+                      </p>
+                    </details>
+                    <div class="input-group">
+                      <textarea
+                        id="que-input"
+                        placeholder="Ej: Necesitamos eliminar 13 SKUs de la marca X porque solo representan 1.8% de ventas."
+                      ></textarea>
+                    </div>
+                    <p class="unlock-note">Minimo recomendado: 24 caracteres.</p>
+                  </article>
+
+                  <article class="guided-card locked" id="step-porque-card">
+                    <div class="guided-head">
+                      <h3>Paso 2: Por que</h3>
+                      <span class="guided-state" id="state-porque">Bloqueado</span>
+                    </div>
+                    <p class="guided-question">
+                      Evidencia y relevancia. ¿Por qué es importante esto?
+                    </p>
+                    <details class="inline-theory">
+                      <summary>Teoría rápida</summary>
+                      <p>
+                        Estos SKUs consumen recursos sin añadir valor real. Su
+                        eliminación permitirá reenfocar esfuerzos en productos
+                        insignia. El objetivo final es mejorar los márgenes.
+                      </p>
+                    </details>
+                    <div class="input-group">
+                      <textarea
+                        id="porque-input"
+                        placeholder="Ej: Consumen recursos sin añadir valor real, y su eliminación mejorará márgenes."
+                        disabled
+                      ></textarea>
+                    </div>
+                    <p class="unlock-note">Se activa al completar Que.</p>
+                  </article>
+
+                  <article class="guided-card locked" id="step-como-card">
+                    <div class="guided-head">
+                      <h3>Paso 3: Como</h3>
+                      <span class="guided-state" id="state-como">Bloqueado</span>
+                    </div>
+                    <p class="guided-question">
+                      Pasos operativos. ¿Cómo vamos a hacerlo?
+                    </p>
+                    <details class="inline-theory">
+                      <summary>Teoría rápida</summary>
+                      <p>
+                        La próxima semana tendremos reunión para presentar el
+                        análisis detallado. Ahí decidiremos si hacemos piloto con el
+                        20%.
+                      </p>
+                    </details>
+                    <div class="input-group">
+                      <textarea
+                        id="como-input"
+                        placeholder="Ej: La próxima semana tendremos reunión para decidir un piloto con el 20% de SKUs."
+                        disabled
+                      ></textarea>
+                    </div>
+                    <p class="unlock-note">Se activa al completar Por que.</p>
+                  </article>
+                </div>
+              </section>
+
+              <!-- generated-content se mantiene oculto para la lógica JS, pero no se muestra -->
+              <div id="generated-content" style="display:none" aria-hidden="true"></div>
+
             </div>
-            <div class="card-example">
-              "Las empresas estan perdiendo a su mejor talento porque se niegan a
-              ofrecer esquemas de trabajo flexible."
-            </div>
+
+            <aside class="workspace-side">
+              <!-- SHARED SETTINGS -->
+              <section class="section-block settings-panel">
+                <h2 class="section-heading">Contexto de entrega</h2>
+                <p class="section-subtitle">
+                  Ajusta lo esencial para que la propuesta de IA salga más útil y alineada al contexto.
+                </p>
+
+                <div class="essentials-grid">
+                  <div class="input-group">
+                    <label>Objetivo</label>
+                    <select id="objective-select">
+                      <option value="informar">Informar</option>
+                      <option value="persuadir">Persuadir</option>
+                      <option value="motivar">Motivar</option>
+                      <option value="vender">Vender</option>
+                      <option value="educar">Educar</option>
+                    </select>
+                  </div>
+                  <div class="input-group">
+                    <label>Audiencia</label>
+                    <input
+                      id="audience-input"
+                      type="text"
+                      placeholder="Ej: equipo comercial de Latam"
+                    />
+                  </div>
+                  <div class="input-group">
+                    <label>Canal</label>
+                    <select id="channel-select">
+                      <option value="presentacion">Presentación</option>
+                      <option value="reunion">Reunión</option>
+                      <option value="email">Email</option>
+                      <option value="mensaje_corto">Mensaje corto</option>
+                    </select>
+                  </div>
+                  <div class="input-group">
+                    <label>Tono</label>
+                    <select id="tone-select">
+                      <option value="formal">Formal</option>
+                      <option value="informal">Informal</option>
+                      <option value="inspirador">Inspirador</option>
+                      <option value="directo">Directo</option>
+                    </select>
+                  </div>
+                </div>
+
+                <details class="advanced-tuning">
+                  <summary>Ajustes avanzados</summary>
+                  <div class="fine-tuning-grid">
+                    <div class="input-group">
+                      <label>Nivel de formalidad</label>
+                      <select id="formality-select">
+                        <option value="alto">Alto</option>
+                        <option value="medio" selected>Medio</option>
+                        <option value="bajo">Bajo</option>
+                      </select>
+                    </div>
+                    <div class="input-group">
+                      <label>Longitud</label>
+                      <select id="length-select">
+                        <option value="corta">Corta</option>
+                        <option value="media" selected>Media</option>
+                        <option value="larga">Larga</option>
+                      </select>
+                    </div>
+                    <div class="input-group">
+                      <label>Industria</label>
+                      <select id="industry-select">
+                        <option value="general" selected>General</option>
+                        <option value="tecnologia">Tecnología</option>
+                        <option value="salud">Salud</option>
+                      </select>
+                    </div>
+                    <div class="input-group">
+                      <label>Urgencia</label>
+                      <select id="urgency-select">
+                        <option value="media" selected>Media</option>
+                        <option value="alta">Alta</option>
+                      </select>
+                    </div>
+                    <div class="input-group">
+                      <label>Estilo argumentativo</label>
+                      <select id="argument-style-select">
+                        <option value="balanceado" selected>Balanceado</option>
+                        <option value="datos">Basado en datos</option>
+                      </select>
+                    </div>
+                    <div class="input-group">
+                      <label>Tipo de CTA</label>
+                      <select id="cta-type-select">
+                        <option value="directa" selected>Directa</option>
+                        <option value="suave">Suave</option>
+                      </select>
+                    </div>
+                  </div>
+                </details>
+              </section>
+
+              <section class="section-block action-panel">
+                <div class="action-header">
+                  <h2 class="section-heading">Análisis asistido</h2>
+                  <p class="section-subtitle">
+                    Primero estructura el mensaje. Luego analiza, contrasta y exporta la mejor versión.
+                  </p>
+                </div>
+                <div class="actions-row">
+                  <button class="ai-btn" id="analyzeBtn">Analizar con IA</button>
+                  <div class="iteration-panel">
+                    <span class="counter-pill" id="messageIterationCounter"
+                      >Iteraciones del mensaje: 0</span
+                    >
+                    <span class="counter-pill secondary" id="dailyUsageCounter"
+                      data-tip="Se reinicia cada día a medianoche"
+                      >Uso IA hoy: 0/12</span
+                    >
+                  </div>
+                  <span
+                    class="helper-text analysis-status"
+                    id="analysisStatus"
+                    aria-live="polite"
+                    >La IA evaluará claridad, coherencia, persuasión y accionabilidad.</span
+                  >
+                </div>
+                <div class="secondary-actions">
+                  <div class="controls">
+                    <button class="control-btn" id="clearBtn">Limpiar</button>
+                    <button class="control-btn download-btn" id="downloadBtn">
+                      Descargar
+                    </button>
+                    <button class="control-btn" id="pdfBtn">PDF</button>
+                    <button class="control-btn" id="copyScriptBtn" type="button">Copiar</button>
+                  </div>
+                </div>
+              </section>
+            </aside>
           </div>
 
-          <div class="pera-card">
-            <div class="card-letter">E</div>
-            <div class="card-title">Ejemplo</div>
-            <div class="card-description">
-              Cuenta una historia especifica con lugar, tiempo, personajes,
-              dialogo y, de ser posible, un giro inesperado.
-            </div>
-            <div class="card-example">
-              "El martes pasado, en las oficinas de Microsoft en Seattle, Sarah,
-              una desarrolladora senior, presento su renuncia durante una
-              junta..."
-            </div>
-          </div>
+          <section class="ai-output">
+            <h2 class="section-heading" style="margin-bottom: 0.2rem">
+              Lectura ejecutiva de la IA
+            </h2>
+            <p class="helper-text" id="aiPlaceholder">
+              Completa tu mensaje y lanza el análisis para ver resumen, propuesta y contraste accionable.
+            </p>
+            <div id="aiResult"></div>
+          </section>
 
-          <div class="pera-card">
-            <div class="card-letter">R</div>
-            <div class="card-title">Razones</div>
-            <div class="card-description">
-              Sustenta con citas de expertos, datos o argumentos racionales que
-              validen tu punto.
+          <!-- THEORY PERA -->
+          <details
+            class="section-block theory-block pera-only"
+            id="theory-pera"
+          >
+            <summary>Ver teoría PERA completa</summary>
+            <div class="pera-cards">
+              <div class="pera-card">
+                <div class="card-letter">P</div>
+                <div class="card-title">Punto</div>
+                <div class="card-description">
+                  Disparador + Respuesta. Conecta claramente causa y efecto.
+                </div>
+                <div class="card-example">
+                  "Las empresas pierden talento por no dar trabajo flexible."
+                </div>
+              </div>
+              <div class="pera-card">
+                <div class="card-letter">E</div>
+                <div class="card-title">Ejemplo</div>
+                <div class="card-description">
+                  Cuenta una historia específica con lugar, tiempo y personajes.
+                </div>
+                <div class="card-example">
+                  "El martes pasado, Sarah renunció en plena junta..."
+                </div>
+              </div>
+              <div class="pera-card">
+                <div class="card-letter">R</div>
+                <div class="card-title">Razones</div>
+                <div class="card-description">
+                  Sustenta con datos o argumentos.
+                </div>
+                <div class="card-example">
+                  "Según McKinsey 2024, 87% de empleados dejaría su trabajo."
+                </div>
+              </div>
+              <div class="pera-card">
+                <div class="card-letter">A</div>
+                <div class="card-title">Accion</div>
+                <div class="card-description">
+                  Da instrucciones accionables.
+                </div>
+                <div class="card-example">
+                  "Encuesta a tu equipo antes del viernes."
+                </div>
+              </div>
             </div>
-            <div class="card-example">
-              "Segun el informe de McKinsey 2024, 87% de los empleados dejaria su
-              trabajo por opciones flexibles."
-            </div>
-          </div>
+          </details>
 
-          <div class="pera-card">
-            <div class="card-letter">A</div>
-            <div class="card-title">Accion</div>
-            <div class="card-description">
-              Da instrucciones especificas y accionables para tu audiencia.
+          <!-- THEORY QPC -->
+          <details class="section-block theory-block qpc-only" id="theory-qpc">
+            <summary>Ver teoría Pirámide QPC completa</summary>
+            <div class="pera-cards">
+              <div class="pera-card">
+                <div class="card-letter">Q</div>
+                <div class="card-title">Qué</div>
+                <div class="card-description">
+                  Punto = Intención + Detonante.
+                </div>
+                <div class="card-example">
+                  "Necesitamos eliminar 13 SKUs porque solo representan 1.8% de
+                  ventas."
+                </div>
+              </div>
+              <div class="pera-card">
+                <div class="card-letter">P</div>
+                <div class="card-title">Por qué</div>
+                <div class="card-description">
+                  Evidencia y Relevancia. Contexto del impacto.
+                </div>
+                <div class="card-example">
+                  "Consumen recursos sin añadir valor. Eliminar permitirá reenfocar."
+                </div>
+              </div>
+              <div class="pera-card">
+                <div class="card-letter">C</div>
+                <div class="card-title">Cómo</div>
+                <div class="card-description">
+                  Pasos Operativos. Qué sigue concretamente.
+                </div>
+                <div class="card-example">
+                  "La próxima semana haremos piloto con 20% de SKUs."
+                </div>
+              </div>
             </div>
-            <div class="card-example">
-              "Encuesta a tu equipo antes del viernes sobre sus preferencias de
-              trabajo y agenda conversaciones uno a uno."
-            </div>
-          </div>
+          </details>
         </div>
-      </details>
+      </main>
     </div>
 
     <script>
-      const DRAFT_KEY = "pera_draft_v1";
+      let currentMode = "pera"; // 'pera' | 'qpc'
+
+      // ── Admin mode (via URL ?admin=TOKEN) ──────────────
+      const ADMIN_TOKEN = new URLSearchParams(window.location.search).get("admin") || "";
+      const IS_ADMIN = Boolean(ADMIN_TOKEN);
+
+      const DRAFT_KEY_PERA = "pera_draft_v1";
+      const DRAFT_KEY_QPC = "qpc_draft_v1";
       const ITERATION_KEY = "pera_iteration_state_v1";
-      const GAME_KEY = "pera_story_game_v1";
-      const DEFAULT_DAILY_LIMIT = 12;
-      const LOCAL_HOSTS = new Set(["localhost", "127.0.0.1", "::1"]);
+      const DEFAULT_DAILY_LIMIT = IS_ADMIN ? 999999 : 12;
       const API_BASE_CANDIDATES = buildApiBaseCandidates();
       let ACTIVE_API_BASE = API_BASE_CANDIDATES[0] || "";
       let BACKEND_VERIFIED = false;
       let dailyLimit = DEFAULT_DAILY_LIMIT;
       let messageIterations = 0;
       let dailyUsageCount = 0;
+      let analysisPhase = "idle";
+      let shouldAnimateUnlocks = false;
+      let analysisMessage =
+        "La IA evaluará claridad, coherencia, persuasión y accionabilidad.";
 
-      const latestRewrites = {
-        point: "",
-        example: "",
-        reasons: "",
-        action: "",
-      };
+      const latestRewrites = {};
 
       const DEFAULT_SETTINGS = {
         tone: "formal",
@@ -1103,7 +1999,7 @@
         cta_type: "cta-type-select",
       };
 
-      const GUIDED_STEPS = [
+      const GUIDED_STEPS_PERA = [
         {
           id: "point",
           label: "Punto",
@@ -1133,7 +2029,7 @@
         },
         {
           id: "action",
-          label: "Accion",
+          label: "Acción",
           inputId: "action-input",
           cardId: "step-action-card",
           stateId: "state-action",
@@ -1142,315 +2038,179 @@
         },
       ];
 
-      const RANKS = [
-        { minXP: 0, label: "Aprendiz" },
-        { minXP: 60, label: "Narrador" },
-        { minXP: 140, label: "Arquitecto" },
-        { minXP: 240, label: "Estratega" },
-        { minXP: 360, label: "Maestro PERA" },
+      const GUIDED_STEPS_QPC = [
+        {
+          id: "que",
+          label: "Qué",
+          inputId: "que-input",
+          cardId: "step-que-card",
+          stateId: "state-que",
+          pillId: "step-pill-que",
+          minChars: 24,
+        },
+        {
+          id: "porque",
+          label: "Por qué",
+          inputId: "porque-input",
+          cardId: "step-porque-card",
+          stateId: "state-porque",
+          pillId: "step-pill-porque",
+          minChars: 24,
+        },
+        {
+          id: "como",
+          label: "Cómo",
+          inputId: "como-input",
+          cardId: "step-como-card",
+          stateId: "state-como",
+          pillId: "step-pill-como",
+          minChars: 24,
+        },
       ];
 
-      const MISSIONS = [
-        { id: "full_pera", label: "Completa las 4 casillas PERA", xp: 20 },
-        { id: "audience_set", label: "Define una audiencia especifica", xp: 12 },
-        { id: "first_analysis", label: "Realiza tu primer analisis IA", xp: 18 },
-        { id: "clarity_80", label: "Consigue 80+ en claridad", xp: 25 },
-        { id: "actionability_80", label: "Consigue 80+ en accionabilidad", xp: 25 },
-        { id: "apply_two_rewrites", label: "Aplica 2 sugerencias de IA", xp: 20 },
-        { id: "export_message", label: "Exporta el mensaje (TXT o PDF)", xp: 15 },
-      ];
+      // Switch Mode
+      document
+        .getElementById("nav-pera")
+        .addEventListener("click", () => setMode("pera"));
+      document
+        .getElementById("nav-qpc")
+        .addEventListener("click", () => setMode("qpc"));
 
-      let gameState = createDefaultGameState();
+      function setMode(mode) {
+        currentMode = mode;
+        shouldAnimateUnlocks = false;
+        document.body.className = "mode-" + mode;
+
+        document
+          .getElementById("nav-pera")
+          .classList.toggle("active", mode === "pera");
+        document
+          .getElementById("nav-qpc")
+          .classList.toggle("active", mode === "qpc");
+
+        const title = document.getElementById("main-title");
+        const desc = document.getElementById("main-desc");
+        if (mode === "pera") {
+          title.textContent = "Framework PERA";
+          desc.textContent =
+            "Punto · Ejemplo · Razones · Acción — comunica con eficacia e inspiración";
+        } else {
+          title.textContent = "Pirámide QPC";
+          desc.textContent =
+            "Qué · Por qué · Cómo — destila tu mensaje ejecutivo con claridad";
+        }
+
+        resetAnalysisUI();
+        loadDraft();
+        updateGenerated();
+        updateIterationUI();
+        window.requestAnimationFrame(() => {
+          shouldAnimateUnlocks = true;
+        });
+      }
+
+      function getActiveSteps() {
+        return currentMode === "pera" ? GUIDED_STEPS_PERA : GUIDED_STEPS_QPC;
+      }
 
       function getTodayKey() {
         return new Date().toISOString().slice(0, 10);
       }
-
       function clampToNonNegativeNumber(value) {
-        if (!Number.isFinite(value)) return 0;
-        return Math.max(0, Math.floor(value));
+        return !Number.isFinite(value) ? 0 : Math.max(0, Math.floor(value));
       }
-
       function getStepTextLength(step) {
         const node = document.getElementById(step.inputId);
-        if (!node) return 0;
-        return node.value.trim().length;
+        return node ? node.value.trim().length : 0;
       }
-
       function isStepComplete(step) {
         return getStepTextLength(step) >= step.minChars;
       }
-
       function isGuidedFlowComplete() {
-        return GUIDED_STEPS.every((step) => isStepComplete(step));
+        return getActiveSteps().every((step) => isStepComplete(step));
       }
 
       function updateGuidedFlow() {
-        const guideNode = document.getElementById("constructionGuideStatus");
+        const steps = getActiveSteps();
+        const guideNode = document.getElementById(
+          currentMode === "pera" ? "peraGuideStatus" : "qpcGuideStatus",
+        );
+        const firstPendingIndex = steps.findIndex((step) => !isStepComplete(step));
+        const currentIndex = firstPendingIndex === -1 ? steps.length - 1 : firstPendingIndex;
 
-        GUIDED_STEPS.forEach((step, index) => {
+        steps.forEach((step, index) => {
           const inputNode = document.getElementById(step.inputId);
           const cardNode = document.getElementById(step.cardId);
           const stateNode = document.getElementById(step.stateId);
           const pillNode = document.getElementById(step.pillId);
 
-          const unlocked = index === 0 ? true : isStepComplete(GUIDED_STEPS[index - 1]);
+          const unlocked =
+            index === 0 ? true : isStepComplete(steps[index - 1]);
           const done = isStepComplete(step);
+          const isCurrent = unlocked && index === currentIndex;
 
           if (inputNode) {
             inputNode.disabled = !unlocked;
             inputNode.setAttribute("aria-disabled", String(!unlocked));
           }
-
           if (cardNode) {
+            const wasUnlocked = cardNode.dataset.unlocked === "true";
             cardNode.classList.toggle("locked", !unlocked);
             cardNode.classList.toggle("complete", done);
+            cardNode.classList.toggle("is-current", isCurrent);
+            cardNode.dataset.unlocked = unlocked ? "true" : "false";
+            if (unlocked && !wasUnlocked && shouldAnimateUnlocks && index > 0) {
+              cardNode.classList.remove("is-revealing");
+              void cardNode.offsetWidth;
+              cardNode.classList.add("is-revealing");
+              window.setTimeout(
+                () => cardNode.classList.remove("is-revealing"),
+                460,
+              );
+            }
           }
-
           if (stateNode) {
-            stateNode.textContent = !unlocked ? "Bloqueado" : done ? "Listo" : "En progreso";
+            stateNode.textContent = !unlocked
+              ? "Bloqueado"
+              : done && !isCurrent
+                ? "Listo"
+                : isCurrent
+                  ? "Paso activo"
+                  : "En progreso";
           }
-
           if (pillNode) {
+            const shouldPulse = unlocked && pillNode.dataset.unlocked !== "true";
             pillNode.classList.toggle("done", done);
-            pillNode.classList.toggle("active", unlocked && !done);
+            pillNode.classList.toggle("active", isCurrent);
+            pillNode.dataset.unlocked = unlocked ? "true" : "false";
+            if (shouldPulse && shouldAnimateUnlocks && index > 0) {
+              pillNode.classList.remove("is-unlocking");
+              void pillNode.offsetWidth;
+              pillNode.classList.add("is-unlocking");
+              window.setTimeout(
+                () => pillNode.classList.remove("is-unlocking"),
+                600,
+              );
+            }
           }
         });
 
         if (guideNode) {
-          const firstPending = GUIDED_STEPS.find((step) => !isStepComplete(step));
+          const firstPending = steps.find((step) => !isStepComplete(step));
           if (!firstPending) {
-            guideNode.textContent = "Flujo completo. Ya puedes analizar con IA.";
+            guideNode.textContent =
+              "Flujo completo. Ya puedes analizar con IA.";
           } else {
-            const nextStepIndex = GUIDED_STEPS.findIndex((step) => step.id === firstPending.id) + 1;
+            const nextStepIndex =
+              steps.findIndex((step) => step.id === firstPending.id) + 1;
             const unlockLabel =
-              nextStepIndex < GUIDED_STEPS.length
-                ? GUIDED_STEPS[nextStepIndex].label
-                : "Analisis IA";
+              nextStepIndex < steps.length
+                ? steps[nextStepIndex].label
+                : "Análisis IA";
             guideNode.textContent = `Completa ${firstPending.label} (${firstPending.minChars}+ caracteres) para desbloquear ${unlockLabel}.`;
           }
         }
-
         updateIterationUI();
-      }
-
-      function createDefaultGameState() {
-        return {
-          xp: 0,
-          completedMissions: {},
-          badges: {},
-          appliedSuggestions: 0,
-          bestOverallScore: 0,
-          eventNote: "Completa misiones para desbloquear logros.",
-        };
-      }
-
-      function getRankByXP(xp) {
-        let rank = RANKS[0];
-        for (const candidate of RANKS) {
-          if (xp >= candidate.minXP) rank = candidate;
-        }
-        return rank;
-      }
-
-      function getNextRank(currentXP) {
-        for (const rank of RANKS) {
-          if (rank.minXP > currentXP) return rank;
-        }
-        return null;
-      }
-
-      function getCompletedMissionCount() {
-        return MISSIONS.filter((mission) => gameState.completedMissions[mission.id]).length;
-      }
-
-      function saveGameState() {
-        try {
-          localStorage.setItem(GAME_KEY, JSON.stringify(gameState));
-        } catch {
-          // Ignore storage errors.
-        }
-      }
-
-      function loadGameState() {
-        try {
-          const raw = localStorage.getItem(GAME_KEY);
-          if (!raw) {
-            gameState = createDefaultGameState();
-            updateGameUI();
-            return;
-          }
-
-          const parsed = JSON.parse(raw);
-          gameState = {
-            ...createDefaultGameState(),
-            ...parsed,
-            xp: clampToNonNegativeNumber(Number(parsed?.xp)),
-            appliedSuggestions: clampToNonNegativeNumber(Number(parsed?.appliedSuggestions)),
-            bestOverallScore: Math.max(0, Number(parsed?.bestOverallScore || 0)),
-            completedMissions:
-              parsed?.completedMissions && typeof parsed.completedMissions === "object"
-                ? parsed.completedMissions
-                : {},
-            badges:
-              parsed?.badges && typeof parsed.badges === "object" ? parsed.badges : {},
-          };
-        } catch {
-          gameState = createDefaultGameState();
-        }
-        updateGameUI();
-      }
-
-      function flashRankPill() {
-        const rankNode = document.getElementById("playerRankPill");
-        if (!rankNode) return;
-        rankNode.classList.remove("flash-level");
-        window.requestAnimationFrame(() => {
-          rankNode.classList.add("flash-level");
-        });
-      }
-
-      function updateGameUI() {
-        const rankNode = document.getElementById("playerRankPill");
-        const xpNode = document.getElementById("playerXpPill");
-        const missionNode = document.getElementById("missionCountPill");
-        const xpFill = document.getElementById("xpFill");
-        const noteNode = document.getElementById("gameEventNote");
-        const missionListNode = document.getElementById("missionList");
-        const badgeNode = document.getElementById("badgeRow");
-
-        const rank = getRankByXP(gameState.xp);
-        const nextRank = getNextRank(gameState.xp);
-        const completedMissions = getCompletedMissionCount();
-
-        if (rankNode) {
-          rankNode.textContent = `Rango: ${rank.label}`;
-        }
-        if (xpNode) {
-          xpNode.textContent = `XP: ${gameState.xp}`;
-        }
-        if (missionNode) {
-          missionNode.textContent = `Misiones: ${completedMissions}/${MISSIONS.length}`;
-        }
-        if (noteNode) {
-          noteNode.textContent = gameState.eventNote || "Completa misiones para desbloquear logros.";
-        }
-
-        if (xpFill) {
-          let progress = 100;
-          if (nextRank) {
-            const span = nextRank.minXP - rank.minXP;
-            const completed = gameState.xp - rank.minXP;
-            progress = span > 0 ? (completed / span) * 100 : 100;
-          }
-          xpFill.style.width = `${Math.max(4, Math.min(100, progress))}%`;
-        }
-
-        if (missionListNode) {
-          missionListNode.innerHTML = MISSIONS.map((mission) => {
-            const done = Boolean(gameState.completedMissions[mission.id]);
-            return `
-              <div class="mission-item ${done ? "done" : ""}">
-                <span>${done ? "Lista" : "Pendiente"}: ${escapeForHTML(mission.label)}</span>
-                <strong>${mission.xp} XP</strong>
-              </div>
-            `;
-          }).join("");
-        }
-
-        if (badgeNode) {
-          const badges = Object.values(gameState.badges || {});
-          badgeNode.innerHTML = badges.length
-            ? badges.map((label) => `<span class="badge-chip">${escapeForHTML(label)}</span>`).join("")
-            : `<span class="badge-chip empty">Sin logros todavia</span>`;
-        }
-      }
-
-      function awardXP(amount, reason) {
-        const points = clampToNonNegativeNumber(Number(amount));
-        if (!points) return;
-
-        const rankBefore = getRankByXP(gameState.xp);
-        gameState.xp += points;
-        const rankAfter = getRankByXP(gameState.xp);
-
-        if (rankAfter.label !== rankBefore.label) {
-          gameState.eventNote = `Subiste de nivel: ${rankAfter.label} (+${points} XP).`;
-          flashRankPill();
-        } else {
-          gameState.eventNote = `+${points} XP: ${reason}`;
-        }
-
-        saveGameState();
-        updateGameUI();
-      }
-
-      function completeMission(id, reasonOverride = "") {
-        const mission = MISSIONS.find((item) => item.id === id);
-        if (!mission) return false;
-        if (gameState.completedMissions[id]) return false;
-
-        gameState.completedMissions[id] = true;
-        awardXP(mission.xp, reasonOverride || mission.label);
-        gameState.eventNote = `Mision completada: ${mission.label}`;
-        saveGameState();
-        updateGameUI();
-        return true;
-      }
-
-      function unlockBadge(id, label) {
-        if (!id || !label) return false;
-        if (gameState.badges[id]) return false;
-        gameState.badges[id] = label;
-        gameState.eventNote = `Logro desbloqueado: ${label}`;
-        saveGameState();
-        updateGameUI();
-        return true;
-      }
-
-      function evaluateDraftMissions() {
-        const payload = getPayload();
-        const filledSections = Object.values(payload.sections || {}).filter(Boolean).length;
-
-        if (filledSections === 4) {
-          completeMission("full_pera");
-        }
-
-        if (payload?.settings?.audience) {
-          completeMission("audience_set");
-        }
-      }
-
-      function evaluateAnalysisMissions(analysis) {
-        const scores = analysis?.scores || {};
-        const clarity = Number(scores.clarity || 0);
-        const actionability = Number(scores.actionability || 0);
-        const coherence = Number(scores.coherence || 0);
-        const persuasion = Number(scores.persuasion || 0);
-
-        completeMission("first_analysis");
-        if (clarity >= 80) completeMission("clarity_80");
-        if (actionability >= 80) completeMission("actionability_80");
-
-        const currentAverage = (clarity + coherence + persuasion + actionability) / 4;
-        if (currentAverage > gameState.bestOverallScore) {
-          const delta = currentAverage - gameState.bestOverallScore;
-          gameState.bestOverallScore = currentAverage;
-          if (delta >= 5) {
-            awardXP(10, `mejora de ${Math.round(delta)} puntos promedio`);
-          }
-        }
-
-        if (currentAverage >= 85) {
-          unlockBadge("gold_script", "Guion de Oro");
-        }
-
-        if (getCompletedMissionCount() === MISSIONS.length) {
-          unlockBadge("mission_master", "Master de Misiones");
-        }
-
-        saveGameState();
-        updateGameUI();
       }
 
       function saveIterationState() {
@@ -1463,148 +2223,139 @@
               dailyUsageCount,
             }),
           );
-        } catch {
-          // Ignore storage errors.
-        }
+        } catch {}
       }
-
       function loadIterationState() {
-        const today = getTodayKey();
         try {
           const raw = localStorage.getItem(ITERATION_KEY);
-          if (!raw) {
-            messageIterations = 0;
-            dailyUsageCount = 0;
-            updateIterationUI();
-            return;
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            if (parsed.date === getTodayKey()) {
+              messageIterations = clampToNonNegativeNumber(
+                parsed.messageIterations,
+              );
+              dailyUsageCount = clampToNonNegativeNumber(
+                parsed.dailyUsageCount,
+              );
+            } else {
+              messageIterations = 0;
+              dailyUsageCount = 0;
+              saveIterationState();
+            }
           }
+        } catch {}
+        updateIterationUI();
+      }
 
-          const parsed = JSON.parse(raw);
-          if (parsed?.date !== today) {
-            messageIterations = 0;
-            dailyUsageCount = 0;
-            saveIterationState();
-            updateIterationUI();
-            return;
-          }
-
-          messageIterations = clampToNonNegativeNumber(Number(parsed?.messageIterations));
-          dailyUsageCount = clampToNonNegativeNumber(Number(parsed?.dailyUsageCount));
-        } catch {
-          messageIterations = 0;
-          dailyUsageCount = 0;
-        }
+      function setAnalysisState(phase, message = "") {
+        analysisPhase = phase;
+        analysisMessage =
+          message ||
+          "La IA evaluará claridad, coherencia, persuasión y accionabilidad.";
         updateIterationUI();
       }
 
       function updateIterationUI() {
-        const messageNode = document.getElementById("messageIterationCounter");
-        const dailyNode = document.getElementById("dailyUsageCounter");
+        document.getElementById("messageIterationCounter").textContent =
+          `Iteraciones del mensaje: ${messageIterations}`;
+        const limitReached = IS_ADMIN ? false : dailyUsageCount >= dailyLimit;
+        document.getElementById("dailyUsageCounter").textContent =
+          IS_ADMIN ? `Uso IA hoy: ${dailyUsageCount} (∞)` : `Uso IA hoy: ${dailyUsageCount}/${dailyLimit}`;
+        document
+          .getElementById("dailyUsageCounter")
+          .classList.toggle("limit", limitReached);
+
         const analyzeButton = document.getElementById("analyzeBtn");
-        const limitReached = dailyUsageCount >= dailyLimit;
         const flowReady = isGuidedFlowComplete();
+        const analysisStatusNode = document.getElementById("analysisStatus");
 
-        if (messageNode) {
-          messageNode.textContent = `Iteraciones del mensaje: ${messageIterations}`;
+        analyzeButton.classList.remove("is-loading", "is-complete", "is-error");
+        analysisStatusNode.classList.remove(
+          "loading",
+          "success",
+          "error",
+          "ready",
+        );
+
+        if (analysisPhase === "loading") {
+          analyzeButton.disabled = true;
+          analyzeButton.textContent = "Analizando...";
+          analyzeButton.classList.add("is-loading");
+          analysisStatusNode.textContent =
+            analysisMessage || "La IA esta analizando tu mensaje...";
+          analysisStatusNode.classList.add("loading");
+          return;
         }
 
-        if (dailyNode) {
-          dailyNode.textContent = `Uso IA hoy: ${dailyUsageCount}/${dailyLimit}`;
-          dailyNode.classList.toggle("limit", limitReached);
+        analyzeButton.disabled = limitReached || !flowReady;
+
+        if (limitReached) {
+          analyzeButton.textContent = "Límite diario alcanzado";
+          analysisStatusNode.textContent =
+            "Alcanzaste el límite de análisis por hoy. Se reinicia a medianoche.";
+          analysisStatusNode.classList.add("error");
+          return;
         }
 
-        if (analyzeButton && analyzeButton.textContent !== "Analizando...") {
-          analyzeButton.disabled = limitReached || !flowReady;
-          if (limitReached) {
-            analyzeButton.textContent = "Limite diario alcanzado";
-          } else if (!flowReady) {
-            analyzeButton.textContent = "Completa pasos para analizar";
-          } else {
-            analyzeButton.textContent = "Analizar con IA";
-          }
-        }
-      }
-
-      function canUseAI() {
-        return dailyUsageCount < dailyLimit;
-      }
-
-      function registerAIIteration() {
-        messageIterations += 1;
-        dailyUsageCount += 1;
-        saveIterationState();
-        updateIterationUI();
-      }
-
-      function resetMessageIterations() {
-        messageIterations = 0;
-        saveIterationState();
-        updateIterationUI();
-      }
-
-      function syncUsageFromServer(usage) {
-        const serverCount = Number(usage?.count);
-        const serverLimit = Number(usage?.limit);
-
-        if (Number.isFinite(serverLimit) && serverLimit > 0) {
-          dailyLimit = Math.floor(serverLimit);
+        if (!flowReady) {
+          analyzeButton.textContent = "Completa los pasos para analizar";
+          analysisStatusNode.textContent =
+            "Completa el flujo guiado para activar el análisis.";
+          return;
         }
 
-        if (Number.isFinite(serverCount) && serverCount >= 0) {
-          dailyUsageCount = clampToNonNegativeNumber(serverCount);
+        if (analysisPhase === "success") {
+          analyzeButton.textContent = "Volver a analizar";
+          analyzeButton.classList.add("is-complete");
+          analysisStatusNode.textContent =
+            analysisMessage ||
+            "Análisis listo. Revisa los resultados o vuelve a analizar.";
+          analysisStatusNode.classList.add("success");
+          return;
         }
 
-        saveIterationState();
-        updateIterationUI();
+        if (analysisPhase === "error") {
+          analyzeButton.textContent = "Reintentar análisis";
+          analyzeButton.classList.add("is-error");
+          analysisStatusNode.textContent =
+            analysisMessage || "No se pudo completar el análisis.";
+          analysisStatusNode.classList.add("error");
+          return;
+        }
+
+        analyzeButton.textContent = "Analizar con IA";
+        analysisStatusNode.textContent =
+          "La IA evaluará claridad, coherencia, persuasión y accionabilidad.";
+        analysisStatusNode.classList.add("ready");
       }
 
       function buildApiBaseCandidates() {
         const { protocol, hostname, port } = window.location;
         if (protocol === "file:") return ["http://127.0.0.1:8787"];
-
         const candidates = [""];
-
-        // If frontend runs in Live Server (e.g. :5500), route API to Node backend.
-        if (LOCAL_HOSTS.has(hostname) && port && port !== "8787") {
+        if (
+          new Set(["localhost", "127.0.0.1", "::1"]).has(hostname) &&
+          port &&
+          port !== "8787"
+        ) {
           candidates.push("http://127.0.0.1:8787");
         }
-
         return [...new Set(candidates)];
       }
-
-      function buildApiUrl(pathname, base = ACTIVE_API_BASE) {
-        return `${base}${pathname}`;
-      }
-
-      function describeApiBase(base) {
-        return base ? base : "mismo dominio";
+      function getAdminHeaders() {
+        return ADMIN_TOKEN ? { "X-Admin-Token": ADMIN_TOKEN } : {};
       }
 
       async function fetchWithTimeout(url, options = {}, timeoutMs = 25000) {
         const controller = new AbortController();
         const timer = window.setTimeout(() => controller.abort(), timeoutMs);
+        // Inject admin header into all requests
+        const headers = { ...(options.headers || {}), ...getAdminHeaders() };
         try {
-          return await fetch(url, { ...options, signal: controller.signal });
+          return await fetch(url, { ...options, headers, signal: controller.signal });
         } finally {
           window.clearTimeout(timer);
         }
-      }
-
-      function getFriendlyAnalyzeError(error) {
-        const raw = error instanceof Error ? error.message : String(error || "");
-        if (error?.name === "AbortError") {
-          return "La solicitud tardo demasiado. Intenta de nuevo.";
-        }
-        if (/insufficient_quota|quota/i.test(raw)) {
-          return "Tu cuenta OpenAI no tiene saldo/cupo disponible.";
-        }
-        if (/rate_limit|limite diario/i.test(raw)) {
-          return raw;
-        }
-        if (/Failed to fetch|NetworkError|Load failed|fetch/i.test(raw)) {
-          return "No hay conexion con el backend IA. Si es local, ejecuta npm start. Si es Netlify, revisa redirects y variables.";
-        }
-        return raw || "Error al analizar con IA.";
       }
 
       function escapeForHTML(value) {
@@ -1616,12 +2367,25 @@
           .replace(/\r?\n/g, "<br>");
       }
 
+      // Convierte texto plano en párrafos HTML con saltos de línea legibles
+      function formatProseHTML(value) {
+        if (typeof value !== "string" || !value.trim()) return "";
+        const safe = value
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
+        return safe
+          .trim()
+          .split(/\n{2,}/)                                // divide por doble salto (párrafos)
+          .map(para => `<p>${para.trim().replace(/\n/g, "<br>")}</p>`)
+          .join("");
+      }
+
       function getScriptFromInputs() {
-        const point = document.getElementById("point-input").value.trim();
-        const example = document.getElementById("example-input").value.trim();
-        const reasons = document.getElementById("reasons-input").value.trim();
-        const action = document.getElementById("action-input").value.trim();
-        return [point, example, reasons, action].filter(Boolean).join("\n\n");
+        return getActiveSteps()
+          .map((step) => document.getElementById(step.inputId).value.trim())
+          .filter(Boolean)
+          .join("\n\n");
       }
 
       function getSettingsFromForm() {
@@ -1634,281 +2398,475 @@
           length: document.getElementById("length-select").value,
           industry: document.getElementById("industry-select").value,
           urgency: document.getElementById("urgency-select").value,
-          argument_style: document.getElementById("argument-style-select").value,
+          argument_style: document.getElementById("argument-style-select")
+            .value,
           cta_type: document.getElementById("cta-type-select").value,
         };
       }
-
       function applySettingsToForm(settings = {}) {
         const next = { ...DEFAULT_SETTINGS, ...settings };
         Object.entries(SETTINGS_FIELD_MAP).forEach(([key, id]) => {
           const node = document.getElementById(id);
-          if (!node) return;
-          node.value = next[key] ?? DEFAULT_SETTINGS[key];
+          if (node) node.value = next[key] ?? DEFAULT_SETTINGS[key];
         });
       }
 
       function clearRewrites() {
-        latestRewrites.point = "";
-        latestRewrites.example = "";
-        latestRewrites.reasons = "";
-        latestRewrites.action = "";
+        Object.keys(latestRewrites).forEach((k) => delete latestRewrites[k]);
       }
-
       function resetAnalysisUI() {
         clearRewrites();
         document.getElementById("aiResult").innerHTML = "";
         document.getElementById("aiPlaceholder").style.display = "block";
+        setAnalysisState("idle");
+      }
+
+      function renderComparisonBlock(originalText, proposedText) {
+        const original = originalText?.trim() || "Sin contenido original.";
+        const proposed = proposedText?.trim() || "Sin propuesta generada.";
+        return `
+          <div class="comparison-grid">
+            <div class="comparison-card original">
+              <div class="comparison-label">Tu version</div>
+              <div class="comparison-body">${escapeForHTML(original)}</div>
+            </div>
+            <div class="comparison-card proposed">
+              <div class="comparison-label">Propuesta IA</div>
+              <div class="comparison-body">${escapeForHTML(proposed)}</div>
+            </div>
+          </div>
+        `;
+      }
+
+      function getScoreDescriptor(value) {
+        if (value >= 85) return "Muy fuerte";
+        if (value >= 75) return "Solido";
+        if (value >= 65) return "Mejorable";
+        return "Debil";
+      }
+
+      function getScoreTone(value) {
+        if (value >= 85) return "tone-strong";
+        if (value >= 70) return "tone-mid";
+        return "tone-weak";
+      }
+
+      function getScoreInsights(scores) {
+        const entries = [
+          { key: "clarity", label: "Claridad", value: Number(scores.clarity || 0) },
+          {
+            key: "coherence",
+            label: "Coherencia",
+            value: Number(scores.coherence || 0),
+          },
+          {
+            key: "persuasion",
+            label: "Persuasion",
+            value: Number(scores.persuasion || 0),
+          },
+          {
+            key: "actionability",
+            label: "Accionabilidad",
+            value: Number(scores.actionability || 0),
+          },
+        ];
+        const strongest = [...entries].sort((a, b) => b.value - a.value)[0];
+        const weakest = [...entries].sort((a, b) => a.value - b.value)[0];
+        return { entries, strongest, weakest };
       }
 
       function getPayload() {
-        return {
-          sections: {
-            point: document.getElementById("point-input").value.trim(),
-            example: document.getElementById("example-input").value.trim(),
-            reasons: document.getElementById("reasons-input").value.trim(),
-            action: document.getElementById("action-input").value.trim(),
-          },
-          settings: getSettingsFromForm(),
-        };
+        const sections = {};
+        getActiveSteps().forEach((step) => {
+          sections[step.id] = document
+            .getElementById(step.inputId)
+            .value.trim();
+        });
+        return { sections, settings: getSettingsFromForm() };
       }
 
       function updateGenerated() {
         const script = getScriptFromInputs();
-        const node = document.getElementById("generated-content");
-        node.innerHTML = script
+        document.getElementById("generated-content").innerHTML = script
           ? escapeForHTML(script)
-          : "Escribe arriba para ver tu guion PERA aqui.";
+          : "Escribe arriba para ver tu guión aquí.";
         updateGuidedFlow();
       }
 
-      function setAnalysisStatus(text, isError = false) {
-        const node = document.getElementById("analysisStatus");
-        node.textContent = text;
-        node.classList.toggle("error", isError);
-      }
-
-      function showSaveStatus() {
+      function showSaveStatus(text = "Guardado automatico") {
         const node = document.getElementById("saveStatus");
+        node.textContent = text;
         node.classList.add("show");
-        window.setTimeout(() => node.classList.remove("show"), 800);
+        window.setTimeout(() => node.classList.remove("show"), 1200);
       }
 
       function saveDraft() {
         try {
-          localStorage.setItem(DRAFT_KEY, JSON.stringify(getPayload()));
+          const key = currentMode === "pera" ? DRAFT_KEY_PERA : DRAFT_KEY_QPC;
+          localStorage.setItem(key, JSON.stringify(getPayload()));
           showSaveStatus();
-        } catch {
-          // Ignore storage errors (private mode / browser restrictions).
-        }
+        } catch {}
       }
 
       function loadDraft() {
+        const key = currentMode === "pera" ? DRAFT_KEY_PERA : DRAFT_KEY_QPC;
         try {
-          const raw = localStorage.getItem(DRAFT_KEY);
-          if (!raw) {
+          const raw = localStorage.getItem(key);
+          if (raw) {
+            const draft = JSON.parse(raw);
+            if (draft?.sections) {
+              getActiveSteps().forEach((step) => {
+                const node = document.getElementById(step.inputId);
+                if (node) node.value = draft.sections[step.id] || "";
+              });
+            }
+            applySettingsToForm(draft?.settings || DEFAULT_SETTINGS);
+          } else {
+            getActiveSteps().forEach((step) => {
+              const node = document.getElementById(step.inputId);
+              if (node) node.value = "";
+            });
             applySettingsToForm(DEFAULT_SETTINGS);
-            evaluateDraftMissions();
-            return;
           }
-          const draft = JSON.parse(raw);
-          if (draft?.sections) {
-            document.getElementById("point-input").value = draft.sections.point || "";
-            document.getElementById("example-input").value = draft.sections.example || "";
-            document.getElementById("reasons-input").value = draft.sections.reasons || "";
-            document.getElementById("action-input").value = draft.sections.action || "";
-          }
-          applySettingsToForm(draft?.settings || DEFAULT_SETTINGS);
-          evaluateDraftMissions();
-        } catch {
-          try {
-            localStorage.removeItem(DRAFT_KEY);
-          } catch {
-            // Ignore storage errors.
-          }
-          applySettingsToForm(DEFAULT_SETTINGS);
-          evaluateDraftMissions();
-        }
+        } catch {}
+        updateGenerated();
       }
 
       async function checkBackendHealth() {
         for (const base of API_BASE_CANDIDATES) {
           try {
-            const response = await fetchWithTimeout(buildApiUrl("/api/health", base), { method: "GET" }, 4000);
-            const data = await response.json();
-            if (!response.ok) throw new Error("health check failed");
-
-            ACTIVE_API_BASE = base;
-            if (Number.isFinite(Number(data?.rateLimitPerDay)) && Number(data.rateLimitPerDay) > 0) {
-              dailyLimit = Math.floor(Number(data.rateLimitPerDay));
-              updateIterationUI();
-            }
-
-            if (!data?.openaiConfigured) {
-              BACKEND_VERIFIED = false;
-              setAnalysisStatus(
-                `Backend conectado (${describeApiBase(base)}), pero falta OPENAI_API_KEY`,
-                true,
-              );
-              return false;
-            }
-
-            BACKEND_VERIFIED = true;
-            setAnalysisStatus(
-              `Backend IA conectado (${describeApiBase(base)}). Limite diario: ${dailyLimit}.`,
+            const response = await fetchWithTimeout(
+              `${base}/api/health`,
+              { method: "GET" },
+              4000,
             );
-            return true;
-          } catch {
-            // Try next candidate.
-          }
+            const data = await response.json();
+            if (response.ok) {
+              ACTIVE_API_BASE = base;
+              if (data?.rateLimitPerDay)
+                dailyLimit = Math.floor(Number(data.rateLimitPerDay));
+              BACKEND_VERIFIED = data?.openaiConfigured;
+              updateIterationUI();
+              return BACKEND_VERIFIED;
+            }
+          } catch {}
         }
-
         BACKEND_VERIFIED = false;
-        setAnalysisStatus(
-          "No hay conexion con el backend IA. Si es local, ejecuta npm start en el proyecto.",
-          true,
-        );
         return false;
       }
 
-      async function ensureBackendReady() {
-        if (BACKEND_VERIFIED) return true;
-        return checkBackendHealth();
+      function renderScoreItem(label, rawValue) {
+        const value = Number(rawValue || 0);
+        const colorClass = value >= 80 ? "high" : value >= 60 ? "mid" : "low";
+        return `
+          <div class="score-item">
+            <strong>${label}</strong>
+            <span class="score-value">${value}/100</span>
+            <div class="score-bar-wrap">
+              <div class="score-bar-fill ${colorClass}" style="width:${value}%"></div>
+            </div>
+          </div>`;
       }
 
       function renderAnalysis(analysis) {
-        const placeholder = document.getElementById("aiPlaceholder");
-        const target = document.getElementById("aiResult");
-        placeholder.style.display = "none";
+        document.getElementById("aiPlaceholder").style.display = "none";
 
-        latestRewrites.point = analysis?.section_feedback?.point?.rewrite || "";
-        latestRewrites.example = analysis?.section_feedback?.example?.rewrite || "";
-        latestRewrites.reasons = analysis?.section_feedback?.reasons?.rewrite || "";
-        latestRewrites.action = analysis?.section_feedback?.action?.rewrite || "";
+        const sectionFeedback = analysis?.section_feedback || {};
+        let feedbackHTML = "";
+        const originalScript = getScriptFromInputs();
+
+        getActiveSteps().forEach((step, index) => {
+          const fb = sectionFeedback[step.id] || {};
+          const originalText =
+            document.getElementById(step.inputId)?.value.trim() || "";
+          latestRewrites[step.id] = fb.rewrite || "";
+          const summaryPreview =
+            (fb.suggestion || fb.diagnosis || "Revisa el detalle y aplica la mejora que te sirva.")
+              .trim()
+              .slice(0, 140);
+          const summaryLine =
+            summaryPreview.length >= 140 ? `${summaryPreview}...` : summaryPreview;
+          feedbackHTML += `
+            <details class="feedback-card feedback-detail">
+              <summary class="feedback-summary">
+                <div class="feedback-summary-main">
+                  <span class="feedback-step-tag">Bloque ${escapeForHTML(step.label)}</span>
+                  <div class="feedback-summary-copy">
+                    <h4>${step.label}</h4>
+                    <p>${escapeForHTML(summaryLine)}</p>
+                  </div>
+                </div>
+                <span class="feedback-toggle">
+                  Ver detalle
+                  <svg class="chevron" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                    <path d="M2.5 5L7 9.5L11.5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </summary>
+              <div class="feedback-detail-body">
+                <div class="feedback-copy">
+                  <p><strong>Diagnostico:</strong> ${escapeForHTML(fb.diagnosis)}</p>
+                  <p><strong>Sugerencia:</strong> ${escapeForHTML(fb.suggestion)}</p>
+                </div>
+                ${renderComparisonBlock(originalText, fb.rewrite)}
+                <div class="feedback-actions">
+                  <button class="mini-btn apply-btn" data-field="${step.id}" type="button">Aplicar sugerencia</button>
+                </div>
+              </div>
+            </details>
+          `;
+        });
 
         const score = analysis?.scores || {};
-        const section = analysis?.section_feedback || {};
+        const { entries: scoreEntries, strongest, weakest } = getScoreInsights(score);
         const alternatives = Array.isArray(analysis?.alternatives)
           ? analysis.alternatives
           : [];
+        const nextStep =
+          analysis?.next_step ||
+          "Aplica la mejora más útil, vuelve a analizar y compara si sube la accionabilidad.";
 
-        target.innerHTML = `
-          <p><strong>Resumen:</strong> ${escapeForHTML(analysis?.summary || "Sin resumen")}</p>
-          <div class="score-grid">
-            <div class="score-item"><strong>Claridad</strong>${Number(score.clarity || 0)}/100</div>
-            <div class="score-item"><strong>Coherencia</strong>${Number(score.coherence || 0)}/100</div>
-            <div class="score-item"><strong>Persuasion</strong>${Number(score.persuasion || 0)}/100</div>
-            <div class="score-item"><strong>Accionabilidad</strong>${Number(score.actionability || 0)}/100</div>
+        // Build carousel slides data
+        const carouselSlides = [
+          {
+            icon: "📊",
+            title: "Resumen ejecutivo",
+            content: `
+              <div class="analysis-overview-shell">
+                <article class="analysis-summary-card">
+                  <span class="overview-kicker">Lectura ejecutiva</span>
+                  <h3 class="analysis-summary-title">${escapeForHTML(analysis?.summary || "La IA ya terminó su lectura del mensaje.")}</h3>
+                  <p class="analysis-summary-copy">${escapeForHTML(nextStep)}</p>
+                </article>
+                <div class="analysis-rail">
+                  <article class="analysis-sidecard">
+                    <span class="overview-kicker">Mayor fortaleza</span>
+                    <strong>${escapeForHTML(strongest.label)} · ${strongest.value}/100</strong>
+                    <p>${escapeForHTML(getScoreDescriptor(strongest.value))}</p>
+                  </article>
+                  <article class="analysis-sidecard">
+                    <span class="overview-kicker">Mayor riesgo</span>
+                    <strong>${escapeForHTML(weakest.label)} · ${weakest.value}/100</strong>
+                    <p>${escapeForHTML(getScoreDescriptor(weakest.value))}</p>
+                  </article>
+                  <article class="analysis-sidecard">
+                    <span class="overview-kicker">Siguiente movimiento</span>
+                    <strong>Refina y vuelve a medir</strong>
+                    <p>${escapeForHTML(nextStep)}</p>
+                  </article>
+                </div>
+              </div>`
+          },
+          {
+            icon: "🎯",
+            title: "Puntuación",
+            content: `
+              <div class="analysis-section-head" style="margin-bottom:1rem">
+                <span class="overview-kicker">Lectura por criterio</span>
+                <h4 class="comparison-section-title">Dónde está fuerte y dónde conviene intervenir</h4>
+                <p>Usa estos puntajes como señal de prioridad.</p>
+              </div>
+              <div class="score-grid">
+                ${scoreEntries.map((entry) => renderScoreItem(entry.label, entry.value)).join("")}
+              </div>`
+          },
+          {
+            icon: "✍️",
+            title: "Propuesta",
+            content: `
+              <div class="analysis-section-head" style="margin-bottom:1rem">
+                <span class="overview-kicker">Resultado recomendado</span>
+                <h4 class="comparison-section-title">Versión propuesta para reutilizar o editar</h4>
+                <p>Esta es la mejor base para usar ya mismo.</p>
+              </div>
+              <article class="proposal-card proposal-card-main">
+                <div class="proposal-copy">${formatProseHTML(analysis?.full_rewrite || "Sin propuesta completa generada.")}</div>
+                <div class="proposal-meta">
+                  <div class="proposal-note">
+                    <strong>Fortaleza principal</strong>
+                    <span>${escapeForHTML(strongest.label)} es tu punto más sólido hoy.</span>
+                  </div>
+                  <div class="proposal-note">
+                    <strong>Mejora prioritaria</strong>
+                    <span>Sube primero ${escapeForHTML(weakest.label.toLowerCase())} para notar el mayor impacto.</span>
+                  </div>
+                  <div class="proposal-note">
+                    <strong>Próximo paso</strong>
+                    <span>${escapeForHTML(nextStep)}</span>
+                  </div>
+                </div>
+              </article>
+              <details class="analysis-deep-dive" style="margin-top:14px">
+                <summary>Ver comparación completa del guión</summary>
+                <div class="analysis-deep-dive-body">
+                  ${renderComparisonBlock(originalScript, analysis?.full_rewrite)}
+                </div>
+              </details>`
+          },
+          {
+            icon: "🔍",
+            title: "Detalle por bloque",
+            content: `
+              <div class="analysis-section-head" style="margin-bottom:1rem">
+                <span class="overview-kicker">Antes vs después</span>
+                <h4 class="comparison-section-title">Contraste por bloque</h4>
+                <p>Abre solo el bloque que quieres trabajar.</p>
+              </div>
+              <div class="feedback-list">${feedbackHTML}</div>`
+          },
+          ...(alternatives.length ? [{
+            icon: "🔀",
+            title: "Alternativas",
+            content: `
+              <div class="analysis-section-head" style="margin-bottom:1rem">
+                <span class="overview-kicker">Rutas alternativas</span>
+                <h4 class="comparison-section-title">Otras formas de contarlo</h4>
+                <p>Prueba una de estas rutas si la versión principal no encaja con tu contexto.</p>
+              </div>
+              <div class="alternatives-grid">
+                ${alternatives.slice(0, 3).map((a) => `
+                  <article class="alternative-card">
+                    <h5>${escapeForHTML(a.label)}</h5>
+                    <div>${formatProseHTML(a.text)}</div>
+                  </article>`).join("")}
+              </div>`
+          }] : [])
+        ];
+
+        const total = carouselSlides.length;
+        const slidesHTML = carouselSlides.map((s, i) =>
+          `<div class="carousel-slide${i === 0 ? " active" : ""}" data-slide="${i}">${s.content}</div>`
+        ).join("");
+        const dotsHTML = carouselSlides.map((_, i) =>
+          `<button class="carousel-dot${i === 0 ? " active" : ""}" data-goto="${i}" aria-label="Slide ${i+1}"></button>`
+        ).join("");
+
+        document.getElementById("aiResult").innerHTML = `
+          <div class="analysis-report carousel-shell">
+            <div class="carousel-header">
+              <div class="carousel-label">
+                <span class="carousel-icon" id="carouselIcon">${carouselSlides[0].icon}</span>
+                <span class="carousel-title" id="carouselTitle">${carouselSlides[0].title}</span>
+                <span class="carousel-counter" id="carouselCounter">1 / ${total}</span>
+              </div>
+              <div class="carousel-nav">
+                <button class="carousel-arrow" id="carouselPrev" aria-label="Anterior" disabled>&#8592;</button>
+                <button class="carousel-arrow" id="carouselNext" aria-label="Siguiente">&#8594;</button>
+              </div>
+            </div>
+            <div class="carousel-track" id="carouselTrack">${slidesHTML}</div>
+            <div class="carousel-dots" id="carouselDots">${dotsHTML}</div>
           </div>
-
-          <div class="feedback-grid">
-            ${renderSectionCard("point", "Punto", section.point)}
-            ${renderSectionCard("example", "Ejemplo", section.example)}
-            ${renderSectionCard("reasons", "Razones", section.reasons)}
-            ${renderSectionCard("action", "Accion", section.action)}
-          </div>
-
-          <h4>Guion mejorado completo</h4>
-          <p>${escapeForHTML(analysis?.full_rewrite || "Sin propuesta completa")}</p>
-
-          <div class="alternatives">
-            <h4>Alternativas</h4>
-            <ol>
-              ${alternatives
-                .slice(0, 3)
-                .map(
-                  (item) =>
-                    `<li><strong>${escapeForHTML(item.label || "Opcion")}</strong>: ${escapeForHTML(item.text || "")}</li>`,
-                )
-                .join("")}
-            </ol>
-          </div>
-
-          <p><strong>Siguiente paso recomendado:</strong> ${escapeForHTML(analysis?.next_step || "No especificado")}</p>
         `;
 
-        awardXP(4, "iteracion analizada");
-        evaluateAnalysisMissions(analysis);
-      }
+        // ── Carousel logic ────────────────────────────────
+        let currentSlide = 0;
 
-      function renderSectionCard(field, label, data) {
-        const diagnosis = data?.diagnosis || "Sin diagnostico";
-        const suggestion = data?.suggestion || "Sin sugerencia";
-        const rewrite = data?.rewrite || "Sin reescritura";
-        return `
-          <article class="feedback-card">
-            <h4>${label}</h4>
-            <p><strong>Diagnostico:</strong> ${escapeForHTML(diagnosis)}</p>
-            <p><strong>Sugerencia:</strong> ${escapeForHTML(suggestion)}</p>
-            <div class="feedback-rewrite">${escapeForHTML(rewrite)}</div>
-            <button class="mini-btn apply-btn" data-field="${field}" type="button">Aplicar sugerencia</button>
-          </article>
-        `;
+        function goToSlide(next, dir = 1) {
+          if (next === currentSlide) return;
+          const track  = document.getElementById("carouselTrack");
+          const slides = track.querySelectorAll(".carousel-slide");
+          const dots   = document.querySelectorAll(".carousel-dot");
+
+          // Guardar scroll ANTES de cambiar el DOM para evitar el salto de altura
+          const savedY = window.scrollY;
+
+          // 1. Ocultar slide actual
+          slides[currentSlide].classList.remove("active", "dir-prev");
+
+          // 2. Mostrar slide entrante
+          currentSlide = next;
+          const incoming = slides[currentSlide];
+          incoming.classList.toggle("dir-prev", dir < 0);
+          void incoming.offsetWidth; // reflow para reiniciar la animación CSS
+          incoming.classList.add("active");
+
+          // 3. Restaurar scroll inmediatamente — evita el salto de posición
+          window.scrollTo({ top: savedY, behavior: "instant" });
+
+          // 4. Actualizar encabezado
+          document.getElementById("carouselIcon").textContent    = carouselSlides[currentSlide].icon;
+          document.getElementById("carouselTitle").textContent   = carouselSlides[currentSlide].title;
+          document.getElementById("carouselCounter").textContent = `${currentSlide + 1} / ${total}`;
+
+          // 5. Flechas
+          document.getElementById("carouselPrev").disabled = currentSlide === 0;
+          document.getElementById("carouselNext").disabled = currentSlide === total - 1;
+
+          // 6. Dots
+          dots.forEach((d, i) => d.classList.toggle("active", i === currentSlide));
+        }
+
+        document.getElementById("carouselPrev").addEventListener("click", () => {
+          if (currentSlide > 0) goToSlide(currentSlide - 1, -1);
+        });
+        document.getElementById("carouselNext").addEventListener("click", () => {
+          if (currentSlide < total - 1) goToSlide(currentSlide + 1, 1);
+        });
+        document.querySelectorAll(".carousel-dot").forEach((dot) => {
+          dot.addEventListener("click", () => {
+            const goto = Number(dot.dataset.goto);
+            goToSlide(goto, goto > currentSlide ? 1 : -1);
+          });
+        });
+        setAnalysisState(
+          "success",
+          "Análisis terminado. Revisa las sugerencias o vuelve a analizar.",
+        );
+        const aiSection = document.querySelector(".ai-output");
+        aiSection.classList.remove("fade-in");
+        window.requestAnimationFrame(() => {
+          aiSection.classList.add("fade-in");
+          aiSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
       }
 
       async function analyzeWithAI() {
-        const payload = getPayload();
-        if (!isGuidedFlowComplete()) {
-          setAnalysisStatus(
-            "Completa los 4 pasos (Punto, Ejemplo, Razones y Accion) para analizar.",
-            true,
-          );
-          updateGuidedFlow();
-          return;
-        }
-
-        if (!canUseAI()) {
-          setAnalysisStatus(
-            `Llegaste al limite diario de ${dailyLimit} analisis. Se reinicia manana.`,
-            true,
-          );
-          updateIterationUI();
-          return;
-        }
+        if (!isGuidedFlowComplete() || (!IS_ADMIN && dailyUsageCount >= dailyLimit)) return;
 
         const button = document.getElementById("analyzeBtn");
         button.disabled = true;
-        button.textContent = "Analizando...";
-        setAnalysisStatus("Verificando conexion del backend...");
+        setAnalysisState("loading", "La IA está revisando tu mensaje...");
 
         try {
-          const backendReady = await ensureBackendReady();
-          if (!backendReady) return;
+          const ok = await checkBackendHealth();
+          if (!ok)
+            throw new Error("Backend IA no disponible o mal configurado. Revisa la conexión.");
 
-          registerAIIteration();
-          setAnalysisStatus("Analizando tu guion con IA...");
+          messageIterations++;
+          dailyUsageCount++;
+          saveIterationState();
+          updateIterationUI();
 
-          const response = await fetchWithTimeout(
-            buildApiUrl("/api/pera/analyze"),
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(payload),
-            },
-            25000,
-          );
+          const endpoint =
+            currentMode === "pera" ? "/api/pera/analyze" : "/api/qpc/analyze";
+          const res = await fetchWithTimeout(`${ACTIVE_API_BASE}${endpoint}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(getPayload()),
+          });
 
-          const raw = await response.text();
+          const raw = await res.text();
           let data = {};
           try {
-            data = raw ? JSON.parse(raw) : {};
-          } catch {
-            data = {};
+            data = JSON.parse(raw);
+          } catch {}
+          if (data?.usage) {
+            dailyUsageCount = Number(data.usage.count) || dailyUsageCount;
+            saveIterationState();
+            updateIterationUI();
           }
-
-          syncUsageFromServer(data?.usage);
-
-          if (!response.ok) {
-            throw new Error(data?.error || "No se pudo obtener analisis.");
-          }
+          if (!res.ok) throw new Error(data?.error || "Error al analizar");
 
           renderAnalysis(data.analysis);
-          setAnalysisStatus("Analisis listo. Puedes aplicar sugerencias por seccion.");
         } catch (error) {
-          setAnalysisStatus(getFriendlyAnalyzeError(error), true);
+          setAnalysisState(
+            "error",
+            error.message || "No se pudo completar el análisis. Inténtalo otra vez.",
+          );
+          alert(error.message || "Error");
         } finally {
-          button.disabled = !canUseAI();
-          button.textContent = canUseAI() ? "Analizar con IA" : "Limite diario alcanzado";
+          button.disabled = false;
           updateIterationUI();
         }
       }
@@ -1917,133 +2875,111 @@
         node.addEventListener("input", () => {
           updateGenerated();
           saveDraft();
-          evaluateDraftMissions();
         });
       });
 
-      document.getElementById("analyzeBtn").addEventListener("click", analyzeWithAI);
+      document
+        .getElementById("analyzeBtn")
+        .addEventListener("click", analyzeWithAI);
 
-      document.getElementById("aiResult").addEventListener("click", (event) => {
-        const button = event.target.closest(".apply-btn");
-        if (!button) return;
-
-        const field = button.dataset.field;
-        const map = {
-          point: "point-input",
-          example: "example-input",
-          reasons: "reasons-input",
-          action: "action-input",
-        };
+      document.getElementById("aiResult").addEventListener("click", (e) => {
+        const btn = e.target.closest(".apply-btn");
+        if (!btn) return;
+        const field = btn.dataset.field;
+        const step = getActiveSteps().find((s) => s.id === field);
+        if (!step) return;
 
         const rewrite = latestRewrites[field];
-        if (!rewrite || !map[field]) return;
-        const inputNode = document.getElementById(map[field]);
-        const currentValue = inputNode.value.trim();
-        if (currentValue === rewrite.trim()) return;
-
-        inputNode.value = rewrite;
-        gameState.appliedSuggestions += 1;
-        awardXP(6, "sugerencia aplicada");
-        if (gameState.appliedSuggestions >= 2) {
-          completeMission("apply_two_rewrites");
+        const inputNode = document.getElementById(step.inputId);
+        if (inputNode.value.trim() !== rewrite.trim()) {
+          inputNode.value = rewrite;
+          inputNode.classList.remove("flash-apply");
+          window.requestAnimationFrame(() => inputNode.classList.add("flash-apply"));
+          showSaveStatus("Sugerencia aplicada");
+          updateGenerated();
+          saveDraft();
         }
-        if (gameState.appliedSuggestions >= 4) {
-          unlockBadge("precision_editor", "Editor de Precision");
-        }
-        saveGameState();
-
-        updateGenerated();
-        saveDraft();
-        evaluateDraftMissions();
       });
 
-      document.getElementById("clearBtn").addEventListener("click", () => {
-        const confirmed = window.confirm(
-          "Se limpiara toda la construccion, el fine tuning y el analisis. Las iteraciones diarias no se reinician. Estas seguro?",
+      function doClear() {
+        getActiveSteps().forEach(
+          (step) => (document.getElementById(step.inputId).value = ""),
         );
-        if (!confirmed) return;
-
-        document.querySelectorAll("textarea").forEach((t) => (t.value = ""));
         applySettingsToForm(DEFAULT_SETTINGS);
         resetAnalysisUI();
-        resetMessageIterations();
-        BACKEND_VERIFIED = false;
-
+        messageIterations = 0;
+        saveIterationState();
+        updateIterationUI();
         try {
-          localStorage.removeItem(DRAFT_KEY);
-        } catch {
-          // Ignore storage errors.
-        }
-
+          localStorage.removeItem(
+            currentMode === "pera" ? DRAFT_KEY_PERA : DRAFT_KEY_QPC,
+          );
+        } catch {}
         updateGenerated();
-        setAnalysisStatus("Formulario reseteado.");
-        evaluateDraftMissions();
-        checkBackendHealth();
+      }
+
+      document.getElementById("clearBtn").addEventListener("click", () => {
+        document.getElementById("confirmModal").classList.remove("is-hidden");
+        document.getElementById("confirmOk").focus();
+      });
+      document.getElementById("confirmCancel").addEventListener("click", () => {
+        document.getElementById("confirmModal").classList.add("is-hidden");
+      });
+      document.getElementById("confirmOk").addEventListener("click", () => {
+        document.getElementById("confirmModal").classList.add("is-hidden");
+        doClear();
+      });
+      document.getElementById("confirmModal").addEventListener("click", (e) => {
+        if (e.target === document.getElementById("confirmModal")) {
+          document.getElementById("confirmModal").classList.add("is-hidden");
+        }
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          document.getElementById("confirmModal").classList.add("is-hidden");
+        }
       });
 
       document.getElementById("downloadBtn").addEventListener("click", () => {
-        const script = getScriptFromInputs();
-        const blob = new Blob([script], { type: "text/plain;charset=utf-8" });
+        const blob = new Blob([getScriptFromInputs()], {
+          type: "text/plain;charset=utf-8",
+        });
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = "mensaje-pera.txt";
+        a.download = `mensaje-${currentMode}.txt`;
         a.click();
-        URL.revokeObjectURL(url);
-
-        completeMission("export_message");
-        unlockBadge("publisher_ready", "Mensaje Publicable");
       });
 
       document.getElementById("pdfBtn").addEventListener("click", () => {
-        const script = getScriptFromInputs();
         const win = window.open("", "_blank");
         if (!win) return;
+        let stepsHTML = getActiveSteps()
+          .map(
+            (step) =>
+              `<div style="margin-bottom:10px"><strong>${step.label}:</strong> ${escapeForHTML(document.getElementById(step.inputId).value)}</div>`,
+          )
+          .join("");
 
-        const html = `
-          <html>
-          <head>
-            <title>Mensaje PERA</title>
-            <style>
-              body { font-family: sans-serif; padding: 40px; line-height: 1.5; }
-              h1 { color: #0b56c6; }
-              .section { margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-              .label { font-weight: bold; color: #0b56c6; display: block; }
-            </style>
-          </head>
-          <body>
-            <h1>Mensaje PERA</h1>
-            <div class="section"><span class="label">Punto:</span> ${escapeForHTML(document.getElementById("point-input").value)}</div>
-            <div class="section"><span class="label">Ejemplo:</span> ${escapeForHTML(document.getElementById("example-input").value)}</div>
-            <div class="section"><span class="label">Razones:</span> ${escapeForHTML(document.getElementById("reasons-input").value)}</div>
-            <div class="section"><span class="label">Accion:</span> ${escapeForHTML(document.getElementById("action-input").value)}</div>
-            <h2>Guion completo</h2>
-            <p>${escapeForHTML(script) || "(Sin contenido)"}</p>
-            <script>window.print();<\/script>
-          </body>
-          </html>`;
-
-        win.document.write(html);
-        win.document.close();
-
-        completeMission("export_message");
-        unlockBadge("publisher_ready", "Mensaje Publicable");
-      });
-
-      document.getElementById("resetGameBtn").addEventListener("click", () => {
-        const confirmed = window.confirm(
-          "Se reiniciaran rango, XP, misiones y logros. Quieres continuar?",
+        win.document.write(
+          `<html><head><title>Mensaje ${currentMode.toUpperCase()}</title></head><body style="font-family:sans-serif;padding:40px;"><h1>Mensaje ${currentMode.toUpperCase()}</h1>${stepsHTML}<h2>Guion completo</h2><p>${escapeForHTML(getScriptFromInputs())}</p><script>window.print();<\/script></body></html>`,
         );
-        if (!confirmed) return;
-        gameState = createDefaultGameState();
-        saveGameState();
-        updateGameUI();
+        win.document.close();
       });
 
-      loadGameState();
-      loadDraft();
+      document.getElementById("copyScriptBtn").addEventListener("click", () => {
+        const script = getScriptFromInputs();
+        if (!script) return;
+        navigator.clipboard.writeText(script).then(() => {
+          showSaveStatus("Copiado al portapapeles");
+        }).catch(() => {
+          showSaveStatus("Error al copiar");
+        });
+      });
+
+      // Init
       loadIterationState();
-      updateGenerated();
+      setMode("pera"); // This loads the draft and updates UI
       checkBackendHealth();
     </script>
   </body>
